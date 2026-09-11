@@ -1,7 +1,17 @@
 # Copiloto para Asesores Comerciales de DOMINIA
 
 > Trabajo final · Creación de Agentes de IA · MBA UCEMA · 2026 2T · Francisco Alloatti
-> **Estado: en construcción** (11/9/2026). Este README se actualiza con cada iteración.
+> Estado al 11/9/2026, 18:30: contrato en su versión 4, dos módulos funcionando, 26 corridas reales
+> exitosas. Pendiente: la comparación de modelos, frenada por falta de crédito en la API (ver *Qué
+> falta o qué falló*).
+
+| Documento | Qué tiene |
+|---|---|
+| `prompts/` | El contrato: `system_prompt.md` y `user_prompt.md` (módulo 1) y `variantes/` (módulo 2) |
+| `corridas/` | Las ejecuciones reales: entrada, llamadas a la herramienta, salida, chequeos, tokens, costo y fecha |
+| `DECISIONES.md` | La historia: once decisiones y cinco iteraciones, cada una con su error textual |
+| `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
+| `GOBIERNO.md` | Permisos, doce modos de falla con su mitigación, control humano y firma |
 
 ## Qué construí
 
@@ -12,6 +22,9 @@ decide **qué lista le corresponde** (terminados de Casona 2 o pozo de Casona 3,
 propone hasta tres unidades con su precio exacto y deja un **borrador de mensaje** cuyo objetivo es
 conseguir la visita. **El agente nunca le escribe al cliente**: el asesor revisa, corrige y envía
 con su firma. Es para los asesores comerciales de DOMINIA y las inmobiliarias que venden el proyecto.
+
+Un segundo módulo arma el **plan mensual de ventas y publicaciones**: lee el registro de consultas
+que dejó el primero y el stock, y propone qué unidades empujar, por qué canal y con qué mensaje.
 
 Nivel de delegación: **L2 — ejecuta con revisión**. Responsable del sistema: **Francisco Alloatti,
 responsable general de DOMINIA**.
@@ -87,32 +100,96 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 ## Qué funciona
 
-- **El tarifario derivado** (`herramientas/tarifario_vigente.csv`): 8 unidades de Casona 2 y 28 de
-  Casona 3, sin comisiones ni compradores. Se regenera con `python herramientas/derivar_tarifario.py
-  <lista Casona 2> <lista Casona 3>`.
-- **El contrato** (`prompts/system_prompt.md` y `prompts/user_prompt.md`, versión 1), con las seis
-  piezas marcadas, más dos anexos de conocimiento: la ficha del proyecto y el playbook comercial.
-- **El ejecutor** (`sistema/copiloto.py`): corre una consulta, deja que el modelo use la herramienta,
-  valida diez reglas duras y guarda la corrida completa con tokens y costo.
-- **La prueba de humo** del 11/9 (`pruebas/`, con una consulta inventada): pasó de punta a punta y
-  los diez chequeos en el primer intento.
+**Las piezas del sistema:**
+
+- **El contrato** (`prompts/system_prompt.md` v4 y `prompts/user_prompt.md` v2), con las seis piezas
+  marcadas por nombre, más dos anexos: `conocimiento/proyecto.md` (la ficha del proyecto) y
+  `conocimiento/playbook.md` (28 técnicas, cada una con su fuente verificada).
+- **La herramienta real**: `consultar_tarifario` lee `herramientas/tarifario_vigente.csv`, derivado
+  de las listas de precios internas sin comisiones ni compradores. Cada corrida registra qué filas
+  del CSV consultó y el sha256 del tarifario.
+- **La salida estructurada**: JSON validado por la API contra `sistema/esquema_ficha.json`, con los
+  mismos trece campos en todas las corridas.
+- **Doce reglas verificadas en código** después de cada corrida (V1–V12: lista única, precios
+  idénticos al tarifario, sin descuentos ni urgencia, fechas coherentes, firma, presentación,
+  preguntas, largo). Si una falla, la corrida queda **BLOQUEADA** y el asesor no la envía.
+- **La transcripción de audios**, local (`herramientas/transcribir_audio.py`, Whisper).
+- **El módulo 2**: `sistema/plan_mensual.py`, con su contrato en `prompts/variantes/`.
+
+**Lo que se probó y anduvo**, con consultas reales anonimizadas de WhatsApp (`entradas/`):
+
+- **Cuatro de inmobiliarias colegas y cinco de clientes** (una por audio), cada una guardada con lo
+  que respondió el asesor en la realidad para poder comparar. Las corridas finales con el contrato
+  vigente (`corridas/2026-09-11_1739_…` a `…_1745_…`) pasan los doce chequeos.
+- **Tres corridas de referencia**, una por tipo de caso:
+
+  | Corrida | Caso | Qué muestra |
+  |---|---|---|
+  | `corridas/2026-09-11_1741_C03-inmob-mostrar-hoy_opus-5.md` | Un colega quiere mostrar hoy a las 12:30 | Confirma la visita sin condiciones y adjunta la lista de Casona 2 (iteración 1) |
+  | `corridas/2026-09-11_1745_C06-cliente-PBA-C3_opus-5.md` | Un cliente pide el PB A de Casona 3 desde la web | Se presenta, no da precio en el primer mensaje, pregunta cómo paga y propone la visita (iteraciones 2 a 4) |
+  | `corridas/2026-09-11_1707_C09-cliente-audio-canje_opus-5.md` | Un proveedor, por audio, quiere comprar con canje | No confirma el canje; el borrador sale **bloqueado** por 124 palabras (una falla real que frenó el chequeo) |
+
+- **Coherencia**: la misma consulta, escrita por tres personas distintas, da la misma lista, las
+  mismas tres unidades y el mismo precio (`corridas/coherencia/`).
+- **El plan de octubre** (`corridas/plan_mensual/`): cita sus once consultas como señales de demanda.
+
+**Qué versión del contrato produjo cada corrida.** Cada archivo trae el sha256 de system + user:
+
+| sha256 | Contrato | Corridas |
+|---|---|---|
+| `911bac10d216` | v1 + playbook v0 | humo (`pruebas/`) |
+| `07325a31ef33` | v1 + playbook v1 | 01–09 y coherencia (16:48–17:07) |
+| `cae72a3c838e` | v2 (iteración 1) | 03 y 04 de las 17:16 y 17:18 |
+| `230238bc0c27` | v3 (iteración 2) | 01 y 06 de las 17:21 y 17:22 |
+| `c59fefd13d70` | v3 + playbook v2 (iteración 3) | 06 y 05 de las 17:24 y 17:26 |
+| `b856d022cd4b` | v4 (iteración 4) | 06 y 05 de las 17:28 y 17:29 |
+| `d48ad9997e10` | v4 + user prompt v2 (iteración 5) | 04 de las 17:31 |
+| `6a60ec936cf3` | Vigente: la anterior + ficha D-11 | 01–06 de las 17:39–17:45 |
 
 Cómo se usa:
 
 ```bash
-python sistema/copiloto.py entradas/consulta-01.md
+python sistema/copiloto.py entradas/consulta-06.md
+```
+
+```bash
+python sistema/plan_mensual.py --mes 2026-10 --desde 2026-06-01 --hasta 2026-09-11
 ```
 
 ## Qué falta o qué falló
 
-- **Las tres corridas reales** con consultas anonimizadas: todavía no se hicieron.
-- **El playbook v1** con los manuales pedidos: en investigación, solo con fuentes verificables.
-- **El módulo 2** (plan mensual de ventas y publicaciones): sin empezar.
-- **La comparación de modelos** y el análisis económico: hay una sola corrida de humo con Opus 5,
-  que costó USD 0,2145.
-- **Primera falla detectada** en la prueba de humo: el agente consultó las dos listas aunque ya
-  había decidido cuál correspondía (detalle en `DECISIONES.md`).
+- **La comparación de modelos no se pudo hacer.** El 11/9 a las 17:45 se terminó el crédito de la
+  API y las corridas con Haiku 4.5 y Sonnet 5 fallaron con *«Your credit balance is too low to access
+  the Anthropic API»* (`corridas/errores/`). El sistema corre con Opus 5, que es el modelo más caro
+  de los tres, y todavía no hay una prueba de que uno más chico no alcance.
+- **Las corridas finales 07, 08, 09 y las de coherencia** quedaron sin repetir con el contrato
+  vigente por la misma razón. Sus versiones con el contrato v1 están en `corridas/`.
+- **El plan de octubre salió bloqueado**, y no está resuelto: la jornada con colegas entrega las dos
+  listas en la misma acción, lo que el propio módulo prohíbe. Además, el chequeo que lo detectó
+  también marcó una pieza correcta: un control por palabras no distingue *mencionar* de *ofrecer*.
+- **Lo que ningún chequeo mide**: si una respuesta sirve. Las cuatro primeras corridas pasaron los
+  diez chequeos de entonces, y una de ellas le proponía a un colega *«¿lo corremos a las 16?»* cuando
+  ya tenía la visita confirmada para las 12:30. Se encontró comparando contra lo que respondió el
+  asesor real, no con los chequeos.
+- **La transcripción de audio se equivoca**: *«Toda es muy buena pérdida»* por «calidad». Se
+  revisa a mano antes de correr el copiloto.
+- **Todavía no se envió al cliente ningún borrador del copiloto**: las consultas son de junio a
+  septiembre y ya tenían respuesta. La prueba de uso real queda para la primera consulta nueva.
 
 ## Qué aprendí
 
-_(Se completa al cerrar.)_
+_Borrador preparado a partir del proceso; el responsable lo revisa y lo reescribe con sus palabras._
+
+- **La pieza que más movió la efectividad fueron las restricciones, no la tarea.** Una sola regla
+  nueva («la visita ya propuesta se confirma») cambió una respuesta que perdía una visita por una que
+  la confirmaba. La tarea estaba bien desde la versión 1.
+- **Las piezas del contrato no son independientes.** Agregar la presentación (formato) rompió el
+  límite de largo (restricciones); sacar el precio (contexto) liberó espacio y el modelo lo volvió a
+  llenar. El largo de un mensaje se reparte entre piezas, y alguien tiene que fijar el total.
+- **Lo que es caro de equivocar va en código, no solo en el prompt.** El modelo calculaba mal el día
+  de la semana; ahora el calendario lo hace el programa y un chequeo lo verifica. Lo mismo con los
+  precios y la lista única.
+- **Guardar lo que hizo el humano real fue lo más útil del diseño.** Sin eso, los chequeos en verde
+  decían que todo andaba bien.
+- **Verificar en vez de suponer**, también con lo que uno cree saber: *Everybody Wins* no es de
+  Liniger, el jardín de planta baja no es «privado», y Casona 3 no es un fideicomiso.

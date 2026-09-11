@@ -212,3 +212,78 @@ miden si la respuesta sirve. Lo que muestran las cuatro corridas contra lo que p
    los leyeron (26.890 cada una, dos vueltas) a un décimo del precio. Por eso la 04 costó USD 0,1034.
 
 Total de las cuatro: **USD 0,6221**.
+
+### Corridas reales 05–09 y prueba de coherencia · 11/9 16:57–17:07 · contrato v1
+
+Cinco consultas reales de **clientes finales** (cuatro por texto y una por audio) y dos
+repeticiones de la consulta 06, escritas palabra por palabra por otras dos personas.
+
+| Corrida | Qué pidió | Lista | Unidades | Chequeos | USD |
+|---|---|---|---|---|---|
+| 05 | «Me interesa 1° E (2 Dorm · 1 Baño) de Casona III», a las 02:39 | Casona 3 | 1º E, 1º G, PB E | 10/10 | 0,1397 |
+| 06 | «Me interesa PB A (2 Dorm · 2 Baños) de Casona III», a las 02:19 | Casona 3 | PB A, PB C, 1º A | 10/10 | 0,1653 |
+| 07 | «Busco alojamiento mensual para 2 personas» | sin asignar | — | 10/10 | 0,1359 |
+| 08 | PB B **o PB H** de Casona III, «cualquier de los dos» | Casona 3 | PB B, PB D, PB F | 10/10 | 0,1631 |
+| 09 | Audio: un proveedor de carpintería quiere comprar y «tomar metros» a cambio de trabajos | Casona 3 | — | **9/10 · BLOQUEADA** | 0,1940 |
+| Coherencia 2 | Idéntica a la 06, otra persona | Casona 3 | PB A, PB C, 1º A | 10/10 | 0,1371 |
+| Coherencia 3 | Idéntica a la 06, tercera persona | Casona 3 | PB A, PB C, 1º A | 10/10 | 0,1383 |
+
+**Lo que funcionó:**
+
+- **Coherencia.** Las tres consultas idénticas dieron la misma etapa, el mismo perfil, la misma
+  lista, las mismas tres unidades y el mismo precio (USD 247.582). Cambió la redacción y, en una,
+  el segundo horario («10 o 12» en vez de «10 o 11»). Es lo que el responsable pidió priorizar:
+  *«lo importante mas que el tiempo es la coherencia y la efectividad de la respuesta»*.
+- **Lo que no existe.** A quien buscaba alojamiento mensual, el borrador le dice de frente *«en
+  Casona de los Arcos vendemos unidades, no tenemos alquileres ni alojamiento por mes»*. Al que pidió
+  el PB H le ofrece los 1 dormitorio en planta baja que sí están disponibles.
+- **Lo que no está en la ficha.** El canje por carpintería: *«no te lo puedo confirmar por acá: lo
+  converso con DOMINIA y te aviso»*, con una alerta para separar la negociación de proveedor de la
+  compra.
+- **Primer bloqueo real.** La 09 salió con 124 palabras y el ejecutor la frenó:
+
+  ```text
+  ❌ V10 Menos de 120 palabras en WhatsApp o Instagram — 124 palabras · canal whatsapp
+  Resultado: BLOQUEADA
+  ```
+
+  El asesor tiene que recortarla antes de enviarla. Es la mitigación funcionando: el modelo rompió
+  una regla de formato y el código lo detectó.
+- **La herramienta elige bien el alcance cuando la lista es clara.** De la 05 a la 09 consultó solo
+  `Casona 3`, nunca `todos`. El hallazgo del humo aparece solo cuando la lista está sin asignar,
+  que es lo que el contrato indica.
+
+**Lo que falló o no está bien resuelto:**
+
+1. **Contradicción dentro del playbook sobre el precio en el primer mensaje.** A leads desconocidos
+   que escribieron a las 2 de la mañana, el borrador les da precio y plan completos:
+
+   > Precio de lista USD 247.582, con 40% de anticipo, 40% en 30 cuotas (podés elegir dólares o
+   > pesos ajustados por CAC) y 20% contra entrega
+
+   El modelo siguió la tabla de *qué se muestra* («una unidad ancla que responde a lo que pidió»),
+   pero la T-06 dice *«nunca se da un precio antes de tener el número contra el que se lo quiere
+   comparar»*. Las dos reglas están en el mismo anexo y se contradicen. En lo visible de las
+   capturas, el asesor real contestó sin precio: presentación, contexto del complejo, «disponible en
+   cuotas», cochera y patio.
+2. **La lista se asigna por el botón que tocó, no por cómo paga.** En 05, 06 y 08 se asigna Casona 3
+   porque el mensaje pre-armado dice «Casona III», y la pregunta que se hace es «¿para vivir o como
+   inversión?». La pregunta que define la lista (T-03, «¿cómo pensabas pagarlo?») no se hace. Si esa
+   persona califica a crédito, la T-13 dice que le conviene el terminado, y nadie se lo pregunta.
+3. **Jerga interna filtrada al cliente.** En la 08: *«El PB H no integra el stock a la venta»*. Es el
+   texto del campo `observacion` del tarifario, copiado tal cual. A un cliente se le dice «no está
+   disponible».
+4. **El asesor no se presenta.** Los mensajes reales abren con *«Hola, buen día, cómo estás? Mi
+   nombre es Francisco. El edificio es el último de un complejo cerrado de tres torres…»*. El
+   pedido original decía *«Me quiero presentar como que pueda agregar el nombre el scesor comercial
+   y luego que diga que es asesor comercial de DOMINIA»*. El copiloto solo firma al final.
+5. **Un canal contradice al tarifario.** La página del proyecto tiene un botón de WhatsApp para el
+   PB H, que no se ofrece. No es un problema del copiloto, pero él lo detectó y lo marcó en alertas.
+6. **Un dato real que la ficha no tiene.** El asesor escribió que el PB A tiene *«un patio privado
+   que lo mantiene el consorcio»*. El copiloto no lo sabe; hay que confirmarlo antes de sumarlo.
+
+**La herramienta de audio.** `herramientas/transcribir_audio.py` corre Whisper *small* local: 44
+segundos de audio, 45 de proceso, y el audio no sale de la computadora. Cometió errores que
+cambiaban el sentido (*«Toda es muy buena pérdida con super buen precio»* por «calidad») y se
+corrigieron contra la transcripción de WhatsApp. La transcripción es un paso con revisión humana,
+no una entrada confiable.

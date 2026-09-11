@@ -194,6 +194,9 @@ def verificar(ficha, datos, llamadas):
 
     firma = f"{datos['asesor']}, Asesor Comercial de DOMINIA"
     chequeo("V8", "Firma exacta del asesor", borrador.rstrip().endswith(firma), f"esperada: «{firma}»")
+    primera = borrador.strip().splitlines()[0] if borrador.strip() else ""
+    chequeo("V11", "El asesor se presenta en la primera línea", datos["asesor"] in primera,
+            f"primera línea: «{primera[:80]}»")
 
     preguntas = borrador.count("?")
     chequeo("V9", "Como máximo dos preguntas", preguntas <= 2, f"{preguntas} pregunta(s)")

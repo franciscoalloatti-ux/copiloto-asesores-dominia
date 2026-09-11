@@ -343,3 +343,45 @@ La v2 hace lo mismo que hizo el asesor real en las dos: aceptar la visita y mand
   **viernes** y el 13/9 es **domingo**. El modelo calcula mal el día de la semana a partir de la
   fecha. Ninguno de los diez chequeos lo detecta. Queda para una iteración propia: que el ejecutor
   le pase el calendario y que un chequeo nuevo verifique cada par «día + fecha».
+
+## Iteración 2 · pieza: FORMATO · contrato v2 → v3 · 11/9 17:20
+
+**Qué falló** (v1 y v2). Ningún borrador presentaba al asesor, que era parte del pedido original, y
+todos abrían con la misma fórmula: *«Hola! Todo bien por acá, gracias por escribir»*. El asesor
+real abre así: *«Hola, buen día, cómo estás? Mi nombre es Francisco. El edificio es el último de un
+complejo cerrado de tres torres…»*.
+
+**Qué se cambió** (solo la pieza *formato*): el campo `borrador_mensaje` pasa a tener una estructura
+en seis pasos: saludo y presentación → contexto en una línea (solo primer contacto con cliente) →
+respuesta a lo que preguntó → hasta dos preguntas → próximo paso → firma. Sin fórmulas repetidas ni
+emojis. El ejecutor suma el chequeo **V11**: el nombre del asesor tiene que estar en la primera línea.
+
+La pieza *ejemplos* **no se tocó**, aunque su borrador de ejemplo no tiene presentación. Se quería
+ver cuál de las dos pesaba más.
+
+**Qué cambió en la salida:**
+
+| | Antes | v3 |
+|---|---|---|
+| **01** (colega) · `2026-09-11_1721_…` | *«Hola! Todo bien, gracias por escribir.»* | *«Hola! Francisco, de DOMINIA, por acá.»* · 10/10 + V11 |
+| **06** (cliente) · `2026-09-11_1722_…` | *«Hola! Gracias por escribir.»* | *«Hola, buen día! Soy Francisco, asesor comercial de DOMINIA. / Casona de los Arcos es un complejo cerrado de tres torres en Manantiales I…»* · **BLOQUEADA** |
+
+1. **La presentación funcionó en las dos**, y pesó más la instrucción de formato que el ejemplo sin
+   presentación: el modelo no copió el ejemplo.
+2. **Pero la iteración rompió dos reglas en la 06**, y los chequeos la frenaron:
+
+   ```text
+   ❌ V9 Como máximo dos preguntas — 3 pregunta(s)
+   ❌ V10 Menos de 120 palabras en WhatsApp o Instagram — 125 palabras · canal whatsapp
+   Resultado: BLOQUEADA
+   ```
+
+   - **Largo:** sumar presentación y contexto (unas 35 palabras) a un borrador que ya traía precio y
+     plan completos lo pasó del límite. Las dos piezas compiten por el mismo espacio.
+   - **Preguntas:** el formato dice *«hasta dos preguntas»* y después *«el próximo paso»*. El modelo
+     leyó que la pregunta de la visita no contaba y escribió *«¿Es para vivir o como inversión? ¿Lo
+     decidís solo o con alguien más?»* más *«¿te queda mejor el sábado a las 10 o a las 12?»*. La
+     ambigüedad está en el contrato, no en el modelo.
+
+   Lo que hay que sacar para que entre es el precio y el plan del primer mensaje, que es justamente
+   la iteración 3. Se deja así a propósito para ver si la iteración 3 lo resuelve sola.

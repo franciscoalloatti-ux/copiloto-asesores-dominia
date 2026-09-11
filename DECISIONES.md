@@ -131,3 +131,37 @@ aunquesea»*. Se amplió la búsqueda a **PDFs que el autor o la editorial publi
 (capítulos de muestra, vista previa de Google Books, material de colegios profesionales). Las copias
 subidas sin autorización (Scribd, sitios de descarga, Drives de terceros) siguen excluidas: que un
 PDF sea accesible no quiere decir que su publicación esté autorizada.
+
+### D-09 · Playbook v1: lo que se pudo verificar de los ocho manuales
+
+El subagente de investigación terminó (resultado completo en `conocimiento/fuentes_manuales.md`,
+que **no** se carga en el prompt: es el respaldo). Resultado:
+
+| | Manuales |
+|---|---|
+| **Identificados (5)** | Villarroya, *El cierre de la venta inmobiliaria*; Harkins y Hollihan, *Everybody Wins*; Migliorisi, *El camino del real estate*; Woscoboinik, *Marketing para inmobiliarios*; Tabakman, *Fideicomisos al costo* |
+| **Probable (1)** | *Comunicar para vender* sería de Massimo Forte, en portugués — a confirmar con el responsable |
+| **Sin identificar (2)** | «📓 La Biblia del Real Estate» y «📈 Marca Personal y Cierre de Alto Impacto»: son nombres de cuadernos de NotebookLM, no títulos de libros |
+| **Leídos completos o en muestra oficial** | Migliorisi (PDF gratuito del autor), prólogo y prefacio de *Everybody Wins* (muestra de la editorial), Ley 9445 y Código de Ética del Colegio de Corredores de Córdoba |
+
+Tres correcciones que salieron de verificar en vez de suponer:
+
+1. **Everybody Wins no es de Dave Liniger.** Lo escribieron Phil Harkins y Keith Hollihan; Liniger
+   firma el prólogo. El pedido original lo atribuía a él.
+2. **Everybody Wins no es un manual de técnica de venta**: es un libro de cultura y estrategia de
+   RE/MAX. Aporta dos ideas (la satisfacción del comprador como base del éxito del agente, y la
+   marca única en todos los canales), no técnicas de conversación.
+3. **De Woscoboinik solo se verificó el índice.** Se usa como tema («el precio se funda en la
+   tasación»), no como técnica atribuida.
+
+Qué cambió en `conocimiento/playbook.md` (pieza **contexto**, anexo del system prompt): diez
+técnicas nuevas (T-17 a T-26), entre ellas **T-19 «¿es un fideicomiso?»** y **T-20 «¿qué garantías
+tengo?»**, que salen del contexto nuevo de D-07. La restricción 6 del system prompt ya prohibía
+prometer lo que no está en la ficha; ahora la ficha no nombra el seguro del art. 2071 ni la fecha
+cierta del boleto, porque **DOMINIA no los confirmó**, así que el copiloto no puede usarlos como
+garantía. El chequeo V7 del ejecutor suma las frases de urgencia artificial («últimas unidades»,
+«decidí hoy») y las garantías no confirmadas.
+
+Quedan cuatro preguntas para DOMINIA / legal antes de que el copiloto pueda usarlas: si Casona 3
+tiene el seguro del art. 2071 CCyC, si el boleto tiene fecha cierta, cómo se calcula la cuota en
+pesos ajustada por CAC y la base legal de ese ajuste en un contrato en dólares.

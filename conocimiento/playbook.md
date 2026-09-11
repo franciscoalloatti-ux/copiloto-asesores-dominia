@@ -1,89 +1,139 @@
 # Playbook comercial — técnicas que aplica el copiloto
 
-> **Versión 0 (11/9/2026).** Técnicas destiladas de la Academia Casona (formación interna de
-> DOMINIA), que a su vez se apoya en bibliografía clásica de ventas y negociación. Cada técnica
-> tiene un código (`T-..`) para que el copiloto la cite en la ficha, y su fuente.
->
-> **Pendiente para la versión 1:** incorporar los manuales de referencia que pidió el responsable
-> (ver `DECISIONES.md`). Ninguna técnica se atribuye a un libro que no se haya podido verificar.
+> **Versión 1 (11/9/2026).** Técnicas de la Academia Casona (formación interna de DOMINIA) más las
+> que se pudieron verificar en los manuales de referencia. Cada técnica tiene un código `T-..` para
+> que el copiloto la cite en la ficha, y su fuente. El respaldo completo de cada fuente —URL, fecha
+> de consulta y qué no se pudo verificar— está en `conocimiento/fuentes_manuales.md`.
 
 ## Principio rector
 
-**El objetivo de cada mensaje escrito es conseguir la visita, no cerrar la venta por chat.** Un
-precio contestado solo cierra la conversación; una pregunta la abre. En la visita se muestra lo
-entregado, y lo entregado es la mejor prueba que tiene este proyecto.
+**El objetivo de cada mensaje escrito es un avance concreto —la visita con día y hora—, no el
+cierre.** En una venta grande como un inmueble, el cierre llega después de varias entrevistas; por
+escrito se gana el derecho a la siguiente. *(Villarroya, El cierre de la venta inmobiliaria; Keller,
+The Millionaire Real Estate Agent: leads → citas → contratos)*
+
+## Los manuales y qué se tomó de cada uno
+
+| Manual (como lo nombró el responsable) | Obra verificada | Qué se usó |
+|---|---|---|
+| El cierre de la venta inmobiliaria | M. Villarroya Martín (Finis Terrae, 2016) | Avance vs. cierre, cierre condicional, sin «cierre mágico», confirmar la visita |
+| Everybody Wins | P. Harkins y K. Hollihan (Wiley, 2005); **Dave Liniger escribe solo el prólogo** | Satisfacción del comprador, marca única en todos los canales |
+| Comunicar para vender | Probablemente M. Forte (Portugal, 2017, en portugués) — **a confirmar** | Precalificar conversando, no negociar en el primer contacto, temperatura del lead |
+| El camino del Real Estate Argentino | D. Migliorisi (ed. del autor, 2025; PDF gratuito del autor, leído) | Decir los contras, no adornar, «¿qué garantías tengo en pozo?» |
+| Marketing para Inmobiliarios | G. Woscoboinik (Ugerman, 2.ª ed.) — **solo índice verificado** | Precio fundado ante «está caro» (tema del libro, no su técnica) |
+| Fideicomisos al costo | D. Tabakman (dir.) (BRE, 2011), vía tesis UFLO que lo cita | Diferencia fideicomiso / boleto, no vender la figura como garantía |
+| 📓 La «Biblia» del Real Estate | **No identificado** (cuaderno de NotebookLM). Candidato: Keller, *MREA* | Solo principios de MREA atribuidos a MREA, no a «la Biblia» |
+| 📈 Marca Personal y Cierre de Alto Impacto | **No identificado** | Nada: no se atribuye ninguna técnica |
+
+Además, con la misma jerarquía que los manuales: **Ley 9445 y Código de Ética del Colegio de
+Corredores Públicos Inmobiliarios de Córdoba** (PDF del propio Colegio).
 
 ## Etapas del camino del comprador
 
-| Etapa | Cómo se reconoce | Objetivo del próximo mensaje |
-|---|---|---|
-| `explorando` | Pregunta genérica («precio», «info»), sin datos propios | Ganarse el derecho a asesorar: 1 o 2 preguntas de calificación |
-| `comparando` | Menciona otros proyectos, pide el precio por m², pide la lista | Cambiar el marco de comparación sin desacreditar a nadie |
-| `calificado` | Ya se conocen uso, plazo y forma de pago | Proponer 1 a 3 unidades concretas y la visita |
-| `listo_para_visita` | Pide dirección u horarios, o dice que quiere verlo | Cerrar día y hora, con los dos decisores |
-| `post_visita_negociacion` | Ya visitó; pide descuento, condiciones o tiempo | Buscar el interés detrás del pedido; el precio es lo último |
+| Etapa | Cómo se reconoce | Temperatura | Objetivo del próximo mensaje |
+|---|---|---|---|
+| `explorando` | Pregunta genérica («precio», «info»), sin datos propios | fría | Ganarse el derecho a asesorar: 1 o 2 preguntas de calificación |
+| `comparando` | Menciona otros proyectos, pide precio por m² o la lista | tibia | Cambiar el marco de comparación sin desacreditar a nadie |
+| `calificado` | Ya se conocen uso, plazo y forma de pago | tibia o caliente | Proponer 1 a 3 unidades concretas y la visita |
+| `listo_para_visita` | Pide dirección u horarios, o dice que quiere verlo | caliente | Cerrar día, hora y lugar, con los decisores |
+| `post_visita_negociacion` | Ya visitó; pide descuento, condiciones o tiempo | caliente | Buscar el interés detrás del pedido; el precio es lo último |
+
+*(Temperatura: Forte, blog del autor, «cliente comprador ou interessado»)*
 
 ## Técnicas
 
 ### Calificar antes de cotizar
 
-- **T-01 · No cotizar de entrada.** Ante «¿precio?» sin contexto, se responden **dos preguntas
-  cortas con el motivo dicho**: «para no mandarte información que no te sirve». Nunca más de dos
-  preguntas por mensaje: un interrogatorio también espanta. *(Academia Casona, «Por qué no se
-  cotiza de entrada»)*
-- **T-02 · Los seis datos.** Antes de agendar hay que saber: uso, plazo, capital disponible hoy,
-  origen de los fondos, quién decide y qué otras opciones mira. No se preguntan todos juntos: se
-  completan a lo largo de la conversación. *(Academia Casona, «Los seis datos»)*
-- **T-03 · La pregunta que define la lista.** «¿Cómo pensabas financiarlo?» separa al comprador
-  de Casona 2 (crédito o contado, quiere mudarse) del de Casona 3 (plan en cuotas, no califica a
-  crédito o busca una tipología que no hay en terminado). *(Academia Casona, «Tenés dos productos»)*
-- **T-04 · El trabajo que tiene que hacer el departamento.** «¿Qué te llevó a empezar a mirar
-  ahora?» devuelve el motivo real (se le vence el alquiler, nació un hijo, lo trasladaron) y la
-  urgencia. *(Christensen, Jobs to be Done, vía Academia Casona)*
+- **T-01 · No cotizar de entrada.** Ante «¿precio?» sin contexto, dos preguntas cortas con el
+  motivo dicho: «para no mandarte información que no te sirve». *(Academia Casona)*
+- **T-02 · Los seis datos.** Uso, plazo, capital disponible hoy, origen de los fondos, quién decide
+  y qué otras opciones mira. Se completan a lo largo de la conversación, **una o dos preguntas por
+  mensaje**: conversación, no interrogatorio. *(Academia Casona; Forte, blog del autor)*
+- **T-03 · La pregunta que define la lista.** «¿Cómo pensabas pagarlo?» separa al comprador de Casona 2
+  (crédito o contado, quiere mudarse) del de Casona 3 (plan en cuotas, no califica a crédito o busca
+  una tipología que no hay en terminado). *(Academia Casona)*
+- **T-04 · El trabajo que tiene que hacer el departamento.** «¿Qué te llevó a empezar a mirar ahora?»
+  devuelve el motivo real y la urgencia. *(Christensen, Jobs to be Done, vía Academia Casona)*
+- **T-17 · Responder a la persona antes que a la consulta.** Retomar lo que escribió (se muda con su
+  pareja, alquila en tal barrio) antes de dar un dato. *(Forte, descripción del libro)*
 
 ### Conversación
 
-- **T-05 · SPIN.** Situación → Problema → Implicancia → Necesidad-beneficio. Por escrito se
-  trabajan solo los dos primeros; la implicancia se hace en la visita. *(Rackham, SPIN Selling,
-  vía Academia Casona)*
-- **T-06 · La implicancia como pregunta.** Si el interesado alquila: alquiler × 36 meses,
-  devuelto como pregunta, nunca como conclusión. Nunca se da un precio antes de tener el número
-  contra el que se quiere que lo comparen. *(Rackham; Academia Casona, «La pregunta de implicancia»)*
-- **T-07 · Contra qué se compite.** La alternativa real del comprador casi nunca es otro
-  emprendimiento: es seguir alquilando o dejar la plata quieta. *(Fisher y Ury, BATNA, vía
-  Academia Casona)*
-- **T-08 · Quién decide.** Se pregunta temprano, no al final. La visita se arma con todos los
-  decisores. *(Academia Casona, «Quién decide de verdad»)*
+- **T-05 · SPIN.** Situación → Problema → Implicancia → Necesidad-beneficio. Por escrito se trabajan
+  los dos primeros; la implicancia se hace en la visita. *(Rackham, vía Academia Casona; Villarroya
+  adapta SPIN a la venta inmobiliaria)*
+- **T-06 · La implicancia como pregunta.** Alquiler × 36 meses, devuelto como pregunta. Nunca se da
+  un precio antes de tener el número contra el que se lo quiere comparar. *(Academia Casona)*
+- **T-07 · Contra qué se compite.** La alternativa real casi nunca es otro emprendimiento: es seguir
+  alquilando o dejar la plata quieta. *(Fisher y Ury, vía Academia Casona)*
+- **T-08 · Quién decide.** Se pregunta temprano; la visita se arma con todos los decisores.
+  *(Academia Casona)*
+- **T-18 · Decir los contras antes de que los descubra.** Lo que la unidad no tiene o lo que falta
+  definir se dice de entrada: atrae al cliente correcto y cuida la confianza. No adornar una
+  respuesta si no hay certeza: «lo confirmo y te aviso». *(Migliorisi, cap. 6 «El valor de la
+  palabra»; Forte, blog del autor)*
 
 ### Objeciones y negociación
 
-- **T-09 · Validar → buscar el interés → reencuadrar → probar.** Una objeción es información y
-  casi siempre señal de interés. Primero una pregunta; la respuesta viene después. *(Academia
-  Casona, «Qué es una objeción en realidad»)*
-- **T-10 · Intereses, no posiciones.** «¿Me hacés un descuento?» es una posición; detrás suele
-  estar el efectivo inicial, el miedo a la cuota o un decisor que no está convencido. Se negocia
-  con estructura de pago, no con precio. *(Fisher y Ury, Getting to Yes, vía Academia Casona)*
-- **T-11 · El descuento no se ofrece: se guarda.** Nunca aparece en un mensaje escrito. *(Academia
-  Casona, «El pedido de descuento»)*
-- **T-12 · «¿Y si se para la obra?»** Se responde con hechos verificables y una invitación a
-  comprobarlos (Casona 1 vendida en su totalidad, Casona 2 con 20 de 28 vendidas, Casona 3 cierra el
-  complejo), nunca con «somos serios» ni con una garantía. *(Academia Casona, «Las cuatro más
-  frecuentes»)*
-- **T-13 · Recomendar lo que menos factura.** Si alguien que califica a crédito pide Casona 3, el
-  asesor le dice que el terminado le conviene. Es la estrategia que más factura a doce meses.
-  *(Venta consultiva, vía Academia Casona)*
+- **T-09 · Validar → buscar el interés → reencuadrar → probar.** Primero una pregunta; la respuesta
+  viene después. *(Academia Casona)*
+- **T-10 · Intereses, no posiciones.** Detrás de «¿me hacés un descuento?» suele estar el efectivo
+  inicial, el miedo a la cuota o un decisor no convencido. Se negocia con estructura, no con precio.
+  **Nunca se negocian precio ni condiciones en el primer contacto escrito.** *(Fisher y Ury, vía
+  Academia Casona; Forte, blog del autor)*
+- **T-11 · El descuento no se ofrece: se guarda.** Nunca aparece en un mensaje escrito. *(Academia Casona)*
+- **T-12 · «¿Y si se para la obra?»** Hechos verificables e invitación a comprobarlos (Casona 1
+  vendida en su totalidad, Casona 2 con 20 de 28 vendidas, Casona 3 cierra el complejo), nunca «somos
+  serios» ni una garantía. *(Academia Casona)*
+- **T-13 · Recomendar lo que le conviene aunque facture menos.** El éxito del asesor se apoya en la
+  satisfacción del comprador: queda bien atendido aunque hoy no compre. *(Venta consultiva, vía
+  Academia Casona; Harkins y Hollihan, Everybody Wins, prefacio)*
+- **T-19 · «¿Es un fideicomiso?»** «No» en la primera línea; después qué es (boleto de compraventa,
+  precio fijado en dólares, financiación durante la obra) y la diferencia en una frase (en un
+  fideicomiso al costo el comprador paga lo que la obra termine costando). Si elige pesos, «la cuota
+  se actualiza por el índice CAC», sin estimar cuánto. No se desacredita a los fideicomisos.
+  *(Tabakman, vía tesis UFLO; Código de Ética CPI Córdoba)*
+- **T-20 · «¿Qué garantías tengo?»** Es la pregunta central de quien compra en pozo. Se responde con
+  los hechos confirmados de la ficha y con la invitación a ver el **modelo de boleto y el plan de
+  pagos en la visita**. Nunca se nombran como garantía el seguro, la fecha cierta del boleto ni su
+  inscripción: DOMINIA no los confirmó. Las preguntas legales las responde el asesor con legal.
+  *(Migliorisi, cap. 6)*
+- **T-21 · No desacreditar a nadie.** Ni a otros proyectos, ni a otros desarrollistas, ni a los
+  fideicomisos. *(Código de Ética CPI Córdoba, art. 1 b) y c))*
 
 ### Cierre hacia la visita
 
-- **T-14 · Todo mensaje termina con un próximo paso con fecha.** «Cualquier cosa me escribís» es un
-  lead que se cae. *(Academia Casona, «Cerrar hacia la visita»)*
-- **T-15 · Dos horarios, no una pregunta abierta.** «¿Te queda mejor el sábado a las 10 o a las
-  11?» convierte una decisión difícil en una fácil. *(Academia Casona)*
-- **T-16 · Orden de la visita.** Edificios entregados → amenities en uso → 2° F amoblado → la
-  unidad → recién al final la obra de Casona 3. *(Academia Casona, «El recorrido en el orden
-  correcto»)*
+- **T-14 · Todo mensaje termina con un próximo paso.** «Cualquier cosa me escribís» es un lead que se
+  cae. *(Academia Casona; Forte, blog del autor: guiar, no dejarse guiar)*
+- **T-15 · Dos horarios, no una pregunta abierta.** «¿Te queda mejor el sábado a las 10 o a las 11?»
+  *(Academia Casona)*
+- **T-22 · Cierre condicional suave.** «Si el plan de pagos te cierra, ¿lo vemos el jueves o el
+  sábado?» antes que un cierre que da por hecha la decisión. *(Villarroya)*
+- **T-23 · Sin presión ni urgencia artificial.** Nada de «últimas unidades, decidí hoy» ni fórmulas
+  de cierre enlatadas: en una venta grande son peligrosas y el comprador en pozo las lee como alerta.
+  Un dato cierto (quedan 8 unidades en Casona 2) se dice como dato, no como ultimátum. *(Villarroya,
+  «el cierre mágico»)*
+- **T-24 · Concertar y confirmar.** Al agendar: día, hora, dirección y qué se va a ver, con aviso de
+  que se confirma el día anterior. *(Villarroya, artículo del autor)*
+- **T-16 · Orden de la visita.** Edificios terminados → amenities → 2° F amoblado → la unidad →
+  recién al final la obra de Casona 3. *(Academia Casona)*
+
+### Marca y colegas
+
+- **T-25 · Mismos datos en todos los canales.** El precio y las condiciones que se escriben por
+  WhatsApp son los mismos que en los portales, Instagram y lo que reciben las inmobiliarias. La
+  marca DOMINIA pesa más que el estilo de cada asesor. *(Código de Ética CPI Córdoba, art. 1 a) inc.
+  6; Harkins y Hollihan, Everybody Wins)*
+- **T-26 · Con inmobiliarias colegas.** Información completa y ordenada para que puedan llevar a su
+  cliente, cumplir lo que se compromete por escrito, y los honorarios se acuerdan aparte con el
+  asesor. *(Código de Ética CPI Córdoba, art. 1 c))*
 
 ## Reglas para mensajes escritos (qué se muestra y qué no)
+
+**Lo que se escribe queda y puede obligar a DOMINIA**: la publicidad y la información dada por
+escrito integran la oferta. Por eso no se escribe nada que no esté en la ficha o en el tarifario.
+*(Ley 9445 art. 16 y Código de Ética CPI Córdoba; jurisprudencia de Córdoba citada en
+`fuentes_manuales.md`)*
 
 | Se muestra | No se muestra |
 |---|---|
@@ -91,4 +141,5 @@ entregado, y lo entregado es la mejor prueba que tiene este proyecto.
 | El diferencial que le importa a esa persona (DVH, jardín, canal de nado, plan en pesos) | Descuentos, márgenes o comisiones |
 | La forma de pago de **su** lista | La comparación de precio entre terminado y pozo |
 | La invitación a la visita con dos horarios | Promesas: fecha de entrega cerrada, aprobación de crédito, rentabilidad, expensas que bajan |
-| Las expensas si las pregunta, dichas como quien informa | Adjetivos que la visita puede desmentir («olímpica», «el mejor de Córdoba») |
+| Las expensas si las pregunta, dichas como quien informa | Garantías no confirmadas (seguro, fecha cierta, inscripción del boleto) y opiniones legales |
+| Un contra relevante, dicho antes de que lo descubra | Adjetivos que la visita puede desmentir («olímpica», «el mejor de Córdoba») y urgencia artificial |

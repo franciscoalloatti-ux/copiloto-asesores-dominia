@@ -186,8 +186,11 @@ def verificar(ficha, datos, llamadas):
     chequeo("V6", "El borrador no menciona descuentos ni comisiones", not prohibidas, ", ".join(prohibidas))
 
     promesas = [p for p in ("garantiz", "te aseguro", "sin dudas", "se revaloriza", "rentabilidad asegurada",
-                            "olímpica", "semiolímpica") if p in borrador.lower()]
-    chequeo("V7", "El borrador no promete lo que no se puede cumplir", not promesas, ", ".join(promesas))
+                            "olímpica", "semiolímpica", "seguro de caución", "fecha cierta",
+                            "últimas unidades", "última unidad", "solo por hoy", "decidí hoy")
+                if p in borrador.lower()]
+    chequeo("V7", "El borrador no promete lo que no se puede cumplir ni mete urgencia artificial",
+            not promesas, ", ".join(promesas))
 
     firma = f"{datos['asesor']}, Asesor Comercial de DOMINIA"
     chequeo("V8", "Firma exacta del asesor", borrador.rstrip().endswith(firma), f"esperada: «{firma}»")

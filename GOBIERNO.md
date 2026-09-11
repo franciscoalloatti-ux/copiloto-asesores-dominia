@@ -24,6 +24,7 @@ envía el asesor, con su nombre.
 | API de Anthropic | Llamadas con la API key del responsable | La key vive en `~/.anthropic-key` o en `ANTHROPIC_API_KEY`, **fuera del repositorio**; el ejecutor nunca la imprime ni la guarda en las corridas. Lo que sale de la máquina es el texto de la consulta y los anexos |
 | Audio del interesado | **Local**: `herramientas/transcribir_audio.py` corre Whisper en la computadora | El audio no sale de la máquina; solo el texto transcripto, revisado, entra a la consulta |
 | `corridas/` | **Escritura**, solo archivos locales nuevos | Cada corrida se guarda completa y no se sobrescribe |
+| Tarea programada de Windows «Copiloto DOMINIA - Paquete colegas» | Corre con el usuario del responsable, el día 1 de cada mes a las 9:00, solo con la sesión iniciada | Ejecuta `herramientas/paquete_mensual.bat`: escribe el paquete en `corridas/paquete_colegas/AAAA-MM/`, muestra un aviso y abre la carpeta. **No envía nada ni llama a la API.** Se ve y se borra desde el Programador de tareas de Windows |
 | WhatsApp, Instagram, portales, CRM, correo | **Ninguno** | No hay conector. El asesor copia el borrador y lo envía él |
 
 ## Modos de falla: qué pasa y qué se hace
@@ -46,6 +47,9 @@ Cada fila salió de una corrida real o de una regla de negocio con consecuencia 
 | 11 | **Borrador fuera de formato** (largo, más de dos preguntas, sin firma) | Mensaje que no se lee o que interroga | **V8–V11** (líneas 217–245). **Implementada**; en la corrida 09 frenó un borrador de 124 palabras |
 
 | 12 | **La API deja de responder** (11/9 17:45: *«Your credit balance is too low to access the Anthropic API»*) | Los asesores se quedan sin copiloto en medio de una tanda | El ejecutor guarda la corrida con el error y costo 0, sin inventar salida. **El asesor responde a mano, como antes del copiloto**, y el responsable configura una alerta de saldo en la consola de Anthropic. Lo que no se puede es que el copiloto sea el único camino para responder |
+
+| 13 | **Paquete mensual con disponibilidad vieja**: se le manda a los colegas una unidad que ya se vendió | El colega la ofrece, el cliente la quiere y no existe: queda mal DOMINIA y queda mal el colega | **K1** en `sistema/paquete_colegas.py`: si el tarifario tiene más de 35 días, el paquete sale **«REVISAR ANTES DE ENVIAR»** y pide actualizar la planilla interna. **Implementada** |
+| 14 | **El modelo cuenta mal** (plan de octubre: «14 de 2 dormitorios y 9 de 3» cuando son 15 y 8) | Un plan o un mensaje con stock equivocado | Los conteos que se mandan a colegas los hace el código (paquete mensual); el contrato del módulo 2 prohíbe contar de memoria. **Parcial**: la regla del contrato no se pudo probar |
 
 **Cuando algún chequeo falla**, la corrida queda marcada **«BLOQUEADA: corregir antes de enviar»**
 en el archivo y en la consola. El asesor no la envía hasta corregir la regla que falló.

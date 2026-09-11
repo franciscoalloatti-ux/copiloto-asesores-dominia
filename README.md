@@ -25,7 +25,10 @@ conseguir la visita. **El agente nunca le escribe al cliente**: el asesor revisa
 con su firma. Es para los asesores comerciales de DOMINIA y las inmobiliarias que venden el proyecto.
 
 Un segundo módulo arma el **plan mensual de ventas y publicaciones**: lee el registro de consultas
-que dejó el primero y el stock, y propone qué unidades empujar, por qué canal y con qué mensaje.
+que dejó el primero y el stock, y propone qué unidades empujar, por qué canal y con qué mensaje. Y
+el día 1 de cada mes, una **tarea programada** arma el **paquete para inmobiliarias colegas**: las
+dos listas actualizadas por separado, el brochure, la disponibilidad y el mensaje, listo para que el
+asesor lo revise y lo mande.
 
 Nivel de delegación: **L2 — ejecuta con revisión**. Responsable del sistema: **Francisco Alloatti,
 responsable general de DOMINIA**.
@@ -121,6 +124,9 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
   preguntas, largo). Si una falla, la corrida queda **BLOQUEADA** y el asesor no la envía.
 - **La transcripción de audios**, local (`herramientas/transcribir_audio.py`, Whisper).
 - **El módulo 2**: `sistema/plan_mensual.py`, con su contrato en `prompts/variantes/`.
+- **El paquete mensual para colegas**: `sistema/paquete_colegas.py`, sin API, con la tarea programada
+  de Windows «Copiloto DOMINIA - Paquete colegas» (día 1 de cada mes, 9:00). Probado el 11/9: generó
+  `corridas/paquete_colegas/2026-09/` y el aviso en pantalla.
 
 **Lo que se probó y anduvo**, con consultas reales anonimizadas de WhatsApp (`entradas/`):
 
@@ -162,6 +168,10 @@ python sistema/copiloto.py entradas/consulta-06.md
 python sistema/plan_mensual.py --mes 2026-10 --desde 2026-06-01 --hasta 2026-09-11
 ```
 
+```bash
+python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
+```
+
 ## Qué falta o qué falló
 
 - **La comparación de modelos no se hizo.** El 11/9 a las 17:45 se terminó el crédito de la API y
@@ -170,9 +180,13 @@ python sistema/plan_mensual.py --mes 2026-10 --desde 2026-06-01 --hasta 2026-09-
   corre con Opus 5, el más caro de los tres, y no hay una prueba de que uno más chico no alcance.
 - **Las corridas finales 07, 08, 09 y las de coherencia** quedaron sin repetir con el contrato
   vigente por la misma razón. Sus versiones con el contrato v1 están en `corridas/`.
-- **El plan de octubre salió bloqueado**, y no está resuelto: la jornada con colegas entrega las dos
-  listas en la misma acción, lo que el propio módulo prohíbe. Además, el chequeo que lo detectó
-  también marcó una pieza correcta: un control por palabras no distingue *mencionar* de *ofrecer*.
+- **El plan de octubre salió bloqueado.** Una de las dos piezas marcadas, la jornada con colegas
+  que entrega las dos listas, se resolvió con la decisión D-13 (a los colegas se les mandan las dos,
+  por separado). La otra es un falso positivo del chequeo, que se dejó así a propósito: un control
+  por palabras no distingue *mencionar* de *ofrecer*.
+- **El plan contó mal el stock**: *«14 unidades de 2 dorm y 9 de 3»* en Casona 3, cuando son 15 y 8.
+  Ningún chequeo lo vio; se descubrió cuando el paquete mensual hizo la cuenta en código. La regla
+  nueva del contrato (*«No cuentes unidades de memoria»*) no se pudo probar sin crédito.
 - **Lo que ningún chequeo mide**: si una respuesta sirve. Las cuatro primeras corridas pasaron los
   diez chequeos de entonces, y una de ellas le proponía a un colega *«¿lo corremos a las 16?»* cuando
   ya tenía la visita confirmada para las 12:30. Se encontró comparando contra lo que respondió el

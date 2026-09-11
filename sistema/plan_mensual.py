@@ -117,6 +117,8 @@ def verificar(plan, llamadas, desde, hasta):
             f"no existen: {sorted(citadas - ids)}" if citadas - ids else f"{len(citadas)} consulta(s) citada(s)")
     mezcla, fuera = [], []
     for i, p in enumerate(plan["publicaciones"], 1):
+        if p["canal"] == "inmobiliarias":
+            continue  # excepción D-13: a los colegas se les mandan las dos listas, por separado
         texto = f"{p['pieza']} {p['foco']} {p['mensaje_clave']}"
         otro = r"Casona\s*(3|III)" if p["lista"] == "casona_2_terminados" else r"Casona\s*(2|II)\b"
         if re.search(otro, texto):

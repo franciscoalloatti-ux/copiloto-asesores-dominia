@@ -591,5 +591,58 @@ desde las corridas guardadas, sin llamar a ninguna API): para cada consulta real
 respondió el asesor, el borrador del copiloto en cada versión del contrato, la ficha, los doce
 chequeos y el costo, más el plan de octubre. Se abre en cualquier navegador desde el repositorio.
 
+### D-13 · Paquete mensual para colegas, con tarea programada (11/9, 19:00)
+
+El responsable propuso, sobre la jornada con colegas del plan de octubre:
+
+> Esta muy buena la idea es mas hay que poner recordatorios mensuales donde se vuelva a mandar la
+> info de listas de precis brochure de venta y disponibilidades
+
+y al preguntarle si a los colegas se les mandan las dos listas:
+
+> dale si mando todos los meses todo junto pero actualizado que sea el mismo agente el que
+> entregamos como final
+
+**Qué se decidió y qué se construyó:**
+
+1. **Excepción de lista única, solo para colegas.** Todos los meses reciben las dos listas **en
+   archivos separados**, el brochure y la disponibilidad, con el pedido escrito de mostrarle a cada
+   cliente solo la que le corresponde. La lista única se sigue cuidando frente al comprador final.
+   Queda en la restricción 1 del módulo 2 (v2). **El contrato del módulo 1 no se tocó**: la
+   respuesta a una consulta de un colega sigue siendo la lista que pide, que es lo que se probó en
+   las corridas.
+2. **`sistema/paquete_colegas.py`**, parte del mismo sistema: arma las dos listas en HTML imprimible
+   (Casona 3 con anticipo, cuota y saldo de cada unidad, que es el «excel en formato de lista» que
+   pidió el responsable en D-10), el mensaje para los colegas y cuatro chequeos. El más importante es
+   **K1**: si el tarifario tiene más de 35 días, avisa que hay que actualizar la planilla interna,
+   porque *«actualizado»* depende de que alguien cargue las ventas del mes. No usa la API.
+3. **Tarea programada de Windows** «Copiloto DOMINIA - Paquete colegas»: el día 1 de cada mes a las
+   9:00 genera el paquete, muestra un aviso y abre la carpeta. No envía nada (L2).
+
+**La tarea falló en el primer intento**, con este resultado de `schtasks`:
+
+```text
+Último resultado:                                      -2147024894
+      <Command>D:\PROYECTO</Command>
+      <Arguments>CON AGENTES\copiloto-asesores-dominia\herramientas\paquete_mensual.bat</Arguments>
+```
+
+`-2147024894` es «archivo no encontrado»: PowerShell le sacó las comillas a la ruta y Windows la
+cortó en el primer espacio de «PROYECTO CON AGENTES». Se volvió a crear pasando el comando por
+`cmd /c` con las comillas escapadas, y la prueba manual generó `corridas/paquete_colegas/2026-09/`
+(log: *«Paquete de septiembre 2026 … listo para revisar»*). Próxima ejecución: 1/10/2026 a las 9:00.
+
+**Con esto se resuelve la falla de la jornada** (P3, pieza #12 del plan de octubre): una acción con
+colegas puede llevar las dos listas. P3 ahora exceptúa el canal `inmobiliarias`; reverificada la
+misma salida sin llamar al modelo, **queda solo el falso positivo de la #7**.
+
+**Y el paquete destapó un error del plan que ningún chequeo había visto.** El diagnóstico del plan de
+octubre dice que en Casona 3 hay *«4 monoambientes/1 dorm … 14 unidades de 2 dorm y 9 de 3 dorm»*.
+El paquete, que cuenta en código desde el tarifario, da **4 de 1 dormitorio, 15 de 2 y 8 de 3**. El
+modelo contó mal y llamó «monoambientes» a departamentos de un dormitorio. Es la misma lección del
+día de la semana (iteración 5): **lo que se cuenta, se cuenta en código**. Se agregó al contrato del
+módulo 2 (*«No cuentes unidades de memoria»*), pero **sin corrida que lo pruebe**, porque no hay
+crédito (D-12).
+
 En total se gastaron **USD 4,94** en la API (suma de las 28 corridas con costo registrado): humo, 26 corridas de consultas exitosas, el plan de
 octubre y las re-corridas de las cinco iteraciones.

@@ -9,9 +9,9 @@
 |---|---|
 | `prompts/` | El contrato: `system_prompt.md` y `user_prompt.md` (módulo 1) y `variantes/` (módulo 2) |
 | `corridas/` | Las ejecuciones reales: entrada, llamadas a la herramienta, salida, chequeos, tokens, costo y fecha |
-| `DECISIONES.md` | La historia: once decisiones y cinco iteraciones, cada una con su error textual |
+| `DECISIONES.md` | La historia: trece decisiones y cinco iteraciones, cada una con su error textual |
 | `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
-| `GOBIERNO.md` | Permisos, doce modos de falla con su mitigación, control humano y firma |
+| `GOBIERNO.md` | Permisos, catorce modos de falla con su mitigación, control humano y firma |
 | `visor/index.html` | **Para mirar sin leer los .md**: abrilo en el navegador y elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
 
 ## Qué construí

@@ -95,6 +95,11 @@ constructor; dos fueron la elección de una opción)
 
 > es un espacio comun de uso exclusivo quiere decir que lo usas vos pero lo mantiene el consorcio. Si hemos aceptado canjes. Exactamente ese libro
 
+**8 · Qué aprendí, y un pedido nuevo** (acompañado del brochure de Casona 3 en PDF)
+
+> lo que aprendi es la importancia de decirlo que no tiene que hacer el agente y lo importante de correr varias veces por los cambios generados en visitas confirmadas. Pensar el proceso del agente me ayudo a organizar mi propio proceso de venta y de la importancia de registrar cada proceso.
+> Esta muy buena la idea es mas hay que poner recordatorios mensuales donde se vuelva a mandar la info de listas de precis brochure de venta y disponibilidades
+
 Se omiten los mensajes de logística (iniciar sesión en GitHub, abrir el navegador). Qué hizo el
 agente constructor con cada pedido, y qué se decidió distinto de lo pedido (por ejemplo, no
 descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
@@ -179,18 +184,14 @@ python sistema/plan_mensual.py --mes 2026-10 --desde 2026-06-01 --hasta 2026-09-
 
 ## Qué aprendí
 
-_Borrador preparado a partir del proceso; el responsable lo revisa y lo reescribe con sus palabras._
-
-- **La pieza que más movió la efectividad fueron las restricciones, no la tarea.** Una sola regla
-  nueva («la visita ya propuesta se confirma») cambió una respuesta que perdía una visita por una que
-  la confirmaba. La tarea estaba bien desde la versión 1.
-- **Las piezas del contrato no son independientes.** Agregar la presentación (formato) rompió el
-  límite de largo (restricciones); sacar el precio (contexto) liberó espacio y el modelo lo volvió a
-  llenar. El largo de un mensaje se reparte entre piezas, y alguien tiene que fijar el total.
-- **Lo que es caro de equivocar va en código, no solo en el prompt.** El modelo calculaba mal el día
-  de la semana; ahora el calendario lo hace el programa y un chequeo lo verifica. Lo mismo con los
-  precios y la lista única.
-- **Guardar lo que hizo el humano real fue lo más útil del diseño.** Sin eso, los chequeos en verde
-  decían que todo andaba bien.
-- **Verificar en vez de suponer**, también con lo que uno cree saber: *Everybody Wins* no es de
-  Liniger, el jardín de planta baja no es «privado», y Casona 3 no es un fideicomiso.
+- **La importancia de decirle al agente lo que no tiene que hacer.** La pieza que más cambió los
+  resultados fueron las **restricciones**: con una sola regla nueva («si ya propusieron día y hora,
+  se confirma») el copiloto dejó de proponerle a un colega mover una visita que ya estaba confirmada
+  (corrida 03, iteración 1).
+- **Lo importante de correr varias veces.** Cada cambio arreglaba algo y movía otra cosa: después de
+  arreglar las visitas confirmadas y agregar mi presentación, los mensajes se pasaron de largo y
+  tuve que volver a correr y ajustar. Con una sola corrida no lo hubiera visto.
+- **Pensar el proceso del agente me ayudó a organizar mi propio proceso de venta**: a quién le
+  muestro qué lista, cuándo doy el precio y cuándo no, cómo le hablo a un colega y cómo a un cliente.
+- **La importancia de registrar cada proceso.** Guardar lo que respondí yo en cada consulta real fue
+  lo que me permitió ver dónde fallaba el agente aunque pasara todos los controles.

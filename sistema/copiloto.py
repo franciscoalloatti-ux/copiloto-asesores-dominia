@@ -17,7 +17,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 import anthropic
@@ -120,6 +120,25 @@ def leer_entrada(ruta):
     return texto, datos
 
 
+DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+
+
+def fecha_consulta(datos):
+    """La fecha de la consulta como date, o None si la entrada no la trae completa."""
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", datos["fecha"])
+    return date(int(m[1]), int(m[2]), int(m[3])) if m else None
+
+
+def calendario(datos):
+    d = fecha_consulta(datos)
+    if d is None:
+        return "(no hay fecha exacta de la consulta: no propongas días con fecha, solo días de la semana)", "fecha no disponible"
+    dias = [d + timedelta(days=i) for i in range(9)]
+    lineas = [f"- {DIAS[x.weekday()]} {x.day}/{x.month}/{x.year}" + (" (día de la consulta)" if i == 0 else "")
+              for i, x in enumerate(dias)]
+    return "\n".join(lineas), DIAS[d.weekday()]
+
+
 def armar_contrato(datos):
     solo_prompt = lambda p: p.read_text(encoding="utf-8").split("\n---\n", 1)[-1]
     system = (RAIZ / "prompts" / "system_prompt.md").read_text(encoding="utf-8")
@@ -127,7 +146,9 @@ def armar_contrato(datos):
         system += "\n\n---\n\n# ANEXO · " + (RAIZ / "conocimiento" / anexo).read_text(encoding="utf-8")
     plantilla = solo_prompt(RAIZ / "prompts" / "user_prompt.md")
     user = plantilla
-    for campo in ("asesor", "canal", "fecha", "consulta_id", "notas", "historial", "consulta"):
+    datos["calendario"], datos["dia_consulta"] = calendario(datos)
+    for campo in ("asesor", "canal", "fecha", "dia_consulta", "consulta_id", "notas", "historial",
+                  "calendario", "consulta"):
         user = user.replace("{" + campo + "}", datos.get(campo) or "(sin datos)")
     version = hashlib.sha256((system + plantilla).encode("utf-8")).hexdigest()[:12]
     return system, user, version
@@ -194,6 +215,24 @@ def verificar(ficha, datos, llamadas):
 
     firma = f"{datos['asesor']}, Asesor Comercial de DOMINIA"
     chequeo("V8", "Firma exacta del asesor", borrador.rstrip().endswith(firma), f"esperada: «{firma}»")
+    # Cada «día dd/mm» que aparezca en el borrador o en la propuesta de visita tiene que ser coherente.
+    d0 = fecha_consulta(datos)
+    texto_fechas = borrador + " " + (ficha["proximo_paso"]["propuesta_de_visita"] or "")
+    pares = re.findall(r"(lunes|martes|miércoles|jueves|viernes|sábado|domingo)\s+(\d{1,2})/(\d{1,2})",
+                       texto_fechas.lower())
+    errados = []
+    if d0:
+        for dia, dd, mm in pares:
+            anio = d0.year + (1 if int(mm) < d0.month else 0)
+            try:
+                real = DIAS[date(anio, int(mm), int(dd)).weekday()]
+            except ValueError:
+                real = "fecha inexistente"
+            if real != dia:
+                errados.append(f"«{dia} {dd}/{mm}» es {real}")
+    chequeo("V12", "Días de la semana coherentes con las fechas propuestas", not errados,
+            "; ".join(errados) or (f"{len(pares)} fecha(s) verificada(s)" if d0 else "sin fecha exacta de consulta"))
+
     primera = borrador.strip().splitlines()[0] if borrador.strip() else ""
     chequeo("V11", "El asesor se presenta en la primera línea", datos["asesor"] in primera,
             f"primera línea: «{primera[:80]}»")

@@ -452,3 +452,37 @@ independientes. La iteración 2 (formato) agregó texto y rompió el largo que f
 3 (contexto) liberó espacio y el modelo lo volvió a llenar; la 4 tuvo que volver sobre el formato
 para fijar un presupuesto. **El largo de un mensaje se reparte entre piezas, y alguien tiene que
 fijar el total.**
+
+## Iteración 5 · pieza: CONTEXTO del pedido (user prompt v1 → v2) + chequeo V12 · 11/9 17:31
+
+**Qué falló** (corrida 04 con contrato v2, `corridas/2026-09-11_1718_C04-inmob-2dorm_opus-5.md`): la
+consulta es del jueves 10/9/2026 y la propuesta de visita decía *«Jueves 11/9 a las 17:00 o sábado
+13/9 a las 10:00»*. El 11/9 es viernes y el 13/9 es domingo. El modelo calcula el día de la semana de
+memoria, y ningún chequeo lo miraba.
+
+**Qué se cambió:**
+
+- **User prompt** (el pedido puntual, no el system): el ejecutor calcula en código el día de la
+  semana de la consulta y un **calendario de nueve días**, y se los pasa con la instrucción *«Usá
+  estos pares día-fecha tal cual: no calcules días de la semana por tu cuenta»*.
+- **Chequeo V12** en el ejecutor: busca cada «día dd/mm» del borrador y de la propuesta de visita y
+  verifica que el día corresponda a la fecha.
+
+**Primero se probó el chequeo contra la corrida que había fallado**, sin volver a llamar al modelo:
+
+```text
+('V12', False, '«jueves 11/9» es viernes; «sábado 13/9» es domingo')
+```
+
+Detecta el error real. **Después, la misma entrada con el contrato nuevo**
+(`2026-09-11_1731_C04-inmob-2dorm_opus-5.md`):
+
+> ¿Te queda mejor el viernes 11 a las 10 o el sábado 12 a las 11?
+
+con `propuesta_de_visita`: *«Viernes 11/9/2026 a las 10 o sábado 12/9/2026 a las 11»* → V12: *«2
+fecha(s) verificada(s)»*. Doce chequeos en verde.
+
+**Por qué las dos cosas y no una.** El calendario en el prompt **previene** el error; el chequeo
+**lo detecta si igual ocurre**. Es la regla que ya se venía aplicando (D-05): lo que es caro de
+equivocar no puede depender solo del prompt. Un borrador con la fecha mal manda al interesado un
+domingo a un complejo cerrado.

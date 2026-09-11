@@ -1,0 +1,11 @@
+# Planillas internas de DOMINIA: tienen comisiones, hojas por inmobiliaria y datos de compradores.
+# El agente solo lee herramientas/tarifario_vigente.csv, que se deriva de ellas.
+*.xlsx
+*.xls
+
+# Credenciales
+.env
+.anthropic-key
+*.key
+
+__pycache__/

@@ -165,3 +165,50 @@ garantía. El chequeo V7 del ejecutor suma las frases de urgencia artificial («
 Quedan cuatro preguntas para DOMINIA / legal antes de que el copiloto pueda usarlas: si Casona 3
 tiene el seguro del art. 2071 CCyC, si el boleto tiene fecha cierta, cómo se calcula la cuota en
 pesos ajustada por CAC y la base legal de ese ajuste en un contrato en dólares.
+
+### Corridas reales 01–04 · 11/9 16:48–16:50 · contrato v1 + playbook v1
+
+Cuatro consultas reales de **inmobiliarias colegas**, transcriptas de capturas de WhatsApp y
+anonimizadas (`entradas/consulta-01.md` a `04.md`). Cada entrada guarda también **lo que respondió
+el asesor en la realidad**, en una sección que el ejecutor no le pasa al modelo: sirve para comparar.
+
+| Corrida | Qué pidió el colega | Qué respondió el asesor real | Qué propuso el copiloto | Chequeos | USD |
+|---|---|---|---|---|---|
+| 01 | Ir mañana por la siesta a ver un 1 dormitorio | «Dale obvio!» → visita a las 14:30 | Confirma, ofrece 15 o 16:30 y pide uso y forma de pago del cliente | 10/10 | 0,1860 |
+| 02 | Algo en planta baja de 2 o 3 dormitorios | Audio de 0:29 → el colega entiende «torre 2, a estrenar» | Hay 2 dormitorios en PB; **3 en PB no existe**; pide perfil; ofrece dos horarios | 10/10 | 0,1692 |
+| 03 | Mostrar **hoy a las 12:30** | Audio + código de acceso: visita aceptada | «¿Te queda mejor 12:30 o lo corremos a las 16?» | 10/10 | 0,1635 |
+| 04 | ¿Hay 2 dormitorios disponibles? | Audio + **la lista N°5 completa de Casona 2** en PDF → «Fran genial» | Dice que hay en dos formatos, pide perfil, no manda lista | 10/10 | 0,1034 |
+
+**Los diez chequeos pasaron en las cuatro, y aun así hay fallas.** Los chequeos miden reglas; no
+miden si la respuesta sirve. Lo que muestran las cuatro corridas contra lo que pasó en la realidad:
+
+1. **Falla grave · corrida 03: el copiloto puso en riesgo una visita que ya estaba ganada.** El
+   colega propuso mostrar hoy a las 12:30 y el borrador contesta:
+
+   > ¿Te queda mejor 12:30 o lo corremos a las 16 y llegamos con todo armado? Confirmame por acá.
+
+   Ofrecer correrla para «llegar con todo armado» antepone la necesidad del copiloto (tener los
+   datos para asignar la lista) al objetivo de todo el sistema (la visita). El asesor real aceptó
+   sin condiciones. La causa está en el contrato: la tarea obliga a asignar lista y la restricción 8
+   obliga a cerrar con **dos horarios**, aunque el otro ya haya puesto uno.
+
+2. **Tono y largo con colegas.** Los cuatro borradores tienen entre 90 y 110 palabras, abren con una
+   fórmula («Hola! Todo bien, gracias por escribir») y firman «Francisco, Asesor Comercial de
+   DOMINIA» a colegas que lo tratan de «Fran». El asesor real contestó con cinco palabras. La
+   restricción 8 limita el largo solo en WhatsApp e Instagram, y las consultas de colegas llegan
+   por WhatsApp pero se registran como canal `inmobiliaria`: el límite no se aplicó.
+
+3. **Con colegas, el copiloto condiciona la información al perfil del cliente final; el asesor real
+   manda la lista.** En la 04 el asesor mandó la lista de Casona 2 completa y la colega respondió
+   «Fran genial». El copiloto no mandó nada hasta saber cómo paga el cliente. Las dos cosas tienen
+   fundamento: la restricción 12 (lista única también con colegas) contra la T-26 (información
+   completa a los colegas, Código de Ética). **Es una decisión de negocio, no de prompt**: queda
+   para el responsable.
+
+4. **Las cuatro corridas consultaron `edificio: "todos"`**: es lo que el contrato indica cuando la
+   lista no está asignada. La 03 trajo el tarifario entero (35 unidades, 12.548 tokens de entrada).
+
+5. **El caché funciona entre corridas**: la 01 escribió 13.445 tokens en caché y las tres siguientes
+   los leyeron (26.890 cada una, dos vueltas) a un décimo del precio. Por eso la 04 costó USD 0,1034.
+
+Total de las cuatro: **USD 0,6221**.

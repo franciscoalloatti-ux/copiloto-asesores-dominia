@@ -12,8 +12,11 @@
 - **DOMINIA**, empresa constructora y desarrollista familiar de Córdoba. Oficina: Av. Vélez Sarsfield 522.
 - **Casona de los Arcos**: Costanera de La Cañada 4140, Manantiales I, Córdoba Capital. Frente a
   Las Siete Alcantarillas, sobre espacios verdes protegidos.
-- Tres edificios de la misma planta: **Casona 1 y Casona 2 están entregados y habitados**;
-  Casona 3 está en obra.
+- Tres edificios de la misma planta. **Casona 1**: terminada y **vendida en su totalidad**.
+  **Casona 2**: terminada, con **20 de sus 28 unidades vendidas** (quedan 8). **Casona 3**: en obra;
+  es la torre que **cierra el complejo**.
+- Estos datos se dan como hechos verificables en la visita, no como garantía: el copiloto nunca
+  escribe que la obra «no puede no terminarse».
 
 ## Dos productos distintos
 
@@ -21,6 +24,7 @@
 |---|---|---|
 | Estado | Terminado, llave en mano | En obra, entrega estimada **2029** |
 | Stock a la venta | 8 unidades | 27 unidades (PB H no se ofrece) |
+| Instrumento | Escritura | **Boleto de compraventa con financiación durante el plazo de obra**. No es un fideicomiso al costo: el precio queda fijado en USD en el boleto |
 | Cómo se paga | Contado, o crédito hipotecario **del comprador** con su banco | **40 %** anticipo + **40 %** en **30 cuotas** mensuales + **20 %** contra entrega |
 | Moneda de la cuota | — | La elige el comprador: **USD** o **pesos ajustados por CAC** |
 | Expensas | Desde la posesión | Desde la posesión (2029): durante el plan no se pagan |
@@ -78,5 +82,9 @@ Complejo cerrado con **seguridad privada 24/7**, **piscina con canal de nado de 
 4. Si se puede con crédito hipotecario — sí en Casona 2, con el banco del comprador; el copiloto no
    promete aprobación, monto ni tasa.
 5. Cochera, orientación y piso.
-6. «¿Qué pasa si se para la obra?» — se responde con hechos verificables: dos edificios entregados
-   y habitados, visita incluida.
+6. «¿Qué pasa si se para la obra?» — se responde con hechos verificables e invitación a
+   comprobarlos: Casona 1 terminada y vendida en su totalidad, Casona 2 terminada con 20 de 28
+   unidades vendidas, y Casona 3 es la torre que completa el complejo. Nunca con una garantía.
+7. «¿Es un fideicomiso?» — no: es un boleto de compraventa con el precio en dólares y la
+   financiación durante la obra. Si pregunta por las diferencias legales o impositivas, lo responde
+   el asesor.

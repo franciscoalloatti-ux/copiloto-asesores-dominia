@@ -66,8 +66,9 @@ entregado, y lo entregado es la mejor prueba que tiene este proyecto.
 - **T-11 · El descuento no se ofrece: se guarda.** Nunca aparece en un mensaje escrito. *(Academia
   Casona, «El pedido de descuento»)*
 - **T-12 · «¿Y si se para la obra?»** Se responde con hechos verificables y una invitación a
-  comprobarlos (dos edificios entregados y habitados), nunca con «somos serios». *(Academia Casona,
-  «Las cuatro más frecuentes»)*
+  comprobarlos (Casona 1 vendida en su totalidad, Casona 2 con 20 de 28 vendidas, Casona 3 cierra el
+  complejo), nunca con «somos serios» ni con una garantía. *(Academia Casona, «Las cuatro más
+  frecuentes»)*
 - **T-13 · Recomendar lo que menos factura.** Si alguien que califica a crédito pide Casona 3, el
   asesor le dice que el terminado le conviene. Es la estrategia que más factura a doce meses.
   *(Venta consultiva, vía Academia Casona)*

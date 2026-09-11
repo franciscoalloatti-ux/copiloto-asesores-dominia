@@ -54,8 +54,13 @@ publicación)
 
 > me gustaria que sea completo, los manuales deberiamos descargarlos de la web, las consultas son relativas hay semanas que hay varias otras no tanto a vyeces a traves de inmobiliaria lo importante mas que el tiempo es la coherencia y la efectividad de la respuesta. Mi rol en dominia es general porque es empresa familiar. Se puede publicar todo
 
+**4 · Correcciones de contexto y publicación**
+
+> pero los  manuales tienen que estar en pdf en internet para leerlos ounquesea, podrias aprender de ahi. LAs tres consultas queres que te las cargue como capturas, que te mande audios o que?. Casona 3 se vende con boleto de compraventa financiada a plazo de obra. Casona 1 esta totalmente vendida, Casona 2 estan vendidos 20 de 28 y el complejo se cierra con la tercer torre con lo cual seria muy dificil no terminar con el compromiso en un complejo tan consolidado.
+> Subilo al github
+
 Qué hizo el agente constructor con cada pedido, y qué se decidió distinto de lo pedido (por
-ejemplo, no descargar los manuales), está en `DECISIONES.md`.
+ejemplo, no descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 ## Qué funciona
 

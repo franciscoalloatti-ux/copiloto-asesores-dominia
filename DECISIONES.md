@@ -104,3 +104,30 @@ crédito) para probar la cañería. No cuenta como corrida real.
 
 **Candidato a iteración 1** (se decide con las corridas reales): consultar solo el edificio de la
 lista asignada, y `todos` únicamente cuando la lista está `sin_asignar_aun`.
+
+### D-07 · Contexto corregido por el responsable: forma de venta y avance comercial
+
+La ficha del proyecto decía *«Casona 1 y Casona 2 están entregados y habitados»* y no decía cómo se
+instrumenta la venta de Casona 3. Se preguntó al responsable, que respondió:
+
+> Casona 3 se vende con boleto de compraventa financiada a plazo de obra. Casona 1 esta totalmente
+> vendida, Casona 2 estan vendidos 20 de 28 y el complejo se cierra con la tercer torre con lo cual
+> seria muy dificil no terminar con el compromiso en un complejo tan consolidado.
+
+Qué cambió en `conocimiento/proyecto.md` (pieza **contexto**):
+
+- Casona 3 se vende con **boleto de compraventa financiado**, con precio fijado en USD: **no es un
+  fideicomiso al costo**. Se agregó la respuesta a «¿es un fideicomiso?».
+- El avance comercial (Casona 1 vendida en su totalidad, Casona 2 con 20 de 28 vendidas) pasa a ser
+  la evidencia para «¿y si se para la obra?» (T-12).
+- El argumento del responsable (*«sería muy difícil no terminar»*) **no se copió como tal**: el
+  copiloto presenta los hechos y los invita a comprobar en la visita, pero no garantiza la
+  terminación. Una garantía por escrito es justamente lo que prohíbe la restricción 6.
+
+### D-08 · Los manuales: PDFs gratuitos sí, copias no autorizadas no
+
+El responsable insistió: *«los manuales tienen que estar en pdf en internet para leerlos
+aunquesea»*. Se amplió la búsqueda a **PDFs que el autor o la editorial publiquen gratis**
+(capítulos de muestra, vista previa de Google Books, material de colegios profesionales). Las copias
+subidas sin autorización (Scribd, sitios de descarga, Drives de terceros) siguen excluidas: que un
+PDF sea accesible no quiere decir que su publicación esté autorizada.

@@ -19,11 +19,12 @@ SALIDA = Path(__file__).parent / "tarifario_vigente.csv"
 EXPENSAS_ARS = {1: 220000, 2: 270000, 3: 330000}
 
 # Unidades que existen en la planilla pero NO se ofrecen (decisión del desarrollista).
-NO_SE_OFRECEN = {("Casona 3", "PB H"): "No integra el stock a la venta (decisión DOMINIA)"}
+# El texto de la observación lo puede leer un cliente: se escribe como se le diría, sin jerga interna.
+NO_SE_OFRECEN = {("Casona 3", "PB H"): "No está a la venta"}
 
 COLUMNAS = [
     "edificio", "unidad", "estado", "entrega", "dormitorios", "banos", "planta",
-    "m2_cubiertos", "m2_balcon", "m2_jardin_privado", "m2_propios", "m2_boleto_total",
+    "m2_cubiertos", "m2_balcon", "m2_jardin_uso_exclusivo", "m2_propios", "m2_boleto_total",
     "cochera", "precio_lista_usd", "usd_m2_boleto", "forma_de_pago", "anticipo_usd",
     "cuotas", "cuota_mensual_usd", "saldo_contra_entrega_usd", "expensas_mensuales_ars",
     "expensas_desde", "disponible", "observacion", "lista", "fecha_lista",
@@ -59,7 +60,7 @@ def casona2(ruta):
         filas.append({
             "edificio": "Casona 2", "unidad": unidad, "estado": "terminado", "entrega": "inmediata",
             "dormitorios": dorm, "banos": banos, "planta": planta(unidad),
-            "m2_cubiertos": num(r[3]), "m2_balcon": num(r[4]), "m2_jardin_privado": num(r[5]),
+            "m2_cubiertos": num(r[3]), "m2_balcon": num(r[4]), "m2_jardin_uso_exclusivo": num(r[5]),
             "m2_propios": num(r[6]), "m2_boleto_total": m2_boleto, "cochera": "si",
             "precio_lista_usd": round(precio), "usd_m2_boleto": round(precio / m2_boleto),
             "forma_de_pago": "contado o crédito hipotecario del comprador",
@@ -86,7 +87,7 @@ def casona3(ruta):
         filas.append({
             "edificio": "Casona 3", "unidad": unidad, "estado": "en obra", "entrega": "2029 (estimada)",
             "dormitorios": dorm, "banos": banos, "planta": planta(unidad),
-            "m2_cubiertos": num(r[4]), "m2_balcon": num(r[5]), "m2_jardin_privado": num(r[8]),
+            "m2_cubiertos": num(r[4]), "m2_balcon": num(r[5]), "m2_jardin_uso_exclusivo": num(r[8]),
             "m2_propios": num(r[9]), "m2_boleto_total": m2_boleto, "cochera": "si",
             "precio_lista_usd": round(precio), "usd_m2_boleto": round(precio / m2_boleto),
             "forma_de_pago": "40% anticipo + 40% en 30 cuotas (USD o pesos ajustados por CAC) + 20% contra entrega",

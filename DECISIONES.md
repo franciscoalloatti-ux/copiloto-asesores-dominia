@@ -486,3 +486,21 @@ fecha(s) verificada(s)»*. Doce chequeos en verde.
 **lo detecta si igual ocurre**. Es la regla que ya se venía aplicando (D-05): lo que es caro de
 equivocar no puede depender solo del prompt. Un borrador con la fecha mal manda al interesado un
 domingo a un complejo cerrado.
+
+### D-11 · Tres datos del responsable y dos correcciones de la herramienta (11/9, 17:40)
+
+Respuestas textuales a las preguntas pendientes:
+
+> es un espacio comun de uso exclusivo quiere decir que lo usas vos pero lo mantiene el consorcio.
+> Si hemos aceptado canjes. Exactamente ese libro
+
+- **Jardín de planta baja** → `conocimiento/proyecto.md`: es un *espacio común de uso exclusivo* que
+  mantiene el consorcio. **Corrige un error que venía de antes**: el tarifario llamaba a la columna
+  `m2_jardin_privado` y los borradores escribían *«jardín privado propio»* (corrida 06, v3). En
+  sentido legal no es privado. La columna pasa a llamarse `m2_jardin_uso_exclusivo`.
+- **Canjes** → la ficha dice que DOMINIA los ha aceptado y que se evalúan caso por caso; el copiloto
+  puede decir que se conversan, pero no los confirma ni les pone valor.
+- **Comunicar para vender** → confirmado: es el libro de Massimo Forte.
+- **Jerga en la herramienta** (falla 3 de las corridas 05–09): la observación del PB H pasa de *«No
+  integra el stock a la venta (decisión DOMINIA)»* a *«No está a la venta»*. Lo que devuelve la
+  herramienta el modelo lo puede copiar al cliente, así que se escribe como se le diría a un cliente.

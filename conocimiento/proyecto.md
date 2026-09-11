@@ -59,6 +59,10 @@ tasa el inmueble, no los muebles.
 - Cerradura digital en la puerta de ingreso. Puertas y marcos de madera de alta calidad.
 - Pisos y revestimientos de porcelanato Ilva. Baños con mamparas de vidrio y griferías de alta calidad.
 - Todas las unidades a la venta incluyen cochera.
+- **Jardín de planta baja:** es un **espacio común de uso exclusivo**. Lo usa solo el propietario de
+  esa unidad, pero lo mantiene el consorcio. No es un jardín «privado» en sentido legal: se dice «de
+  uso exclusivo». Que lo mantenga el consorcio es un argumento a favor (no hay que ocuparse del
+  mantenimiento), y también un dato que el comprador tiene que conocer.
 
 ## Amenities
 
@@ -73,6 +77,9 @@ Complejo cerrado con **seguridad privada 24/7**, **piscina con canal de nado de 
   copiloto nunca lo ofrece ni lo menciona al cliente.**
 - **Comisiones con inmobiliarias colegas:** no están en esta ficha. Si una inmobiliaria pregunta, lo
   responde el asesor.
+- **Canjes:** DOMINIA **ha aceptado canjes** (trabajos, servicios o bienes a cuenta del precio). Se
+  evalúan caso por caso. El copiloto puede decir que es algo que se puede conversar, pero **no lo
+  confirma, no le pone valor ni dice cuánto se toma**: lo define el asesor con DOMINIA en una reunión.
 
 ## Lo que se pregunta siempre
 

@@ -21,7 +21,7 @@ The Millionaire Real Estate Agent: leads → citas → contratos)*
 |---|---|---|
 | El cierre de la venta inmobiliaria | M. Villarroya Martín (Finis Terrae, 2016) | Avance vs. cierre, cierre condicional, sin «cierre mágico», confirmar la visita |
 | Everybody Wins | P. Harkins y K. Hollihan (Wiley, 2005); **Dave Liniger escribe solo el prólogo** | Satisfacción del comprador, marca única en todos los canales |
-| Comunicar para vender | Probablemente M. Forte (Portugal, 2017, en portugués) — **a confirmar** | Precalificar conversando, no negociar en el primer contacto, temperatura del lead |
+| Comunicar para vender | M. Forte (Portugal, 2017, en portugués) — **confirmado por el responsable** el 11/9 | Precalificar conversando, no negociar en el primer contacto, temperatura del lead |
 | El camino del Real Estate Argentino | D. Migliorisi (ed. del autor, 2025; PDF gratuito del autor, leído) | Decir los contras, no adornar, «¿qué garantías tengo en pozo?» |
 | Marketing para Inmobiliarios | G. Woscoboinik (Ugerman, 2.ª ed.) — **solo índice verificado** | Precio fundado ante «está caro» (tema del libro, no su técnica) |
 | Fideicomisos al costo | D. Tabakman (dir.) (BRE, 2011), vía tesis UFLO que lo cita | Diferencia fideicomiso / boleto, no vender la figura como garantía |

@@ -36,7 +36,7 @@ PRECIOS = {
 
 COLUMNAS_HERRAMIENTA = [
     "edificio", "unidad", "estado", "entrega", "dormitorios", "banos", "planta", "m2_cubiertos",
-    "m2_balcon", "m2_jardin_privado", "m2_boleto_total", "precio_lista_usd", "usd_m2_boleto",
+    "m2_balcon", "m2_jardin_uso_exclusivo", "m2_boleto_total", "precio_lista_usd", "usd_m2_boleto",
     "forma_de_pago", "anticipo_usd", "cuotas", "cuota_mensual_usd", "saldo_contra_entrega_usd",
     "expensas_mensuales_ars", "expensas_desde", "disponible", "observacion",
 ]

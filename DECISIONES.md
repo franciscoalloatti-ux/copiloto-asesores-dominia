@@ -422,3 +422,33 @@ a medias:** la 06 bajó de 125 a 117 palabras, pero la 05 quedó en 127, porque 
 espacio liberado para contar el recorrido de la visita. Y el problema de las tres preguntas no
 depende del precio: está en la ambigüedad del formato («hasta dos preguntas» + «el próximo paso»).
 Las dos cosas son de la pieza *formato*: van a la iteración 4.
+
+## Iteración 4 · pieza: FORMATO (otra vez) · contrato v3 → v4 · 11/9 17:28
+
+**Qué falló** (iteración 3): *«❌ V9 Como máximo dos preguntas — 3 pregunta(s)»* en la 06 y *«❌ V10
+… — 127 palabras»* en la 05.
+
+**Qué se cambió** (solo la pieza *formato*):
+
+- Los pasos 4 y 5 se fusionaron: **dos signos de pregunta en todo el mensaje, incluida la del
+  próximo paso**. Si el próximo paso es elegir horario, queda lugar para una sola pregunta más.
+- **Presupuesto de largo explícito**: 80 a 110 palabras contando presentación y firma; el recorrido
+  de la visita se cuenta en la visita.
+
+**Qué cambió en la salida:**
+
+| | v3 + playbook v2 | v4 |
+|---|---|---|
+| **06** · `2026-09-11_1728_…` | 3 preguntas · BLOQUEADA | *«¿cómo pensabas pagarlo: contado, crédito o en cuotas?»* + *«¿te queda mejor el sábado a las 10 o a las 11?»* · 107 palabras · **aprobada** |
+| **05** · `2026-09-11_1729_…` | 127 palabras · BLOQUEADA | 116 palabras · **aprobada** |
+
+Las dos pasan los once chequeos. La 05 quedó en 116 palabras: pasa el límite duro de la restricción
+8 (120), pero se pasa del presupuesto de formato (110). El presupuesto orienta, el chequeo frena:
+**se deja así** y se registra, porque subir el chequeo a 110 bloquearía borradores buenos por seis
+palabras.
+
+**Qué se aprendió de las iteraciones 2 a 4.** Una pieza por vez no quiere decir que las piezas sean
+independientes. La iteración 2 (formato) agregó texto y rompió el largo que fija una restricción; la
+3 (contexto) liberó espacio y el modelo lo volvió a llenar; la 4 tuvo que volver sobre el formato
+para fijar un presupuesto. **El largo de un mensaje se reparte entre piezas, y alguien tiene que
+fijar el total.**

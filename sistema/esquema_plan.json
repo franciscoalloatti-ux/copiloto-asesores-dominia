@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["mes", "diagnostico", "objetivos", "prioridades_de_stock", "publicaciones",
+               "acciones_con_colegas", "que_no_publicar", "datos_que_faltan", "revisar_antes_de_publicar"],
+  "properties": {
+    "mes": {"type": "string"},
+    "diagnostico": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stock", "senales_de_demanda", "riesgos"],
+      "properties": {
+        "stock": {"type": "string"},
+        "senales_de_demanda": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["senal", "consultas"],
+            "properties": {
+              "senal": {"type": "string"},
+              "consultas": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "riesgos": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "objetivos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["metrica", "meta", "supuesto"],
+        "properties": {"metrica": {"type": "string"}, "meta": {"type": "string"}, "supuesto": {"type": "string"}}
+      }
+    },
+    "prioridades_de_stock": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["edificio", "unidades", "por_que", "para_quien"],
+        "properties": {
+          "edificio": {"type": "string", "enum": ["Casona 2", "Casona 3"]},
+          "unidades": {"type": "array", "items": {"type": "string"}},
+          "por_que": {"type": "string"},
+          "para_quien": {"type": "string"}
+        }
+      }
+    },
+    "publicaciones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["semana", "canal", "pieza", "foco", "mensaje_clave", "lista", "tecnica"],
+        "properties": {
+          "semana": {"type": "integer"},
+          "canal": {"type": "string", "enum": ["pagina_web", "zonaprop", "argenprop", "instagram", "whatsapp_difusion", "inmobiliarias"]},
+          "pieza": {"type": "string"},
+          "foco": {"type": "string"},
+          "mensaje_clave": {"type": "string"},
+          "lista": {"type": "string", "enum": ["casona_2_terminados", "casona_3_pozo"]},
+          "tecnica": {"type": "string"}
+        }
+      }
+    },
+    "acciones_con_colegas": {"type": "array", "items": {"type": "string"}},
+    "que_no_publicar": {"type": "array", "items": {"type": "string"}},
+    "datos_que_faltan": {"type": "array", "items": {"type": "string"}},
+    "revisar_antes_de_publicar": {"type": "array", "items": {"type": "string"}}
+  }
+}

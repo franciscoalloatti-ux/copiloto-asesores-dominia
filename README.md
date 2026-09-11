@@ -59,8 +59,31 @@ publicación)
 > pero los  manuales tienen que estar en pdf en internet para leerlos ounquesea, podrias aprender de ahi. LAs tres consultas queres que te las cargue como capturas, que te mande audios o que?. Casona 3 se vende con boleto de compraventa financiada a plazo de obra. Casona 1 esta totalmente vendida, Casona 2 estan vendidos 20 de 28 y el complejo se cierra con la tercer torre con lo cual seria muy dificil no terminar con el compromiso en un complejo tan consolidado.
 > Subilo al github
 
-Qué hizo el agente constructor con cada pedido, y qué se decidió distinto de lo pedido (por
-ejemplo, no descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
+**5 · Las consultas reales** (acompañadas de capturas de WhatsApp y un audio; el número de teléfono
+quedó anonimizado)
+
+> te voy a mostrar chats de posibles venta. Primero con inmobiliarios y despues de consultas de clientes
+
+> y despues te mando uno puntual con audio. LA ultima foto del numero [número anonimizado] es la que manda el audio subido
+
+**6 · Decisiones sobre las fallas de la primera tanda** (respuestas a cuatro preguntas del agente
+constructor; dos fueron la elección de una opción)
+
+> Colegas: lo que pida, si esta buscando en poso lista casona 3 y si no la 2. Pero esta bueno lo del perfil de cliente. LA casona 3 es un excel que lo mandaria en formato de lista tambien
+>
+> Presentación: «Presentación y firma» (opción elegida)
+>
+> Precio en el primer mensaje: Sin precio como recomendas y siguiendo los pasos de los manuales. Justamente quiero transformar asesores comunes en los mejores
+>
+> Iteraciones: «Sí, en ese orden» (opción elegida: restricciones → formato → contexto)
+
+**7 · Datos que faltaban**
+
+> es un espacio comun de uso exclusivo quiere decir que lo usas vos pero lo mantiene el consorcio. Si hemos aceptado canjes. Exactamente ese libro
+
+Se omiten los mensajes de logística (iniciar sesión en GitHub, abrir el navegador). Qué hizo el
+agente constructor con cada pedido, y qué se decidió distinto de lo pedido (por ejemplo, no
+descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 ## Qué funciona
 

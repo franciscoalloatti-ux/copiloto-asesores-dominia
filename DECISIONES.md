@@ -504,3 +504,52 @@ Respuestas textuales a las preguntas pendientes:
 - **Jerga en la herramienta** (falla 3 de las corridas 05–09): la observación del PB H pasa de *«No
   integra el stock a la venta (decisión DOMINIA)»* a *«No está a la venta»*. Lo que devuelve la
   herramienta el modelo lo puede copiar al cliente, así que se escribe como se le diría a un cliente.
+
+## Módulo 2 · plan mensual · primera corrida · 11/9 17:44
+
+El módulo 2 tiene su propio contrato (`prompts/variantes/plan_mensual_system.md` y `_user.md`, con
+las seis piezas), su esquema (`sistema/esquema_plan.json`) y su ejecutor (`sistema/plan_mensual.py`).
+Suma una segunda herramienta, **`resumen_consultas`**, que lee el registro de `entradas/`: **el
+módulo 1 alimenta al 2**. Las consultas que el copiloto responde son la señal de demanda con la que
+se planifica el mes siguiente.
+
+**Corrida:** plan de octubre 2026 con las consultas del 1/6 al 11/9
+(`corridas/plan_mensual/2026-09-11_1744_plan-2026-10_opus-5.md`, USD 0,4906). El plan lee las 11
+consultas y el tarifario completo, y cada señal de demanda cita sus consultas:
+
+- *«tres personas distintas pidieron exactamente la misma unidad desde el botón de la web en cuatro
+  días»* (C06, COH-PBA-2, COH-PBA-3) → prioriza la planta baja de Casona 3 y ordena PB C, PB B, PB E y
+  PB G como alternativas visibles, porque *«dos de cada tres conversaciones se caen»* si solo se
+  ofrece el PB A.
+- *«Las inmobiliarias colegas son el canal más activo del período (4 de 11 consultas)»* → un
+  protocolo para mostrar el mismo día y una jornada para colegas.
+- La web publica el PB H → dar de baja la ficha y el botón en la semana 1.
+- Doce datos que faltan, declarados como tales: no hay presupuesto de pauta, no hay resultados de
+  publicaciones anteriores, no se sabe si el PB A ya tiene reserva…
+
+**Salió BLOQUEADO**, y los dos chequeos que fallaron enseñan cosas distintas:
+
+```text
+❌ P3 Cada publicación habla de una sola lista — piezas que nombran la otra lista: #7, #12
+❌ P5 No prioriza ni publica unidades que no están a la venta — PB H
+```
+
+1. **P5 era un falso positivo de mi chequeo.** El PB H aparecía en la descripción de la pieza #1:
+   *«baja de la ficha y del botón de WhatsApp de PB H»*. El plan hacía lo correcto, **sacarlo**, y el
+   chequeo lo leyó como publicarlo. Se corrigió: P5 mira solo las unidades priorizadas y el
+   `mensaje_clave` (lo que ve el público), no la descripción de la acción. Reverificada la misma
+   salida sin volver a llamar al modelo: P5 pasa.
+2. **P3 acertó en una pieza y se equivocó en otra.**
+   - **#12 es una falla real.** La jornada para colegas figura como lista `casona_2_terminados`, pero
+     su mensaje dice *«Te entregamos por separado el detalle de las unidades terminadas y el de las
+     unidades en obra con su plan de pagos»*. Son las dos listas en la misma acción, justo lo que
+     prohíbe la restricción 1 del módulo. Hay que partirla en dos, o que el responsable decida que un
+     evento con colegas es la excepción.
+   - **#7 es un falso positivo.** Es una pieza de Casona 3 que menciona *«Casona 2 terminada con 20 de
+     sus 28 unidades vendidas»* como prueba de que la obra se termina (T-12), sin precio ni oferta.
+     Eso lo permite el propio playbook.
+
+   **P3 se deja como está**, a propósito. Un chequeo por palabras no distingue «mencionar» de
+   «ofrecer»; si se afina para dejar pasar la #7, deja pasar también la #12. Mientras un error de
+   este chequeo cueste una revisión y no un aviso mal publicado, conviene que sea desconfiado. **Un
+   chequeo por palabras sirve para frenar, no para juzgar: el juicio queda en la revisión humana.**

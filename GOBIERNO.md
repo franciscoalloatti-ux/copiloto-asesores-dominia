@@ -45,6 +45,8 @@ Cada fila salió de una corrida real o de una regla de negocio con consecuencia 
 | 10 | **Un canal contradice al tarifario** (la web tiene botón para el PB H) | Llegan consultas por algo que no se vende | El copiloto lo marca en alertas; el plan mensual lo pone como riesgo. Lo corrige marketing |
 | 11 | **Borrador fuera de formato** (largo, más de dos preguntas, sin firma) | Mensaje que no se lee o que interroga | **V8–V11** (líneas 217–245). **Implementada**; en la corrida 09 frenó un borrador de 124 palabras |
 
+| 12 | **La API deja de responder** (11/9 17:45: *«Your credit balance is too low to access the Anthropic API»*) | Los asesores se quedan sin copiloto en medio de una tanda | El ejecutor guarda la corrida con el error y costo 0, sin inventar salida. **El asesor responde a mano, como antes del copiloto**, y el responsable configura una alerta de saldo en la consola de Anthropic. Lo que no se puede es que el copiloto sea el único camino para responder |
+
 **Cuando algún chequeo falla**, la corrida queda marcada **«BLOQUEADA: corregir antes de enviar»**
 en el archivo y en la consola. El asesor no la envía hasta corregir la regla que falló.
 

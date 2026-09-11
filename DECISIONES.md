@@ -553,3 +553,27 @@ consultas y el tarifario completo, y cada señal de demanda cita sus consultas:
    «ofrecer»; si se afina para dejar pasar la #7, deja pasar también la #12. Mientras un error de
    este chequeo cueste una revisión y no un aviso mal publicado, conviene que sea desconfiado. **Un
    chequeo por palabras sirve para frenar, no para juzgar: el juicio queda en la revisión humana.**
+
+## Corrida final con el contrato vigente · 11/9 17:39–17:46 · y una falla que frenó todo
+
+Con el contrato v4 + user prompt v2 + playbook v2 se volvieron a correr las consultas, para dejar el
+estado final, más la comparación de modelos. **Salieron seis de diecisiete**: 01 a 06 aprobadas,
+entre USD 0,1347 y USD 0,2319. A las 17:45, con el plan de octubre corriendo en paralelo, **se
+terminó el crédito de la API**, y las once siguientes fallaron antes de llegar al modelo:
+
+```text
+BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CexJgRAUg7KPtPxTnaFts'}
+```
+
+- **El ejecutor se comportó bien ante la falla**: guardó cada corrida con el error textual y costo
+  0, no inventó una salida y siguió con la siguiente. Las once corridas fallidas se movieron a
+  `corridas/errores/`, para que no se confundan con corridas válidas.
+- **Es un modo de falla que no estaba previsto**, y es de gobierno: si el sistema se usa de verdad,
+  una cuenta sin crédito deja a los asesores sin copiloto en medio de una tanda. Lo que corresponde
+  es que el asesor responda a mano como antes y que el responsable tenga una alerta de saldo en la
+  consola de Anthropic. Se suma a `GOBIERNO.md`.
+- **Lo que queda pendiente** es la comparación con Haiku 4.5 y Sonnet 5, justo la prueba de la
+  elección de modelo. Sin crédito no se puede hacer.
+
+En total se gastaron **USD 4,94** en la API (suma de las 28 corridas con costo registrado): humo, 26 corridas de consultas exitosas, el plan de
+octubre y las re-corridas de las cinco iteraciones.

@@ -1,0 +1,382 @@
+<title>Copiloto DOMINIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#EDF0EE; --surface:#FFFFFF; --surface-2:#F5F7F6; --line:#D5DCD9; --line-2:#BCC7C3;
+    --ink:#17201D; --ink-2:#3E4A46; --muted:#66736E;
+    --accent:#1D5C72; --accent-ink:#FFFFFF; --accent-soft:#DDEBF0;
+    --bubble-in:#FFFFFF; --bubble-out:#D9F0DF; --bubble-real:#EEE8DA;
+    --ok:#1E7A45; --ok-soft:#DDF1E4; --bad:#B3261E; --bad-soft:#F8E1DE;
+    --c2:#1D5C72; --c3:#7A4E1B; --c2-soft:#DDEBF0; --c3-soft:#F3E7D6;
+    --shadow:0 1px 2px rgba(23,32,29,.06),0 6px 18px rgba(23,32,29,.05);
+    --serif:"Young Serif",Georgia,"Times New Roman",serif;
+    --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0F1513; --surface:#161E1B; --surface-2:#1C2622; --line:#2A3632; --line-2:#3A4843;
+      --ink:#E3EAE7; --ink-2:#B9C5C0; --muted:#8A9893;
+      --accent:#79B8CE; --accent-ink:#0B1F26; --accent-soft:#16323B;
+      --bubble-in:#1C2622; --bubble-out:#1D3A2A; --bubble-real:#2E2A20;
+      --ok:#62C98E; --ok-soft:#12301F; --bad:#F08A80; --bad-soft:#3A1916;
+      --c2:#79B8CE; --c3:#D9A866; --c2-soft:#16323B; --c3-soft:#33261A;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0F1513; --surface:#161E1B; --surface-2:#1C2622; --line:#2A3632; --line-2:#3A4843;
+    --ink:#E3EAE7; --ink-2:#B9C5C0; --muted:#8A9893;
+    --accent:#79B8CE; --accent-ink:#0B1F26; --accent-soft:#16323B;
+    --bubble-in:#1C2622; --bubble-out:#1D3A2A; --bubble-real:#2E2A20;
+    --ok:#62C98E; --ok-soft:#12301F; --bad:#F08A80; --bad-soft:#3A1916;
+    --c2:#79B8CE; --c3:#D9A866; --c2-soft:#16323B; --c3-soft:#33261A;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  /* encabezado */
+  header.top{background:var(--surface);border-bottom:1px solid var(--line)}
+  .top-in{max-width:1320px;margin:0 auto;padding:18px 24px 0;display:grid;gap:14px}
+  .brand{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+  .brand h1{font:400 1.7rem/1.1 var(--serif);margin:0;letter-spacing:-.01em}
+  .brand p{margin:0;color:var(--muted);font-size:.9rem}
+  .facts{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.82rem;color:var(--ink-2)}
+  .facts b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+  nav.tabs{display:flex;gap:4px;overflow-x:auto}
+  nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:9px 12px;cursor:pointer;color:var(--muted);font-weight:600;font-size:.9rem;white-space:nowrap}
+  nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+
+  main{max-width:1320px;margin:0 auto;padding:22px 24px 60px}
+  .vista[hidden]{display:none}
+
+  /* consultas */
+  .consultas{display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px;align-items:start}
+  aside.lista{display:grid;gap:18px;position:sticky;top:14px}
+  .grupo h2{font:600 .7rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px 2px}
+  .grupo ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+  .item{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;text-align:left;background:transparent;border:1px solid transparent;border-radius:8px;padding:8px 10px;cursor:pointer}
+  .item:hover{background:var(--surface-2)}
+  .item[aria-current="true"]{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
+  .item .cod{font:500 .75rem var(--mono);color:var(--muted)}
+  .item .tit{font-size:.86rem;line-height:1.3}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok)}
+  .dot.bad{background:var(--bad)}
+
+  .detalle{display:grid;gap:18px;min-width:0}
+  .cabecera{display:grid;gap:10px}
+  .cabecera h2{font:400 1.45rem/1.2 var(--serif);margin:0;text-wrap:balance}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:.76rem;padding:3px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2)}
+  .versiones{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+  .ver{flex:none;display:grid;gap:1px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 11px;cursor:pointer;min-width:120px}
+  .ver .v{font:500 .82rem var(--mono)}
+  .ver .h{font-size:.72rem;color:var(--muted)}
+  .ver .r{font-size:.72rem;font-weight:600;color:var(--ok)}
+  .ver .r.bad{color:var(--bad)}
+  .ver[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+  .ver-nota{font-size:.82rem;color:var(--muted);margin:0}
+
+  .dos{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:start}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;display:grid;gap:14px;min-width:0}
+  .panel h3{font:600 .7rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+  .chat{display:grid;gap:12px;background:var(--surface-2);border-radius:10px;padding:14px}
+  .burbuja{max-width:92%;padding:10px 13px;border-radius:12px;white-space:pre-wrap;font-size:.92rem;line-height:1.5;box-shadow:0 1px 1px rgba(0,0,0,.05);overflow-wrap:anywhere}
+  .burbuja .quien{display:block;font:600 .7rem var(--sans);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;color:var(--muted);white-space:normal}
+  .in{background:var(--bubble-in);border:1px solid var(--line);justify-self:start;border-top-left-radius:3px}
+  .real{background:var(--bubble-real);justify-self:end;border-top-right-radius:3px}
+  .out{background:var(--bubble-out);justify-self:end;border-top-right-radius:3px}
+  .historial{font-size:.8rem;color:var(--muted);white-space:pre-wrap;margin:0}
+  .transcripcion{font-size:.8rem;color:var(--ink-2);border-left:2px solid var(--line-2);padding-left:10px;margin:0}
+  .transcripcion b{color:var(--ink)}
+
+  .lista-asig{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .lista-tag{font:600 .8rem var(--mono);padding:5px 10px;border-radius:6px}
+  .lista-tag.c2{background:var(--c2-soft);color:var(--c2)}
+  .lista-tag.c3{background:var(--c3-soft);color:var(--c3)}
+  .lista-tag.sin{background:var(--surface-2);color:var(--muted);border:1px dashed var(--line-2)}
+  .motivo{font-size:.86rem;color:var(--ink-2);margin:0}
+  dl.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:.86rem}
+  dl.kv dt{color:var(--muted)}
+  dl.kv dd{margin:0}
+  table{border-collapse:collapse;width:100%;font-size:.84rem}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:600;color:var(--muted);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+  td.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .scroll{overflow-x:auto}
+  .tecnicas{display:flex;flex-wrap:wrap;gap:6px}
+  .tec{font:500 .76rem var(--mono);background:var(--accent-soft);color:var(--accent);border-radius:5px;padding:3px 7px;cursor:help}
+  ul.puntos{margin:0;padding-left:1.1em;display:grid;gap:5px;font-size:.86rem}
+  ul.puntos li::marker{color:var(--muted)}
+
+  .chequeos{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+  .ch{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;padding:7px 9px;border-radius:7px;background:var(--ok-soft);font-size:.78rem;line-height:1.35}
+  .ch .c{font:500 .76rem var(--mono);color:var(--ok);grid-row:span 2}
+  .ch .d{color:var(--muted);font-size:.72rem}
+  .ch.bad{background:var(--bad-soft)}
+  .ch.bad .c{color:var(--bad)}
+  .estado{font-weight:700;font-size:.82rem;padding:4px 10px;border-radius:6px;background:var(--ok-soft);color:var(--ok);justify-self:start}
+  .estado.bad{background:var(--bad-soft);color:var(--bad)}
+  .costo{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.8rem;color:var(--muted)}
+  .costo b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+  .archivo{font:.74rem var(--mono);color:var(--muted);overflow-wrap:anywhere;margin:0}
+
+  /* plan y cómo funciona */
+  .plan{display:grid;gap:18px}
+  .plan-top{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:start}
+  .senal{display:grid;gap:5px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+  .senal:last-child{border-bottom:0}
+  .refs{display:flex;flex-wrap:wrap;gap:4px}
+  .ref{font:500 .7rem var(--mono);border:1px solid var(--line);background:var(--surface-2);border-radius:4px;padding:1px 6px;cursor:pointer;color:var(--accent)}
+  .ref:hover{border-color:var(--accent)}
+  .lede{max-width:68ch;color:var(--ink-2);margin:0}
+  .flujo{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;counter-reset:paso}
+  .flujo li{counter-increment:paso;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:6px;align-content:start}
+  .flujo li::before{content:counter(paso);font:400 1.3rem var(--serif);color:var(--accent)}
+  .flujo b{font-size:.92rem}
+  .flujo span{font-size:.82rem;color:var(--ink-2)}
+  .iter td:first-child{font-family:var(--mono);white-space:nowrap}
+  .cita{font-style:italic;color:var(--ink-2)}
+
+  @media (max-width:980px){
+    .consultas{grid-template-columns:1fr}
+    aside.lista{position:static;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .dos,.plan-top{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .item,.ver,nav.tabs button{transition:background .15s ease,border-color .15s ease,color .15s ease}
+  }
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>Copiloto DOMINIA</h1>
+      <p>Visor de corridas del copiloto para asesores comerciales · Casona de los Arcos, Manantiales, Córdoba</p>
+    </div>
+    <div class="facts" id="facts"></div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-vista="consultas">Consultas reales</button>
+      <button role="tab" aria-selected="false" data-vista="plan">Plan de octubre</button>
+      <button role="tab" aria-selected="false" data-vista="como">Cómo funciona</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="vista" id="v-consultas">
+    <div class="consultas">
+      <aside class="lista" id="lista"></aside>
+      <div class="detalle" id="detalle"></div>
+    </div>
+  </section>
+
+  <section class="vista" id="v-plan" hidden></section>
+
+  <section class="vista" id="v-como" hidden>
+    <div class="plan">
+      <div class="panel">
+        <h3>El recorrido de una consulta</h3>
+        <p class="lede">El copiloto nunca le escribe al cliente. Prepara la ficha y el borrador; el asesor revisa, corrige y envía con su firma. Nivel de delegación <b>L2 · ejecuta con revisión</b>. Responsable del sistema: Francisco Alloatti, responsable general de DOMINIA.</p>
+        <ol class="flujo">
+          <li><b>Llega la consulta</b><span>Por WhatsApp, Instagram, portal o una inmobiliaria colega. Los audios se transcriben en la computadora del asesor, con Whisper.</span></li>
+          <li><b>Se arma el contrato</b><span>System prompt con las seis piezas, más la ficha del proyecto y el playbook (28 técnicas con fuente). El programa agrega el calendario.</span></li>
+          <li><b>Consulta el tarifario</b><span>Herramienta <span class="mono">consultar_tarifario</span>, solo lectura: 36 unidades, sin comisiones ni compradores.</span></li>
+          <li><b>Escribe la ficha</b><span>JSON validado contra el esquema: etapa, perfil, lista asignada, unidades, técnicas, borrador, alertas.</span></li>
+          <li><b>12 chequeos en código</b><span>Lista única, precios del tarifario, sin descuentos, fechas coherentes, firma, largo. Si uno falla, la corrida queda bloqueada.</span></li>
+          <li><b>El asesor revisa y envía</b><span>Precio contra la lista del día, lista asignada, agenda real, adjuntos. El copiloto no envía nada.</span></li>
+        </ol>
+      </div>
+      <div class="panel">
+        <h3>Cinco iteraciones, una pieza del contrato por vez</h3>
+        <div class="scroll">
+          <table class="iter" id="iteraciones"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const DATOS = /*__DATOS__*/null;
+(function(){
+"use strict";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const usd = n => "USD " + Number(n).toLocaleString("es-AR");
+const bloqueada = r => /bloquead/i.test(r.resultado || "");
+const recordar = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+const recuperar = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+
+const consultas = DATOS.consultas;
+const corridasTotal = consultas.reduce((a, c) => a + c.corridas.length, 0);
+$("#facts").innerHTML = [
+  `<span><b>${consultas.length}</b> consultas reales, anonimizadas</span>`,
+  `<span><b>${corridasTotal}</b> corridas guardadas</span>`,
+  `<span><b>5</b> iteraciones del contrato</span>`,
+  `<span><b>12</b> reglas verificadas en código</span>`,
+  `<span><b>USD 0,23</b> por consulta en frío · Opus 5</span>`
+].join("");
+
+/* ---------- lista lateral ---------- */
+const GRUPOS = [["colega","Inmobiliarias colegas"],["cliente","Clientes finales"],["coherencia","Prueba de coherencia"]];
+function codigo(c){ return c.id.split("-").slice(0, c.grupo === "coherencia" ? 3 : 1).join("-"); }
+function ultima(c){ return c.corridas[c.corridas.length - 1]; }
+function pintarLista(actual){
+  $("#lista").innerHTML = GRUPOS.map(([g, nombre]) => {
+    const items = consultas.filter(c => c.grupo === g);
+    if (!items.length) return "";
+    return `<div class="grupo"><h2>${nombre}</h2><ul>${items.map(c => {
+      const u = ultima(c);
+      return `<li><button class="item" data-id="${esc(c.id)}" aria-current="${c.id === actual}">
+        <span class="cod">${esc(codigo(c))}</span><span class="tit">${esc(c.titulo)}</span>
+        <span class="dot ${u && bloqueada(u) ? "bad" : ""}" title="${u ? esc(u.resultado) : ""}"></span></button></li>`;
+    }).join("")}</ul></div>`;
+  }).join("");
+  document.querySelectorAll(".item").forEach(b => b.addEventListener("click", () => elegir(b.dataset.id)));
+}
+
+/* ---------- detalle de una consulta ---------- */
+function tagLista(l){
+  const cls = l === "casona_2_terminados" ? "c2" : l === "casona_3_pozo" ? "c3" : "sin";
+  const txt = l === "casona_2_terminados" ? "Casona 2 · terminados" : l === "casona_3_pozo" ? "Casona 3 · en obra" : "Lista sin asignar";
+  return `<span class="lista-tag ${cls}">${txt}</span>`;
+}
+function pintarDetalle(c, idx){
+  const r = c.corridas[idx];
+  const f = r.ficha;
+  const versiones = c.corridas.map((x, i) => `<button class="ver" data-i="${i}" aria-pressed="${i === idx}">
+      <span class="v">${esc(x.version)}</span><span class="h">${esc(x.fecha.slice(11))} · ${esc(x.modelo.replace("claude-",""))}</span>
+      <span class="r ${bloqueada(x) ? "bad" : ""}">${bloqueada(x) ? "bloqueada" : "aprobada"}</span></button>`).join("");
+  const unidades = f.unidades_propuestas.length ? `<div class="scroll"><table><thead><tr><th>Unidad</th><th>Precio de lista</th><th>Por qué</th></tr></thead><tbody>${
+    f.unidades_propuestas.map(u => `<tr><td>${esc(u.edificio)} · <b>${esc(u.unidad)}</b></td><td class="num">${usd(u.precio_lista_usd)}</td><td>${esc(u.por_que_esta)}</td></tr>`).join("")
+  }</tbody></table></div>` : `<p class="motivo">No propone unidades.</p>`;
+  const tokens = r.tokens ? `<span>entrada <b>${r.tokens.entrada.toLocaleString("es-AR")}</b></span><span>caché escrita <b>${r.tokens.cache_escritura.toLocaleString("es-AR")}</b></span><span>caché leída <b>${r.tokens.cache_lectura.toLocaleString("es-AR")}</b></span><span>salida <b>${r.tokens.salida.toLocaleString("es-AR")}</b></span><span>costo <b>USD ${r.costo.toFixed(4).replace(".", ",")}</b></span>` : "";
+  const herramienta = r.herramienta.map(([n, a, res]) => `<li><span class="mono">${esc(n)}</span> ${esc(a)} → ${esc(res.split(":")[0])}</li>`).join("");
+
+  $("#detalle").innerHTML = `
+    <div class="cabecera">
+      <h2>${esc(c.titulo.charAt(0).toUpperCase() + c.titulo.slice(1))}</h2>
+      <div class="chips"><span class="chip">${esc(c.id)}</span><span class="chip">canal: ${esc(c.canal)}</span><span class="chip">${esc(c.fecha)}</span><span class="chip">asesor: ${esc(c.asesor)}</span></div>
+      <div class="versiones" role="group" aria-label="Versiones del contrato">${versiones}</div>
+      <p class="ver-nota">${esc(r.version_detalle)} · sha256 <span class="mono">${esc(r.hash)}</span>. Elegí otra versión para ver cómo cambió la respuesta.</p>
+    </div>
+    <div class="dos">
+      <div class="panel">
+        <h3>La conversación</h3>
+        ${c.historial ? `<p class="historial">${esc(c.historial)}</p>` : ""}
+        <div class="chat">
+          <div class="burbuja in"><span class="quien">${c.grupo === "colega" ? "Inmobiliaria colega" : "Interesado"}</span>${esc(c.consulta)}</div>
+          ${c.real ? `<div class="burbuja real"><span class="quien">Lo que pasó en la realidad</span>${esc(c.real.replace(/^- /gm, "").replace(/\*\*/g, ""))}</div>` : ""}
+          <div class="burbuja out"><span class="quien">Borrador del copiloto · ${esc(r.version)}</span>${esc(f.borrador_mensaje)}</div>
+        </div>
+        ${c.transcripcion ? `<p class="transcripcion"><b>Transcripción del audio.</b> La salida de Whisper tuvo errores que se corrigieron a mano antes de correr el copiloto; el detalle está en la entrada.</p>` : ""}
+        <span class="estado ${bloqueada(r) ? "bad" : ""}">${esc(r.resultado)}</span>
+        <div class="chequeos">${r.chequeos.map(x => `<div class="ch ${x.ok ? "" : "bad"}"><span class="c">${x.ok ? "✓" : "✗"} ${esc(x.codigo)}</span><span>${esc(x.regla)}</span><span class="d">${esc(x.detalle)}</span></div>`).join("")}</div>
+      </div>
+      <div class="panel">
+        <h3>La ficha para el asesor</h3>
+        <div class="lista-asig">${tagLista(f.lista_asignada.lista)}</div>
+        <p class="motivo">${esc(f.lista_asignada.motivo)}</p>
+        <dl class="kv">
+          <dt>Etapa</dt><dd>${esc(f.camino_del_comprador.etapa.replace(/_/g, " "))}</dd>
+          <dt>Perfil</dt><dd>${esc(f.perfil.tipo.replace(/_/g, " "))} · uso ${esc(f.perfil.uso.replace(/_/g, " "))}</dd>
+          <dt>Próximo paso</dt><dd>${esc(f.proximo_paso.accion)}</dd>
+        </dl>
+        ${unidades}
+        <div class="tecnicas">${f.estrategia.tecnicas.map(t => `<span class="tec" title="${esc(t.como_se_aplica)}">${esc(t.codigo)}</span>`).join("")}</div>
+        <h3>Alertas</h3>
+        <ul class="puntos">${f.alertas_para_el_asesor.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+        <h3>Revisar antes de enviar</h3>
+        <ul class="puntos">${f.revisar_antes_de_enviar.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+        <h3>Herramienta y consumo</h3>
+        <ul class="puntos">${herramienta}</ul>
+        <div class="costo">${tokens}</div>
+        <p class="archivo">${esc(r.archivo)}</p>
+      </div>
+    </div>`;
+  document.querySelectorAll(".ver").forEach(b => b.addEventListener("click", () => pintarDetalle(c, Number(b.dataset.i))));
+}
+function elegir(id){
+  const c = consultas.find(x => x.id === id) || consultas[0];
+  recordar("visor-consulta", c.id);
+  pintarLista(c.id);
+  pintarDetalle(c, c.corridas.length - 1);
+}
+
+/* ---------- plan de octubre ---------- */
+function pintarPlan(){
+  const p = DATOS.plan;
+  if (!p) { $("#v-plan").innerHTML = "<p>No hay corridas del plan mensual.</p>"; return; }
+  const f = p.ficha;
+  const listaTxt = l => l === "casona_2_terminados" ? tagLista(l) : tagLista(l);
+  $("#v-plan").innerHTML = `
+    <div class="plan">
+      <div class="cabecera">
+        <h2>Plan de ventas y publicaciones · ${esc(f.mes)}</h2>
+        <div class="chips"><span class="chip">módulo 2</span><span class="chip">${esc(p.fecha)}</span><span class="chip">${esc(p.modelo)}</span><span class="chip">USD ${p.costo.toFixed(4).replace(".", ",")}</span></div>
+        <span class="estado ${bloqueada(p) ? "bad" : ""}">${esc(p.resultado)}</span>
+        <p class="lede">Lee el registro de consultas que dejó el copiloto y el tarifario, y propone qué empujar en el mes. Cada señal de demanda cita las consultas de las que sale: tocá un código para abrirla.</p>
+      </div>
+      <div class="plan-top">
+        <div class="panel">
+          <h3>Señales de demanda</h3>
+          ${f.diagnostico.senales_de_demanda.map(s => `<div class="senal"><span>${esc(s.senal)}</span><span class="refs">${s.consultas.map(id => `<button class="ref" data-id="${esc(id)}">${esc(id)}</button>`).join("")}</span></div>`).join("")}
+        </div>
+        <div class="panel">
+          <h3>Chequeos del plan</h3>
+          <div class="chequeos">${p.chequeos.map(x => `<div class="ch ${x.ok ? "" : "bad"}"><span class="c">${x.ok ? "✓" : "✗"} ${esc(x.codigo)}</span><span>${esc(x.regla)}</span><span class="d">${esc(x.detalle)}</span></div>`).join("")}</div>
+          <p class="motivo">P3 acertó en la pieza #12 (una jornada con colegas que entrega las dos listas) y se equivocó en la #7 (menciona Casona 2 como prueba de que la obra se termina, sin ofrecerla). P5 era un falso positivo y se corrigió en el código. El detalle está en DECISIONES.md.</p>
+          <h3>Riesgos</h3>
+          <ul class="puntos">${f.diagnostico.riesgos.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Prioridades de stock</h3>
+        <div class="scroll"><table><thead><tr><th>Lista</th><th>Unidades</th><th>Por qué</th><th>Para quién</th></tr></thead><tbody>${
+          f.prioridades_de_stock.map(x => `<tr><td>${tagLista(x.edificio === "Casona 2" ? "casona_2_terminados" : "casona_3_pozo")}</td><td class="mono">${esc(x.unidades.join(", "))}</td><td>${esc(x.por_que)}</td><td>${esc(x.para_quien)}</td></tr>`).join("")
+        }</tbody></table></div>
+      </div>
+      <div class="panel">
+        <h3>Calendario de publicaciones</h3>
+        <div class="scroll"><table><thead><tr><th>Semana</th><th>Canal</th><th>Pieza</th><th>Lista</th><th>Técnica</th><th>Mensaje clave</th></tr></thead><tbody>${
+          f.publicaciones.map((x, i) => `<tr><td class="num">${x.semana}</td><td>${esc(x.canal.replace(/_/g, " "))}</td><td>${esc(x.pieza)}</td><td>${listaTxt(x.lista)}</td><td><span class="tec">${esc(x.tecnica)}</span></td><td>${esc(x.mensaje_clave)}</td></tr>`).join("")
+        }</tbody></table></div>
+      </div>
+      <div class="plan-top">
+        <div class="panel"><h3>Objetivos</h3><div class="scroll"><table><thead><tr><th>Métrica</th><th>Meta</th><th>Supuesto</th></tr></thead><tbody>${
+          f.objetivos.map(o => `<tr><td>${esc(o.metrica)}</td><td>${esc(o.meta)}</td><td>${esc(o.supuesto)}</td></tr>`).join("")}</tbody></table></div></div>
+        <div class="panel"><h3>Datos que faltan</h3><ul class="puntos">${f.datos_que_faltan.map(a => `<li>${esc(a)}</li>`).join("")}</ul></div>
+      </div>
+    </div>`;
+  document.querySelectorAll(".ref").forEach(b => b.addEventListener("click", () => { mostrar("consultas"); elegir(b.dataset.id); window.scrollTo(0, 0); }));
+}
+
+/* ---------- iteraciones ---------- */
+$("#iteraciones").innerHTML = `<thead><tr><th>Versión</th><th>Pieza</th><th>Qué falló (textual)</th><th>Qué cambió</th></tr></thead><tbody>
+  <tr><td>v1 → v2</td><td>Restricciones</td><td class="cita">«¿Te queda mejor 12:30 o lo corremos a las 16 y llegamos con todo armado?» — a un colega que ya había propuesto las 12:30</td><td>Si ya propusieron día y hora, se confirma sin condiciones. Al colega se le da la lista que pide.</td></tr>
+  <tr><td>v2 → v3</td><td>Formato</td><td class="cita">«Hola! Todo bien por acá, gracias por escribir 👍» — el asesor nunca se presentaba</td><td>Saludo y presentación del asesor al inicio, firma al final.</td></tr>
+  <tr><td>v3 → v3+</td><td>Contexto</td><td class="cita">«Precio de lista USD 247.582, con 40% de anticipo…» — a un desconocido que escribió a las 2 de la mañana</td><td>Sin precio en el primer mensaje al cliente; la primera pregunta es cómo paga.</td></tr>
+  <tr><td>v3+ → v4</td><td>Formato</td><td class="cita">«❌ V9 Como máximo dos preguntas — 3 pregunta(s)» · «❌ V10 … 127 palabras»</td><td>Dos preguntas en total, incluida la de la visita; 80 a 110 palabras.</td></tr>
+  <tr><td>v4 → v4+</td><td>Pedido puntual</td><td class="cita">«Jueves 11/9 a las 17:00 o sábado 13/9» — el 11/9/2026 era viernes y el 13/9, domingo</td><td>El programa pasa el calendario; el chequeo V12 verifica cada fecha.</td></tr>
+</tbody>`;
+
+/* ---------- pestañas ---------- */
+function mostrar(v){
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.vista === v)));
+  document.querySelectorAll(".vista").forEach(s => s.hidden = s.id !== "v-" + v);
+  recordar("visor-vista", v);
+}
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => mostrar(b.dataset.vista)));
+
+pintarPlan();
+elegir(recuperar("visor-consulta") || "C03-inmob-mostrar-hoy");
+mostrar(recuperar("visor-vista") || "consultas");
+})();
+</script>

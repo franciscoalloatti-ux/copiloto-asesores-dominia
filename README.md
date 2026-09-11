@@ -12,6 +12,7 @@
 | `DECISIONES.md` | La historia: once decisiones y cinco iteraciones, cada una con su error textual |
 | `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
 | `GOBIERNO.md` | Permisos, doce modos de falla con su mitigación, control humano y firma |
+| `visor/index.html` | **Para mirar sin leer los .md**: abrilo en el navegador y elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
 
 ## Qué construí
 
@@ -158,10 +159,10 @@ python sistema/plan_mensual.py --mes 2026-10 --desde 2026-06-01 --hasta 2026-09-
 
 ## Qué falta o qué falló
 
-- **La comparación de modelos no se pudo hacer.** El 11/9 a las 17:45 se terminó el crédito de la
-  API y las corridas con Haiku 4.5 y Sonnet 5 fallaron con *«Your credit balance is too low to access
-  the Anthropic API»* (`corridas/errores/`). El sistema corre con Opus 5, que es el modelo más caro
-  de los tres, y todavía no hay una prueba de que uno más chico no alcance.
+- **La comparación de modelos no se hizo.** El 11/9 a las 17:45 se terminó el crédito de la API y
+  las corridas con Haiku 4.5 y Sonnet 5 fallaron con *«Your credit balance is too low to access the
+  Anthropic API»* (`corridas/errores/`). Después se decidió no cargar más crédito (D-12). El sistema
+  corre con Opus 5, el más caro de los tres, y no hay una prueba de que uno más chico no alcance.
 - **Las corridas finales 07, 08, 09 y las de coherencia** quedaron sin repetir con el contrato
   vigente por la misma razón. Sus versiones con el contrato v1 están en `corridas/`.
 - **El plan de octubre salió bloqueado**, y no está resuelto: la jornada con colegas entrega las dos

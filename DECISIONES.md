@@ -575,5 +575,21 @@ BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_
 - **Lo que queda pendiente** es la comparación con Haiku 4.5 y Sonnet 5, justo la prueba de la
   elección de modelo. Sin crédito no se puede hacer.
 
+### D-12 · No se carga más crédito; la comparación de modelos queda sin hacer (11/9, 18:40)
+
+Se le propuso al responsable cargar USD 10 para terminar la comparación de modelos y las corridas
+pendientes. Respuesta textual:
+
+> no carguemos creditos solo armemos el artefacto este trabajo es individual
+
+**Consecuencia, dicha sin rodeos:** la elección de modelo queda **argumentada pero no probada**. El
+sistema sigue en Opus 5, el más caro de los tres, y `ECONOMIA.md` lo declara así. Las corridas
+finales 07, 08, 09 y de coherencia quedan con su versión v1.
+
+En lugar de eso se armó un **visor** (`visor/index.html`, generado por `sistema/generar_visor.py`
+desde las corridas guardadas, sin llamar a ninguna API): para cada consulta real muestra lo que
+respondió el asesor, el borrador del copiloto en cada versión del contrato, la ficha, los doce
+chequeos y el costo, más el plan de octubre. Se abre en cualquier navegador desde el repositorio.
+
 En total se gastaron **USD 4,94** en la API (suma de las 28 corridas con costo registrado): humo, 26 corridas de consultas exitosas, el plan de
 octubre y las re-corridas de las cinco iteraciones.

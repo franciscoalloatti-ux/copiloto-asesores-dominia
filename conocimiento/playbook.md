@@ -1,6 +1,9 @@
 # Playbook comercial — técnicas que aplica el copiloto
 
-> **Versión 1 (11/9/2026).** Técnicas de la Academia Casona (formación interna de DOMINIA) más las
+> **Versión 2 (11/9/2026)** · Iteración 3: se resolvió la contradicción sobre el precio en el primer
+> mensaje (T-27) y se agregó cuándo va primero la pregunta de cómo paga (T-28).
+>
+> Versión 1: técnicas de la Academia Casona (formación interna de DOMINIA) más las
 > que se pudieron verificar en los manuales de referencia. Cada técnica tiene un código `T-..` para
 > que el copiloto la cite en la ficha, y su fuente. El respaldo completo de cada fuente —URL, fecha
 > de consulta y qué no se pudo verificar— está en `conocimiento/fuentes_manuales.md`.
@@ -54,6 +57,18 @@ Corredores Públicos Inmobiliarios de Córdoba** (PDF del propio Colegio).
   una tipología que no hay en terminado). *(Academia Casona)*
 - **T-04 · El trabajo que tiene que hacer el departamento.** «¿Qué te llevó a empezar a mirar ahora?»
   devuelve el motivo real y la urgencia. *(Christensen, Jobs to be Done, vía Academia Casona)*
+- **T-27 · Al cliente, el primer mensaje va sin precio.** Aunque haya elegido una unidad desde la
+  web, el primer mensaje confirma que está disponible, da su diferencial y la forma de pago en
+  términos generales («disponible en cuotas durante la obra», «apto crédito»), y lleva la
+  conversación a la visita. El precio se da **cuando lo pide** —y entonces una sola cifra, la de
+  esa unidad— o en la visita, después de la implicancia (T-06). Por qué: sin rapport ni el número
+  contra el que se lo compara, el precio cierra la conversación en vez de abrirla. *(Academia Casona,
+  T-01 y T-06; Forte, blog del autor: no negociar en el primer contacto; Villarroya: el objetivo es
+  el avance)* **A un colega sí se le manda la lista** (T-26).
+- **T-28 · Si la lista salió del botón, la primera pregunta es cómo paga.** Cuando la lista quedó
+  asignada por la unidad que eligió en la web y no por lo que dijo de su forma de pago, la primera
+  pregunta es la T-03 («¿cómo pensabas pagarlo?»), no el uso. Si califica a crédito, el terminado
+  le puede convenir más (T-13), y eso solo se sabe preguntando. *(Academia Casona)*
 - **T-17 · Responder a la persona antes que a la consulta.** Retomar lo que escribió (se muda con su
   pareja, alquila en tal barrio) antes de dar un dato. *(Forte, descripción del libro)*
 
@@ -135,9 +150,12 @@ escrito integran la oferta. Por eso no se escribe nada que no esté en la ficha 
 *(Ley 9445 art. 16 y Código de Ética CPI Córdoba; jurisprudencia de Córdoba citada en
 `fuentes_manuales.md`)*
 
+A un **cliente final**:
+
 | Se muestra | No se muestra |
 |---|---|
-| Un «desde USD …» o **una** unidad ancla que responde a lo que pidió | La lista completa, ni la de la otra etapa |
+| Que la unidad que pidió está disponible, y su diferencial | **El precio en el primer mensaje** (T-27): va cuando lo pide, una sola cifra, o en la visita |
+| Si pregunta el precio: el de **esa** unidad, una sola cifra | La lista completa, ni la de la otra etapa |
 | El diferencial que le importa a esa persona (DVH, jardín, canal de nado, plan en pesos) | Descuentos, márgenes o comisiones |
 | La forma de pago de **su** lista | La comparación de precio entre terminado y pozo |
 | La invitación a la visita con dos horarios | Promesas: fecha de entrega cerrada, aprobación de crédito, rentabilidad, expensas que bajan |

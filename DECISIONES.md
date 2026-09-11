@@ -385,3 +385,40 @@ ver cuál de las dos pesaba más.
 
    Lo que hay que sacar para que entre es el precio y el plan del primer mensaje, que es justamente
    la iteración 3. Se deja así a propósito para ver si la iteración 3 lo resuelve sola.
+
+## Iteración 3 · pieza: CONTEXTO (playbook v1 → v2) · 11/9 17:24
+
+**Qué falló** (corridas 05, 06 y coherencia, v1). A leads desconocidos, el primer mensaje daba
+precio y plan completos (*«Precio de lista USD 247.582, con 40% de anticipo…»*), porque la tabla
+*qué se muestra* permitía «una unidad ancla» y la T-06 decía lo contrario. Y la lista se asignaba
+por el botón que tocó sin preguntar cómo paga.
+
+**Qué se cambió** (solo `conocimiento/playbook.md`, anexo del system prompt; el system prompt no se tocó):
+
+- **T-27 · Al cliente, el primer mensaje va sin precio**: disponibilidad, diferencial y forma de pago
+  en términos generales; el precio, cuando lo pide (una sola cifra) o en la visita. A un colega sí
+  se le manda la lista. Es la decisión D-10 del responsable.
+- **T-28 · Si la lista salió del botón, la primera pregunta es cómo paga** (T-03), para poder aplicar
+  la T-13 si califica a crédito.
+- La tabla *qué se muestra* se separó para el cliente final y se sacó la «unidad ancla».
+
+**Qué cambió en la salida:**
+
+| | v3 (antes) | v3 + playbook v2 |
+|---|---|---|
+| **06** · `2026-09-11_1724_…` | *«Precio de lista USD 247.582, con 40% de anticipo…»* · 125 palabras | *«Se paga con un anticipo y cuotas mensuales durante la obra, en dólares o en pesos ajustados.»* · primera pregunta: *«¿cómo pensabas pagarlo?»* · **117 palabras** |
+| **05** · `2026-09-11_1726_…` | *«Precio USD 241.706, con 40% de anticipo…»* | Sin precio · *«Para pasarte el plan que realmente te sirva, ¿cómo pensabas pagarlo?»* |
+
+El precio salió de los dos y la pregunta que define la lista pasó a ser la primera: el copiloto
+citó T-27 y T-28 en su estrategia. **Pero las dos siguen bloqueadas**, cada una por una regla distinta:
+
+```text
+06 · ❌ V9 Como máximo dos preguntas — 3 pregunta(s)
+05 · ❌ V10 Menos de 120 palabras en WhatsApp o Instagram — 127 palabras · canal whatsapp
+```
+
+La hipótesis de la iteración 2 era que, sacando el precio, el borrador iba a entrar solo. **Salió
+a medias:** la 06 bajó de 125 a 117 palabras, pero la 05 quedó en 127, porque el modelo usó el
+espacio liberado para contar el recorrido de la visita. Y el problema de las tres preguntas no
+depende del precio: está en la ambigüedad del formato («hasta dos preguntas» + «el próximo paso»).
+Las dos cosas son de la pieza *formato*: van a la iteración 4.

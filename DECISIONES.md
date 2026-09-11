@@ -287,3 +287,59 @@ segundos de audio, 45 de proceso, y el audio no sale de la computadora. Cometió
 cambiaban el sentido (*«Toda es muy buena pérdida con super buen precio»* por «calidad») y se
 corrigieron contra la transcripción de WhatsApp. La transcripción es un paso con revisión humana,
 no una entrada confiable.
+
+### D-10 · Decisiones del responsable sobre las fallas (11/9, 17:12)
+
+Se le presentaron las fallas y cuatro preguntas. Respuestas textuales:
+
+- **Colegas:** *«lo que pida, si esta buscando en poso lista casona 3 y si no la 2. Pero esta bueno lo
+  del perfil de cliente. LA casona 3 es un excel que lo mandaria en formato de lista tambien»*.
+- **Presentación:** presentarse al inicio **y** firmar al final.
+- **Precio en el primer mensaje a un cliente:** *«Sin precio como recomendas y siguiendo los pasos
+  de los manuales. Justamente quiero transformar asesores comunes en los mejores»*.
+- **Plan:** tres iteraciones, una pieza por vez, en este orden: restricciones → formato → contexto.
+
+---
+
+## Iteración 1 · pieza: RESTRICCIONES · contrato v1 → v2 · 11/9 17:15
+
+**Qué falló** (corrida 03, v1, `corridas/2026-09-11_1650_C03-inmob-mostrar-hoy_opus-5.md`). El colega
+propuso mostrar hoy a las 12:30 y el borrador respondió:
+
+> ¿Te queda mejor 12:30 o lo corremos a las 16 y llegamos con todo armado? Confirmame por acá.
+
+Y en la 04 (v1), a una colega que preguntó si había 2 dormitorios, el copiloto no le mandó nada:
+la lista quedó `sin_asignar_aun` hasta que respondiera el perfil de su cliente.
+
+**Qué se cambió** (solo la pieza *restricciones* de `prompts/system_prompt.md`):
+
+- **Nueva restricción 13 — «La visita ya propuesta se confirma»**: si el interesado o el colega ya
+  propuso día y hora, se confirma sin condiciones y sin ofrecer otro horario; lo que falte se pide
+  en paralelo, nunca como requisito.
+- **Restricción 8**: el cierre del borrador es la confirmación, si la visita ya está propuesta.
+- **Restricción 12 reescrita** con la decisión D-10: al colega se le da la lista que pide (Casona 3
+  si busca pozo o cuotas; si no, Casona 2), nunca las dos, y el perfil del cliente se pide sin
+  condicionar la lista a esa respuesta.
+
+**Qué cambió en la salida** (mismas entradas, contrato v2):
+
+| | v1 | v2 |
+|---|---|---|
+| **03** · `2026-09-11_1716_…` | «¿Te queda mejor 12:30 o lo corremos a las 16…?» · lista sin asignar | *«te confirmo: hoy 12:30 en Costanera de La Cañada 4140»* · lista `casona_2_terminados` · el perfil se pide «para tenerte preparado lo justo» |
+| **04** · `2026-09-11_1718_…` | No manda lista, pide perfil primero | *«Te adjunto la lista con superficies, precios y expensas para que la trabajes con tu cliente»* · `revisar_antes_de_enviar`: *«Adjuntar vos el PDF/planilla de la lista de Casona 2»* |
+
+La v2 hace lo mismo que hizo el asesor real en las dos: aceptar la visita y mandar la lista de Casona 2.
+
+**Lo que la iteración 1 no arregló, y un error nuevo:**
+
+- El tono con colegas sigue igual (*«Hola! Todo bien por acá, gracias por escribir 👍»*) y la
+  presentación no aparece: es la iteración 2.
+- **Error nuevo en la 04 (v2): fechas con el día de la semana equivocado.** La consulta es del
+  jueves 10/9/2026 y el borrador propone:
+
+  > ¿te sirve el jueves 17 hs o el sábado 10 hs?
+
+  con `propuesta_de_visita`: *«Jueves 11/9 a las 17:00 o sábado 13/9 a las 10:00»*. El 11/9/2026 es
+  **viernes** y el 13/9 es **domingo**. El modelo calcula mal el día de la semana a partir de la
+  fecha. Ninguno de los diez chequeos lo detecta. Queda para una iteración propia: que el ejecutor
+  le pase el calendario y que un chequeo nuevo verifique cada par «día + fecha».

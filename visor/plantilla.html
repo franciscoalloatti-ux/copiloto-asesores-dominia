@@ -144,6 +144,20 @@
   .iter td:first-child{font-family:var(--mono);white-space:nowrap}
   .cita{font-style:italic;color:var(--ink-2)}
 
+  /* usar el copiloto */
+  .usar{display:grid;gap:18px;max-width:980px}
+  .campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+  label{display:grid;gap:5px;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  input,select,textarea{font:400 .92rem/1.5 var(--sans);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;text-transform:none;letter-spacing:0}
+  textarea{resize:vertical;min-height:60px}
+  .acciones{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer}
+  .btn:disabled{opacity:.55;cursor:progress}
+  .btn.sec{background:transparent;color:var(--accent);border:1px solid var(--line-2);font-weight:500;padding:7px 13px;font-size:.85rem}
+  .aviso{font-size:.84rem;color:var(--muted)}
+  .aviso.error{color:var(--bad)}
+  .paso{font-size:.82rem;color:var(--muted);font-family:var(--mono)}
+
   @media (max-width:980px){
     .consultas{grid-template-columns:1fr}
     aside.lista{position:static;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
@@ -162,7 +176,8 @@
     </div>
     <div class="facts" id="facts"></div>
     <nav class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" data-vista="consultas">Consultas reales</button>
+      <button role="tab" aria-selected="true" data-vista="usar">Usar el copiloto</button>
+      <button role="tab" aria-selected="false" data-vista="consultas">Consultas reales</button>
       <button role="tab" aria-selected="false" data-vista="plan">Plan de octubre</button>
       <button role="tab" aria-selected="false" data-vista="como">Cómo funciona</button>
     </nav>
@@ -170,7 +185,38 @@
 </header>
 
 <main>
-  <section class="vista" id="v-consultas">
+  <section class="vista" id="v-usar">
+    <div class="usar">
+      <form class="panel" id="form" autocomplete="off">
+        <h3>Una consulta nueva</h3>
+        <p class="lede">Pegá el mensaje tal como llegó. El copiloto consulta el tarifario, arma la ficha y deja el borrador; vos lo revisás y lo mandás. Viene cargado un ejemplo: reemplazalo.</p>
+        <div class="campos">
+          <label>Canal
+            <select name="canal">
+              <option value="whatsapp">WhatsApp</option>
+              <option value="instagram">Instagram</option>
+              <option value="portal">Portal</option>
+              <option value="inmobiliaria">Inmobiliaria colega</option>
+              <option value="otro">Otro</option>
+            </select>
+          </label>
+          <label>Asesor que firma <input name="asesor" value="Francisco" required></label>
+          <label>Fecha de la consulta <input name="fecha" type="date" required></label>
+        </div>
+        <label class="ancho">Conversación previa, si hay
+          <textarea name="historial" rows="2" placeholder="Vacío si es el primer contacto"></textarea></label>
+        <label class="ancho">La consulta
+          <textarea name="consulta" rows="4" required></textarea></label>
+        <div class="acciones">
+          <button class="btn" type="submit" id="btn-correr">Preparar respuesta</button>
+          <span class="aviso" id="aviso"></span>
+        </div>
+      </form>
+      <div id="resultado"></div>
+    </div>
+  </section>
+
+  <section class="vista" id="v-consultas" hidden>
     <div class="consultas">
       <aside class="lista" id="lista"></aside>
       <div class="detalle" id="detalle"></div>
@@ -367,6 +413,206 @@ $("#iteraciones").innerHTML = `<thead><tr><th>Versión</th><th>Pieza</th><th>Qu�
   <tr><td>v4 → v4+</td><td>Pedido puntual</td><td class="cita">«Jueves 11/9 a las 17:00 o sábado 13/9» — el 11/9/2026 era viernes y el 13/9, domingo</td><td>El programa pasa el calendario; el chequeo V12 verifica cada fecha.</td></tr>
 </tbody>`;
 
+/* ---------- usar el copiloto en vivo ---------- */
+const C = DATOS.contrato;
+const DIAS = ["lunes","martes","miércoles","jueves","viernes","sábado","domingo"];
+const diaDe = d => DIAS[(d.getDay() + 6) % 7];
+const norm = s => String(s).replace(/°/g, "º").replace(/\s+/g, "").toUpperCase();
+const EJEMPLO = "Hola! Me interesa PB C (2 Dorm · 2 Baños) de Casona III. Es para vivir con mi señora, hoy alquilamos. Gracias!";
+
+function calendario(fecha){
+  const d0 = new Date(fecha + "T12:00:00");
+  return Array.from({length: 9}, (_, i) => {
+    const d = new Date(d0); d.setDate(d0.getDate() + i);
+    return `- ${diaDe(d)} ${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}` + (i ? "" : " (día de la consulta)");
+  }).join("\n");
+}
+function consultarTarifario({edificio, dormitorios, unidad, precio_max_usd, incluir_no_disponibles}){
+  const filas = C.tarifario.filter(f =>
+    (edificio === "todos" || f.edificio === edificio) &&
+    (dormitorios == null || Number(f.dormitorios) === dormitorios) &&
+    (!unidad || norm(f.unidad) === norm(unidad)) &&
+    (precio_max_usd == null || Number(f.precio_lista_usd) <= precio_max_usd) &&
+    (incluir_no_disponibles || f.disponible === "si"));
+  return {fuente: "herramientas/tarifario_vigente.csv", cantidad: filas.length, unidades: filas};
+}
+function verificar(f, datos, llamadas){
+  const out = [], ch = (codigo, regla, ok, detalle = "") => out.push({codigo, regla, ok, detalle});
+  const borrador = f.borrador_mensaje || "";
+  const lista = f.lista_asignada.lista;
+  const edif = lista === "casona_2_terminados" ? "Casona 2" : lista === "casona_3_pozo" ? "Casona 3" : null;
+  ch("V1", "Consultó el tarifario antes de responder", llamadas.length > 0, `${llamadas.length} llamada(s)`);
+  const edificios = [...new Set(f.unidades_propuestas.map(u => u.edificio))];
+  ch("V2", "Lista única: unidades de un solo edificio y coherentes con la lista asignada",
+     edif ? edificios.every(e => e === edif) : f.unidades_propuestas.length === 0,
+     `lista=${lista}; edificios propuestos=${edificios.join(", ") || "—"}`);
+  const malas = [];
+  for (const u of f.unidades_propuestas){
+    const fila = C.tarifario.find(x => x.edificio === u.edificio && norm(x.unidad) === norm(u.unidad));
+    if (!fila) malas.push(`${u.edificio} ${u.unidad}: no existe en el tarifario`);
+    else if (Number(fila.precio_lista_usd) !== u.precio_lista_usd) malas.push(`${u.unidad}: USD ${u.precio_lista_usd} ≠ tarifario USD ${fila.precio_lista_usd}`);
+    else if (fila.disponible !== "si") malas.push(`${u.unidad}: no está disponible`);
+  }
+  ch("V3", "Precios y disponibilidad idénticos al tarifario", !malas.length, malas.join("; "));
+  ch("V4", "Hasta 3 unidades propuestas", f.unidades_propuestas.length <= 3, `${f.unidades_propuestas.length} unidad(es)`);
+  const montos = [...borrador.matchAll(/USD\s*([\d.]{4,})/g)].map(m => Number(m[1].replace(/\./g, "")));
+  const permitidos = new Set();
+  C.tarifario.filter(x => x.edificio === edif).forEach(x => ["precio_lista_usd","anticipo_usd","cuota_mensual_usd","saldo_contra_entrega_usd"]
+    .forEach(k => { if (x[k]) permitidos.add(Number(x[k])); }));
+  const fuera = montos.filter(m => !permitidos.has(m));
+  ch("V5", "Todo monto en USD del borrador sale del tarifario de la lista asignada", !fuera.length,
+     fuera.length ? `montos no respaldados: ${fuera.join(", ")}` : `${montos.length} monto(s)`);
+  const prohibidas = ["descuento","bonificaci","comisi","rebaja"].filter(p => borrador.toLowerCase().includes(p));
+  ch("V6", "El borrador no menciona descuentos ni comisiones", !prohibidas.length, prohibidas.join(", "));
+  const promesas = ["garantiz","te aseguro","sin dudas","se revaloriza","rentabilidad asegurada","olímpica","semiolímpica",
+                    "seguro de caución","fecha cierta","últimas unidades","última unidad","solo por hoy","decidí hoy"]
+                   .filter(p => borrador.toLowerCase().includes(p));
+  ch("V7", "El borrador no promete lo que no se puede cumplir ni mete urgencia artificial", !promesas.length, promesas.join(", "));
+  const firma = `${datos.asesor}, Asesor Comercial de DOMINIA`;
+  ch("V8", "Firma exacta del asesor", borrador.trim().endsWith(firma), `esperada: «${firma}»`);
+  const primera = borrador.trim().split("\n")[0] || "";
+  ch("V11", "El asesor se presenta en la primera línea", primera.includes(datos.asesor), `primera línea: «${primera.slice(0, 80)}»`);
+  const preguntas = (borrador.match(/\?/g) || []).length;
+  ch("V9", "Como máximo dos preguntas", preguntas <= 2, `${preguntas} pregunta(s)`);
+  const palabras = borrador.split(/\s+/).filter(Boolean).length;
+  const corto = ["whatsapp","instagram"].includes(datos.canal);
+  ch("V10", "Menos de 120 palabras en WhatsApp o Instagram", palabras < 120 || !corto, `${palabras} palabras · canal ${datos.canal}`);
+  const d0 = new Date(datos.fecha + "T12:00:00"), errados = [];
+  const texto = (borrador + " " + (f.proximo_paso.propuesta_de_visita || "")).toLowerCase();
+  for (const m of texto.matchAll(/(lunes|martes|miércoles|jueves|viernes|sábado|domingo)\s+(\d{1,2})\/(\d{1,2})/g)){
+    const anio = d0.getFullYear() + (Number(m[3]) < d0.getMonth() + 1 ? 1 : 0);
+    const real = diaDe(new Date(anio, Number(m[3]) - 1, Number(m[2])));
+    if (real !== m[1]) errados.push(`«${m[1]} ${m[2]}/${m[3]}» es ${real}`);
+  }
+  ch("V12", "Días de la semana coherentes con las fechas propuestas", !errados.length,
+     errados.join("; ") || `${[...texto.matchAll(/\d{1,2}\/\d{1,2}/g)].length} fecha(s) verificada(s)`);
+  return out.sort((a, b) => Number(a.codigo.slice(1)) - Number(b.codigo.slice(1)));
+}
+function corridaMarkdown(datos, f, llamadas, chequeos){
+  const ok = chequeos.every(c => c.ok);
+  return [`# Corrida en vivo · ${datos.consulta_id} · ${new Date().toLocaleString("es-AR")}`, "",
+    "| Campo | Valor |", "|---|---|", `| Fecha de la corrida | ${new Date().toISOString().slice(0, 16).replace("T", " ")} |`,
+    "| Modelo | el del visor (capacidad `sample` de la página) |",
+    `| Archivo de entrada | consulta cargada en el visor |`,
+    `| Resultado | ${ok ? "aprobada para revisión" : "BLOQUEADA: corregir antes de enviar"} |`, "",
+    "## Entrada", "", "```markdown", `consulta_id: ${datos.consulta_id}`, `asesor: ${datos.asesor}`,
+    `canal: ${datos.canal}`, `fecha: ${datos.fecha}`, "", "## Historial", "", datos.historial || "",
+    "", "## Consulta", "", datos.consulta, "```", "", "## Llamadas a la herramienta", "",
+    ...llamadas.map((l, i) => `${i + 1}. \`consultar_tarifario(${JSON.stringify(l.input)})\` → ${l.cantidad} unidad(es)`),
+    "", "## Salida", "", "```json", JSON.stringify(f, null, 2), "```", "",
+    "## Verificación automática de reglas duras", "", "| | Regla | Detalle |", "|---|---|---|",
+    ...chequeos.map(c => `| ${c.ok ? "✅" : "❌"} ${c.codigo} | ${c.regla} | ${c.detalle} |`), "",
+    "## Revisión humana", "", "- Revisó:", "- Cambios al borrador:", "- ¿Se envió?:", "- Respuesta del interesado:", ""
+  ].join("\n");
+}
+function pintarResultado(datos, f, llamadas, chequeos){
+  const ok = chequeos.every(c => c.ok);
+  const unidades = f.unidades_propuestas.length ? `<div class="scroll"><table><thead><tr><th>Unidad</th><th>Precio de lista</th><th>Por qué</th></tr></thead><tbody>${
+    f.unidades_propuestas.map(u => `<tr><td>${esc(u.edificio)} · <b>${esc(u.unidad)}</b></td><td class="num">${usd(u.precio_lista_usd)}</td><td>${esc(u.por_que_esta)}</td></tr>`).join("")}</tbody></table></div>`
+    : `<p class="motivo">No propone unidades.</p>`;
+  $("#resultado").innerHTML = `<div class="dos">
+      <div class="panel">
+        <h3>Borrador para revisar y enviar</h3>
+        <div class="chat">
+          <div class="burbuja in"><span class="quien">La consulta</span>${esc(datos.consulta)}</div>
+          <div class="burbuja out"><span class="quien">Borrador del copiloto</span>${esc(f.borrador_mensaje)}</div>
+        </div>
+        <div class="acciones">
+          <button class="btn sec" id="copiar">Copiar borrador</button>
+          <button class="btn sec" id="bajar">Descargar la corrida (.md)</button>
+          <span class="aviso" id="aviso2"></span>
+        </div>
+        <span class="estado ${ok ? "" : "bad"}">${ok ? "aprobada para revisión" : "BLOQUEADA: corregir antes de enviar"}</span>
+        <div class="chequeos">${chequeos.map(x => `<div class="ch ${x.ok ? "" : "bad"}"><span class="c">${x.ok ? "✓" : "✗"} ${esc(x.codigo)}</span><span>${esc(x.regla)}</span><span class="d">${esc(x.detalle)}</span></div>`).join("")}</div>
+      </div>
+      <div class="panel">
+        <h3>La ficha para el asesor</h3>
+        <div class="lista-asig">${tagLista(f.lista_asignada.lista)}</div>
+        <p class="motivo">${esc(f.lista_asignada.motivo)}</p>
+        <dl class="kv">
+          <dt>Etapa</dt><dd>${esc(f.camino_del_comprador.etapa.replace(/_/g, " "))}</dd>
+          <dt>Perfil</dt><dd>${esc(f.perfil.tipo.replace(/_/g, " "))} · uso ${esc(f.perfil.uso.replace(/_/g, " "))}</dd>
+          <dt>Próximo paso</dt><dd>${esc(f.proximo_paso.accion)}</dd>
+        </dl>
+        ${unidades}
+        <div class="tecnicas">${f.estrategia.tecnicas.map(t => `<span class="tec" title="${esc(t.como_se_aplica)}">${esc(t.codigo)}</span>`).join("")}</div>
+        <h3>Alertas</h3><ul class="puntos">${f.alertas_para_el_asesor.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+        <h3>Revisar antes de enviar</h3><ul class="puntos">${f.revisar_antes_de_enviar.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+        <h3>Herramienta</h3><ul class="puntos">${llamadas.map(l => `<li><span class="mono">consultar_tarifario</span> ${esc(JSON.stringify(l.input))} → ${l.cantidad} unidad(es)</li>`).join("")}</ul>
+      </div>
+    </div>`;
+  $("#copiar").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(f.borrador_mensaje); $("#aviso2").textContent = "Borrador copiado."; }
+    catch (e) { $("#aviso2").textContent = "No se pudo copiar; seleccionalo a mano."; }
+  });
+  $("#bajar").addEventListener("click", async () => {
+    const downloads = await claude.use("downloads");
+    if (!downloads) { $("#aviso2").textContent = "La descarga no está disponible en esta vista."; return; }
+    try {
+      await downloads.save({filename: `${datos.consulta_id}.md`, data: corridaMarkdown(datos, f, llamadas, chequeos)});
+      $("#aviso2").textContent = "Corrida descargada: guardala en corridas/ del repositorio.";
+    } catch (e) { $("#aviso2").textContent = "La descarga se canceló."; }
+  });
+}
+
+const form = $("#form");
+form.fecha.value = new Date().toISOString().slice(0, 10);
+form.consulta.value = EJEMPLO;
+form.addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const datos = {
+    canal: form.canal.value, asesor: form.asesor.value.trim(), fecha: form.fecha.value,
+    historial: form.historial.value.trim(), consulta: form.consulta.value.trim(),
+    consulta_id: "VIVO-" + new Date().toISOString().slice(0, 16).replace(/[-:T]/g, ""),
+  };
+  const sample = await claude.use("sample");
+  if (!sample) { $("#aviso").textContent = "Esta vista no puede consultar a Claude; abrí el artefacto desde tu cuenta."; $("#aviso").className = "aviso error"; return; }
+  $("#btn-correr").disabled = true;
+  $("#aviso").className = "aviso";
+  $("#aviso").textContent = "Consultando el tarifario y escribiendo la ficha…";
+  const llamadas = [];
+  const user = C.user
+    .replace("{asesor}", datos.asesor).replace("{canal}", datos.canal).replace("{fecha}", datos.fecha)
+    .replace("{dia_consulta}", diaDe(new Date(datos.fecha + "T12:00:00"))).replace("{consulta_id}", datos.consulta_id)
+    .replace("{notas}", "Cargada desde el visor del copiloto.").replace("{calendario}", calendario(datos.fecha))
+    .replace("{historial}", datos.historial || "(sin datos)").replace("{consulta}", datos.consulta)
+    + "\n\nDevolvé únicamente un objeto JSON válido, sin texto alrededor, con este esquema:\n"
+    + JSON.stringify(C.esquema);
+  try {
+    const f = await sample.json([{role: "user", content: C.system + "\n\n---\n\n" + user}], {
+      modelTier: "complex",
+      onText: () => { $("#aviso").textContent = "Escribiendo la ficha y el borrador…"; },
+      tools: [{
+        name: "consultar_tarifario",
+        description: "Devuelve las unidades del tarifario vigente de Casona de los Arcos que cumplen los filtros. Es la ÚNICA fuente de precios: usala antes de nombrar cualquier unidad o precio. Los filtros que no mandes no filtran. Por defecto solo devuelve unidades disponibles.",
+        inputSchema: {type: "object", properties: {
+          edificio: {type: "string", enum: ["Casona 2", "Casona 3", "todos"], description: "Casona 2 = terminados; Casona 3 = en obra."},
+          dormitorios: {type: "integer", description: "1, 2 o 3"},
+          unidad: {type: "string", description: "Designación exacta, por ejemplo 'PB C' o '2º F'"},
+          precio_max_usd: {type: "integer"},
+          incluir_no_disponibles: {type: "boolean"}},
+          required: ["edificio"]},
+        execute: input => {
+          const r = consultarTarifario(input);
+          llamadas.push({input, cantidad: r.cantidad});
+          $("#aviso").textContent = `Consultó el tarifario (${r.cantidad} unidad(es))…`;
+          return r;
+        },
+      }],
+    });
+    const chequeos = verificar(f, datos, llamadas);
+    $("#aviso").textContent = "";
+    pintarResultado(datos, f, llamadas, chequeos);
+    const db = await claude.use("db");
+    if (db) { try { await db.doc("corridas_vivo/" + datos.consulta_id).set({...datos, ficha: f, chequeos}); } catch (e) {} }
+  } catch (e) {
+    $("#aviso").className = "aviso error";
+    $("#aviso").textContent = e && e.code === "rate_limited" ? "Claude está ocupado: probá de nuevo en un minuto."
+      : e && e.code === "not_granted" ? "Hace falta tu permiso para consultar a Claude."
+      : "No se pudo preparar la respuesta: " + ((e && e.message) || e);
+  } finally { $("#btn-correr").disabled = false; }
+});
+
 /* ---------- pestañas ---------- */
 function mostrar(v){
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.vista === v)));
@@ -377,6 +623,13 @@ document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("cl
 
 pintarPlan();
 elegir(recuperar("visor-consulta") || "C03-inmob-mostrar-hoy");
-mostrar(recuperar("visor-vista") || "consultas");
+mostrar(recuperar("visor-vista") || "usar");
+claude.use("sample").then(s => {
+  if (!s) {
+    $("#aviso").className = "aviso error";
+    $("#aviso").textContent = "Esta vista no puede consultar a Claude: abrí el artefacto desde tu cuenta para usar el copiloto.";
+    $("#btn-correr").disabled = true;
+  }
+});
 })();
 </script>

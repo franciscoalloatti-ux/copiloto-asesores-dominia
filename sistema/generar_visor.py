@@ -6,6 +6,7 @@ y escribe visor/index.html con los datos embebidos. No llama a ninguna API.
 Uso:
     python sistema/generar_visor.py
 """
+import csv
 import json
 import re
 from pathlib import Path
@@ -69,7 +70,19 @@ def main():
             "corridas": corridas,
         })
     plan = [leer_corrida(p) for p in sorted((RAIZ / "corridas" / "plan_mensual").glob("*.md"))]
-    datos = {"consultas": consultas, "plan": plan[-1] if plan else None}
+    leer = lambda *p: (RAIZ.joinpath(*p)).read_text(encoding="utf-8")
+    system = leer("prompts", "system_prompt.md")
+    for anexo in ("proyecto.md", "playbook.md"):
+        system += "\n\n---\n\n# ANEXO · " + leer("conocimiento", anexo)
+    datos = {
+        "consultas": consultas, "plan": plan[-1] if plan else None,
+        "contrato": {
+            "system": system,
+            "user": leer("prompts", "user_prompt.md").split("\n---\n", 1)[-1],
+            "esquema": json.loads(leer("sistema", "esquema_ficha.json")),
+            "tarifario": list(csv.DictReader((RAIZ / "herramientas" / "tarifario_vigente.csv").open(encoding="utf-8"))),
+        },
+    }
     plantilla = (RAIZ / "visor" / "plantilla.html").read_text(encoding="utf-8")
     salida = plantilla.replace("/*__DATOS__*/null", json.dumps(datos, ensure_ascii=False).replace("</", "<\\/"))
     (RAIZ / "visor" / "index.html").write_text(salida, encoding="utf-8")

@@ -644,5 +644,29 @@ día de la semana (iteración 5): **lo que se cuenta, se cuenta en código**. Se
 módulo 2 (*«No cuentes unidades de memoria»*), pero **sin corrida que lo pruebe**, porque no hay
 crédito (D-12).
 
+### D-14 · Un front para usarlo, que no depende del crédito de la API (11/9, 19:00)
+
+> pero lo quiero con un front que pueda usarlo
+
+El visor mostraba corridas viejas; el responsable quiere **usar** el copiloto. Se le agregó la
+pestaña **«Usar el copiloto»**: se pega la consulta, la página consulta el tarifario, arma la ficha
+y el borrador, corre los doce chequeos y ofrece copiar el borrador o descargar la corrida en `.md`
+para guardarla en `corridas/`.
+
+**Por qué funciona sin crédito.** Una página publicada puede pedirle una respuesta a Claude con la
+capacidad `sample`, **a cuenta de la suscripción de quien la abre**, no de la API. La misma página
+implementa la herramienta `consultar_tarifario` en JavaScript sobre el tarifario embebido, así que
+el recorrido es el mismo que el del ejecutor de Python: contrato → herramienta → ficha JSON →
+chequeos → revisión humana.
+
+**Lo que hay que tener presente, y es una deuda real:** los doce chequeos ahora existen **dos
+veces**, en `sistema/copiloto.py` y en `visor/plantilla.html`. Si se toca una regla hay que tocar
+las dos, o el front y el ejecutor van a decir cosas distintas sobre el mismo borrador. La forma
+correcta de resolverlo sería que las reglas vivan en un solo archivo de datos que lean los dos; no
+se hizo por tiempo, y queda declarado como lo que es: duplicación.
+
+**Lo que habilita.** Con esto se puede hacer la prueba que faltaba para la rúbrica: correr una
+consulta nueva de verdad, mandar el borrador y anotar qué respondió la persona.
+
 En total se gastaron **USD 4,94** en la API (suma de las 28 corridas con costo registrado): humo, 26 corridas de consultas exitosas, el plan de
 octubre y las re-corridas de las cinco iteraciones.

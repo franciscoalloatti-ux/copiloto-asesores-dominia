@@ -12,7 +12,7 @@
 | `DECISIONES.md` | La historia: trece decisiones y cinco iteraciones, cada una con su error textual |
 | `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
 | `GOBIERNO.md` | Permisos, catorce modos de falla con su mitigación, control humano y firma |
-| `visor/index.html` | **Para mirar sin leer los .md**: abrilo en el navegador y elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
+| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto, la pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha y el borrador y corre los doce chequeos, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
 
 ## Qué construí
 

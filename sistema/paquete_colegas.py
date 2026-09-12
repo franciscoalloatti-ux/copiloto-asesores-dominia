@@ -82,8 +82,10 @@ def main():
     for e, archivo in (("Casona 2", "lista_casona2.html"), ("Casona 3", "lista_casona3.html")):
         (carpeta / archivo).write_text(lista_html(e, disp[e], nombre_mes), encoding="utf-8")
 
-    jornada = (f"\nEste mes hacemos una jornada para colegas: {a.jornada}. Recorremos los edificios terminados, "
-               f"los amenities y la obra de Casona 3. ¿Te anoto?\n") if a.jornada else ""
+    jornada = (f"\nPrimero: {a.jornada} hacemos una recorrida para colegas en el complejo. Se ven los terminados, "
+               f"los amenities, el 2° F amoblado y la obra de Casona 3. Decime si venís y te reservo el lugar.\n"
+               if a.jornada else
+               "\nEstamos armando una recorrida para colegas en el complejo: decime si te interesa y te aviso la fecha.\n")
     mensaje = f"""Hola! {a.asesor}, de DOMINIA, por acá. Te paso la información actualizada de Casona de los Arcos para {nombre_mes}.
 
 Casona 2, terminada y con entrega inmediata: {resumen(disp['Casona 2'])}. Contado o crédito hipotecario del comprador.
@@ -92,7 +94,9 @@ Casona 3, en obra con entrega estimada en 2029: {resumen(disp['Casona 3'])}. Bol
 
 Te adjunto las dos listas por separado y el brochure. Un pedido: a cada cliente mostrale solo la lista que le corresponde según cómo va a pagar. El terminado, a quien compra con crédito o contado; el de obra, a quien necesita cuotas o busca una tipología que en terminado no hay.
 {jornada}
-Si querés mostrar, avisame el día y la franja y coordino. Los honorarios los hablamos aparte.
+Y si te quedó algún cliente sin definir, pasame el nombre y la tipología que buscaba y te digo qué hay hoy para él. Los honorarios los hablamos aparte.
+
+¿Te queda mejor que coordinemos por acá o te llamo?
 
 {a.asesor}, Asesor Comercial de DOMINIA"""
     (carpeta / "mensaje.md").write_text(mensaje, encoding="utf-8")

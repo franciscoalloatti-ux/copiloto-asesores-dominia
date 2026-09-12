@@ -245,6 +245,21 @@ def verificar(ficha, datos, llamadas):
     chequeo("V10", "Menos de 120 palabras en WhatsApp o Instagram", (palabras < 120) or not corto,
             f"{palabras} palabras · canal {datos['canal']}")
 
+    # V13 y V14 salieron de la auditoría comercial del 12/9 (ver DECISIONES).
+    hay_visita = bool(ficha["proximo_paso"]["propuesta_de_visita"])
+    b = borrador.lower()
+    falta = [t for t, ok in (("la dirección", "costanera de la cañada 4140" in b),
+                             ("el aviso de confirmación", "confirmo el día anterior" in b or "te confirmo" in b))
+             if not ok]
+    chequeo("V13", "Si hay visita, el borrador lleva dirección y aviso de confirmación",
+            not hay_visita or not falta,
+            "sin visita propuesta" if not hay_visita else ("falta " + " y ".join(falta) if falta else "dirección y confirmación"))
+
+    vocabulario = [v for v in ("jardín privado", "jardin privado", "jardín propio", "patio privado",
+                               "monoambiente", "pileta olímpica") if v in b]
+    chequeo("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)",
+            not vocabulario, ", ".join(vocabulario))
+
     return {"aprobada_para_revision": all(c["ok"] for c in chequeos), "chequeos": chequeos}
 
 
@@ -335,6 +350,11 @@ def guardar(carpeta, ruta_entrada, texto_entrada, datos, modelo, version, ficha,
         L += ["```json", json.dumps(ficha, ensure_ascii=False, indent=2), "```", "",
               "### Borrador, tal como lo vería el asesor", ""]
         L += ["> " + linea if linea else ">" for linea in ficha["borrador_mensaje"].splitlines()]
+        if ficha.get("seguimiento"):
+            L += ["", "### Seguimiento preparado, si no contesta", "", "| Cuándo | Aporte de valor | Texto |",
+                  "|---|---|---|"]
+            L += [f"| {s['cuando']} | {s['aporte_de_valor']} | {s['texto'].replace(chr(10), ' ')} |"
+                  for s in ficha["seguimiento"]]
         L += ["", "## Verificación automática de reglas duras", "", "| | Regla | Detalle |", "|---|---|---|"]
         for c in verificacion["chequeos"]:
             L.append(f"| {'✅' if c['ok'] else '❌'} {c['codigo']} | {c['regla']} | {c['detalle']} |")
@@ -349,8 +369,12 @@ def guardar(carpeta, ruta_entrada, texto_entrada, datos, modelo, version, ficha,
               f"salida (página de precios de Anthropic, consultada el 11/9/2026). Caché: escritura 1,25×, lectura 0,1×.",
               "", f"**Costo de la corrida: USD {usd:.4f}**"]
     L += ["", "## Revisión humana", "",
-          "_A completar por el asesor antes de enviar: qué corrigió del borrador, si lo envió, y qué respondió el interesado._",
-          "", "- Revisó:", "- Cambios al borrador:", "- ¿Se envió?:", "- Respuesta del interesado:", ""]
+          "_A completar por el asesor. Las tres últimas son las que miden si el copiloto sirve._",
+          "", "- Revisó:", "- Cambios al borrador (pegar el texto que se envió de verdad):",
+          "- ¿Se envió?: sí / no / se reescribió entero", "- Respuesta del interesado:",
+          "- **¿Contestó?**: sí / no", "- **¿Se agendó visita?**: sí / no / todavía no",
+          "- **¿Se hizo la visita?**: sí / no / reprogramada",
+          "- Toques de seguimiento enviados: 48 h ☐ · 7 días ☐ · 21 días ☐", ""]
     destino.write_text("\n".join(L), encoding="utf-8")
     return destino, usd
 

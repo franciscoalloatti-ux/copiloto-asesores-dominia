@@ -2,31 +2,95 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "consulta_id", "canal", "resumen_consulta", "camino_del_comprador", "perfil", "seis_datos",
-    "lista_asignada", "unidades_propuestas", "estrategia", "proximo_paso", "borrador_mensaje",
-    "alertas_para_el_asesor", "revisar_antes_de_enviar"
+    "consulta_id",
+    "canal",
+    "resumen_consulta",
+    "camino_del_comprador",
+    "perfil",
+    "seis_datos",
+    "lista_asignada",
+    "unidades_propuestas",
+    "estrategia",
+    "proximo_paso",
+    "seguimiento",
+    "borrador_mensaje",
+    "alertas_para_el_asesor",
+    "revisar_antes_de_enviar"
   ],
   "properties": {
-    "consulta_id": {"type": "string"},
-    "canal": {"type": "string", "enum": ["whatsapp", "instagram", "portal", "inmobiliaria", "otro"]},
-    "resumen_consulta": {"type": "string"},
+    "consulta_id": {
+      "type": "string"
+    },
+    "canal": {
+      "type": "string",
+      "enum": [
+        "whatsapp",
+        "instagram",
+        "portal",
+        "inmobiliaria",
+        "otro"
+      ]
+    },
+    "resumen_consulta": {
+      "type": "string"
+    },
     "camino_del_comprador": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["etapa", "evidencia"],
+      "required": [
+        "etapa",
+        "evidencia"
+      ],
       "properties": {
-        "etapa": {"type": "string", "enum": ["explorando", "comparando", "calificado", "listo_para_visita", "post_visita_negociacion", "indefinido"]},
-        "evidencia": {"type": "string"}
+        "etapa": {
+          "type": "string",
+          "enum": [
+            "explorando",
+            "comparando",
+            "calificado",
+            "listo_para_visita",
+            "post_visita_negociacion",
+            "indefinido"
+          ]
+        },
+        "evidencia": {
+          "type": "string"
+        }
       }
     },
     "perfil": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["tipo", "uso", "evidencia"],
+      "required": [
+        "tipo",
+        "uso",
+        "evidencia"
+      ],
       "properties": {
-        "tipo": {"type": "string", "enum": ["usa_credito", "contado", "no_califica_credito", "inversor_renta", "resguardo_de_valor", "compra_para_familiar", "indefinido"]},
-        "uso": {"type": "string", "enum": ["vivienda_propia", "inversion", "para_familiar", "indefinido"]},
-        "evidencia": {"type": "string"}
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "usa_credito",
+            "contado",
+            "no_califica_credito",
+            "inversor_renta",
+            "resguardo_de_valor",
+            "compra_para_familiar",
+            "indefinido"
+          ]
+        },
+        "uso": {
+          "type": "string",
+          "enum": [
+            "vivienda_propia",
+            "inversion",
+            "para_familiar",
+            "indefinido"
+          ]
+        },
+        "evidencia": {
+          "type": "string"
+        }
       }
     },
     "seis_datos": {
@@ -34,21 +98,59 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["dato", "estado", "valor"],
+        "required": [
+          "dato",
+          "estado",
+          "valor"
+        ],
         "properties": {
-          "dato": {"type": "string", "enum": ["uso", "plazo", "capital_disponible", "origen_fondos", "quien_decide", "alternativas"]},
-          "estado": {"type": "string", "enum": ["conocido", "inferido", "falta"]},
-          "valor": {"type": ["string", "null"]}
+          "dato": {
+            "type": "string",
+            "enum": [
+              "uso",
+              "plazo",
+              "capital_disponible",
+              "origen_fondos",
+              "quien_decide",
+              "alternativas"
+            ]
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "conocido",
+              "inferido",
+              "falta"
+            ]
+          },
+          "valor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
     "lista_asignada": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["lista", "motivo"],
+      "required": [
+        "lista",
+        "motivo"
+      ],
       "properties": {
-        "lista": {"type": "string", "enum": ["casona_2_terminados", "casona_3_pozo", "sin_asignar_aun"]},
-        "motivo": {"type": "string"}
+        "lista": {
+          "type": "string",
+          "enum": [
+            "casona_2_terminados",
+            "casona_3_pozo",
+            "sin_asignar_aun"
+          ]
+        },
+        "motivo": {
+          "type": "string"
+        }
       }
     },
     "unidades_propuestas": {
@@ -56,48 +158,137 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["edificio", "unidad", "precio_lista_usd", "dato_clave", "por_que_esta"],
+        "required": [
+          "edificio",
+          "unidad",
+          "precio_lista_usd",
+          "dato_clave",
+          "por_que_esta"
+        ],
         "properties": {
-          "edificio": {"type": "string", "enum": ["Casona 2", "Casona 3"]},
-          "unidad": {"type": "string"},
-          "precio_lista_usd": {"type": "integer"},
-          "dato_clave": {"type": "string"},
-          "por_que_esta": {"type": "string"}
+          "edificio": {
+            "type": "string",
+            "enum": [
+              "Casona 2",
+              "Casona 3"
+            ]
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "precio_lista_usd": {
+            "type": "integer"
+          },
+          "dato_clave": {
+            "type": "string"
+          },
+          "por_que_esta": {
+            "type": "string"
+          }
         }
       }
     },
     "estrategia": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["objetivo_del_mensaje", "tecnicas", "que_no_decir_todavia"],
+      "required": [
+        "objetivo_del_mensaje",
+        "tecnicas",
+        "que_no_decir_todavia"
+      ],
       "properties": {
-        "objetivo_del_mensaje": {"type": "string"},
+        "objetivo_del_mensaje": {
+          "type": "string"
+        },
         "tecnicas": {
           "type": "array",
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["codigo", "como_se_aplica"],
+            "required": [
+              "codigo",
+              "como_se_aplica"
+            ],
             "properties": {
-              "codigo": {"type": "string"},
-              "como_se_aplica": {"type": "string"}
+              "codigo": {
+                "type": "string"
+              },
+              "como_se_aplica": {
+                "type": "string"
+              }
             }
           }
         },
-        "que_no_decir_todavia": {"type": "array", "items": {"type": "string"}}
+        "que_no_decir_todavia": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "proximo_paso": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["accion", "propuesta_de_visita"],
+      "required": [
+        "accion",
+        "propuesta_de_visita"
+      ],
       "properties": {
-        "accion": {"type": "string"},
-        "propuesta_de_visita": {"type": ["string", "null"]}
+        "accion": {
+          "type": "string"
+        },
+        "propuesta_de_visita": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     },
-    "borrador_mensaje": {"type": "string"},
-    "alertas_para_el_asesor": {"type": "array", "items": {"type": "string"}},
-    "revisar_antes_de_enviar": {"type": "array", "items": {"type": "string"}}
+    "seguimiento": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cuando",
+          "aporte_de_valor",
+          "texto"
+        ],
+        "properties": {
+          "cuando": {
+            "type": "string",
+            "enum": [
+              "48h",
+              "7 dias",
+              "21 dias",
+              "dia_anterior_a_la_visita"
+            ]
+          },
+          "aporte_de_valor": {
+            "type": "string"
+          },
+          "texto": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "borrador_mensaje": {
+      "type": "string"
+    },
+    "alertas_para_el_asesor": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "revisar_antes_de_enviar": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
   }
 }

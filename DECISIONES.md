@@ -670,3 +670,75 @@ consulta nueva de verdad, mandar el borrador y anotar qué respondió la persona
 
 En total se gastaron **USD 4,94** en la API (suma de las 28 corridas con costo registrado): humo, 26 corridas de consultas exitosas, el plan de
 octubre y las re-corridas de las cinco iteraciones.
+
+---
+
+## Sábado 12/9/2026
+
+### D-15 · Dos auditorías antes de cerrar: la comercial y la de la rúbrica
+
+El responsable pidió *«Que podemos perfeccionar de esto? Podrías auditarlo con la información de los
+manuales para perfeccionarlo? Además auditarlo para ver qué nota tendría para la materia»*. Se
+hicieron las dos, en paralelo, con dos agentes distintos, y las dos leyeron el repositorio como lo
+leería un tercero.
+
+**La auditoría de formato** aplicó la rúbrica ejecutable y el catálogo de banderas del agente
+evaluador del parcial, requisito por requisito y exigiendo una cita por cada requisito dado por
+cumplido. **El informe con su puntaje se dejó deliberadamente fuera de este repositorio**: una
+evaluación previa guardada adentro del trabajo es un anclaje, y quien corrija tiene que empezar de
+cero. Acá va solo lo que hay que arreglar.
+
+- **La bandera G7 era real y la causó este README.** Decía *«La historia: trece decisiones y cinco
+  iteraciones»* cuando `DECISIONES.md` ya tenía catorce. Un número de índice que quedó viejo, y en
+  contra del propio trabajo. **Corregido**: el índice ya no cuenta, describe. La lección se agrega a
+  la lista de lo que no hay que hacer: **no escribir en un documento un número que otro documento
+  puede cambiar.**
+- **Dos G1 sin penalización**: «publicado como artefacto» sin URL verificable (corregido: ahora dice
+  que es privado y que el archivo del repositorio es la copia abrible) y la tarea programada, que
+  desde el repositorio solo se puede verificar por su `.bat`, su log y los paquetes que generó.
+- **Cero G2, G3a/b/c/d, G4, G5, G6 y G8.** El auditor barrió los 84 archivos por carácter —ancho
+  cero, controles bidireccionales, homoglifos— y la historia de git buscando credenciales.
+- Rehízo **las 26 multiplicaciones de costo y los ocho agregados de `ECONOMIA.md`**: cierran al
+  cuarto decimal. Reprodujo los dos sha256. Enumeró los 13 campos de las 26 salidas: idénticos.
+- **La duda que dejó anotada es la misma de siempre**: la exigencia más alta de «sistema completo»
+  pide que una salida se haya usado de verdad. Hoy ninguna se envió. Se resuelve mandando un
+  borrador real, que ahora se puede preparar desde el front sin crédito de API.
+
+**La auditoría comercial** cruzó los siete borradores del contrato vigente contra las técnicas del
+playbook y las fuentes de `conocimiento/fuentes_manuales.md`. Dieciséis hallazgos; el más caro:
+**el sistema no tiene seguimiento**. Los tres interesados por el PB A escribieron a las 02:19, 07:53
+y 13:24 desde el botón de la web: si no contestan, hoy se pierden en silencio, y las fuentes que el
+proyecto ya verificó (MREA con sus secuencias, Forte con tibios y fríos) dicen justamente lo
+contrario.
+
+### Iteraciones 6, 7 y 8 · aplicadas juntas y **sin corrida de verificación**
+
+Hasta acá cada iteración tocó **una** pieza y se volvió a correr para ver el antes y el después. Sin
+crédito en la API (D-12) eso ya no se puede, así que estos cambios se aplican **declarando que no
+están probados**. Cada uno dice qué pieza toca y qué habría que mirar en la próxima corrida; el
+front (D-14) permite correrlos sin API, y esa corrida es la que falta.
+
+| # | Pieza | Qué cambió | Por qué |
+|---|---|---|---|
+| 6 | **Tarea** + esquema | Paso 10: el copiloto deja preparados **tres toques de seguimiento** (48 h, 7 días, 21 días), cada uno con su aporte de valor y su texto; campo `seguimiento` en `esquema_ficha.json` | El agujero más caro: hoy el que no contesta se pierde |
+| 7 | **Restricciones** | 8: el post-visita cierra en **reunión de plan y boleto**, no en otra visita (T-31); y cuando hay día y hora, el borrador lleva **dirección y aviso de confirmación** (T-24). 12: con un colega, cuando la lista se asigna por defecto, se **nombra el otro camino sin precios** | T-24 se citaba y no se cumplía en ninguno de los siete borradores; el post-visita no tenía salida; y las cuatro consultas de colegas iban por defecto a Casona 2, que tiene 8 unidades contra 27 |
+| 8 | **Formato** y **contexto** (playbook v3) | Formato: **primero la persona** (devolver el saludo, retomar lo que dijo), nada de aperturas clonadas, y la mención de los decisores pegada a la línea del horario. Playbook: T-05 y T-06 habilitan **una** implicancia por escrito; T-28 pide el motivo junto a la pregunta de pago; **T-29 y T-30** (seguimiento), **T-31** (post-visita), **T-32** (el precio viaja con su plan) y **T-33** (no anunciar que no se da el precio) | Los cuatro borradores a colegas abrían con la misma frase palabra por palabra, y tres de los cuatro colegas habían preguntado «cómo estás» sin respuesta. El precio se daba sin anticipo ni cuota, que es el número que se compara con un alquiler |
+
+**Chequeos nuevos en el ejecutor y en el front** (los dos, porque siguen duplicados, D-14):
+
+- **V13**: si hay visita propuesta, el borrador tiene que traer la dirección y el aviso de
+  confirmación del día anterior.
+- **V14**: vocabulario que la ficha desmiente. Nace de una deriva medida: las dos corridas de
+  coherencia sobre la **misma consulta** escribieron *«jardín privado de 29,25 m²»* cuando la ficha
+  dice que es un espacio común **de uso exclusivo**. Lo que se escribe integra la oferta (Ley 9445
+  art. 16), así que esto no es una cuestión de estilo.
+
+**Y el bloque de revisión humana de cada corrida ahora pregunta lo único que mide si el copiloto
+sirve**: si el interesado contestó, si se agendó la visita y si la visita se hizo.
+
+### D-16 · El mensaje mensual a colegas ahora cierra con un próximo paso
+
+`corridas/paquete_colegas/2026-10/mensaje.md` terminaba en *«Si querés mostrar, avisame el día y la
+franja y coordino»*, que es exactamente el ejemplo que la T-14 del playbook da como error, en el
+mensaje de mayor alcance del sistema. Ahora invita a la jornada para colegas con fecha, pide los
+clientes sin definir y cierra preguntando: *«¿Te queda mejor que coordinemos por acá o te llamo?»*.

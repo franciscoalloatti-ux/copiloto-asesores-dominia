@@ -486,6 +486,15 @@ function verificar(f, datos, llamadas){
   }
   ch("V12", "Días de la semana coherentes con las fechas propuestas", !errados.length,
      errados.join("; ") || `${[...texto.matchAll(/\d{1,2}\/\d{1,2}/g)].length} fecha(s) verificada(s)`);
+  const hayVisita = !!f.proximo_paso.propuesta_de_visita, b = borrador.toLowerCase();
+  const faltan = [["la dirección", b.includes("costanera de la cañada 4140")],
+                  ["el aviso de confirmación", b.includes("confirmo el día anterior") || b.includes("te confirmo")]]
+                 .filter(x => !x[1]).map(x => x[0]);
+  ch("V13", "Si hay visita, el borrador lleva dirección y aviso de confirmación", !hayVisita || !faltan.length,
+     !hayVisita ? "sin visita propuesta" : (faltan.length ? "falta " + faltan.join(" y ") : "dirección y confirmación"));
+  const vocab = ["jardín privado","jardin privado","jardín propio","patio privado","monoambiente","pileta olímpica"]
+                .filter(v => b.includes(v));
+  ch("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)", !vocab.length, vocab.join(", "));
   return out.sort((a, b) => Number(a.codigo.slice(1)) - Number(b.codigo.slice(1)));
 }
 function corridaMarkdown(datos, f, llamadas, chequeos){
@@ -502,7 +511,13 @@ function corridaMarkdown(datos, f, llamadas, chequeos){
     "", "## Salida", "", "```json", JSON.stringify(f, null, 2), "```", "",
     "## Verificación automática de reglas duras", "", "| | Regla | Detalle |", "|---|---|---|",
     ...chequeos.map(c => `| ${c.ok ? "✅" : "❌"} ${c.codigo} | ${c.regla} | ${c.detalle} |`), "",
-    "## Revisión humana", "", "- Revisó:", "- Cambios al borrador:", "- ¿Se envió?:", "- Respuesta del interesado:", ""
+    ...(f.seguimiento && f.seguimiento.length ? ["## Seguimiento preparado", "", "| Cuándo | Aporte de valor | Texto |", "|---|---|---|",
+        ...f.seguimiento.map(s => `| ${s.cuando} | ${s.aporte_de_valor} | ${s.texto.replace(/\n/g, " ")} |`), ""] : []),
+    "## Revisión humana", "", "- Revisó:", "- Cambios al borrador (pegar el texto que se envió de verdad):",
+    "- ¿Se envió?: sí / no / se reescribió entero", "- Respuesta del interesado:",
+    "- **¿Contestó?**: sí / no", "- **¿Se agendó visita?**: sí / no / todavía no",
+    "- **¿Se hizo la visita?**: sí / no / reprogramada",
+    "- Toques de seguimiento enviados: 48 h ☐ · 7 días ☐ · 21 días ☐", ""
   ].join("\n");
 }
 function pintarResultado(datos, f, llamadas, chequeos){
@@ -536,6 +551,8 @@ function pintarResultado(datos, f, llamadas, chequeos){
         </dl>
         ${unidades}
         <div class="tecnicas">${f.estrategia.tecnicas.map(t => `<span class="tec" title="${esc(t.como_se_aplica)}">${esc(t.codigo)}</span>`).join("")}</div>
+        ${f.seguimiento && f.seguimiento.length ? `<h3>Seguimiento, si no contesta</h3><div class="scroll"><table><thead><tr><th>Cuándo</th><th>Aporte de valor</th><th>Texto para copiar</th></tr></thead><tbody>${
+          f.seguimiento.map(s => `<tr><td class="mono">${esc(s.cuando)}</td><td>${esc(s.aporte_de_valor)}</td><td>${esc(s.texto)}</td></tr>`).join("")}</tbody></table></div>` : ""}
         <h3>Alertas</h3><ul class="puntos">${f.alertas_para_el_asesor.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
         <h3>Revisar antes de enviar</h3><ul class="puntos">${f.revisar_antes_de_enviar.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
         <h3>Herramienta</h3><ul class="puntos">${llamadas.map(l => `<li><span class="mono">consultar_tarifario</span> ${esc(JSON.stringify(l.input))} → ${l.cantidad} unidad(es)</li>`).join("")}</ul>

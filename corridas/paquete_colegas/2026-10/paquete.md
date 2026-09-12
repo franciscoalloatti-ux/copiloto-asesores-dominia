@@ -1,6 +1,6 @@
 # Paquete para colegas · octubre 2026
 
-Generado el 2026-09-11 18:28 por `sistema/paquete_colegas.py` · tarifario `tarifario_vigente.csv`
+Generado el 2026-09-12 13:59 por `sistema/paquete_colegas.py` · tarifario `tarifario_vigente.csv`
 · **listo para revisar y enviar**
 
 ## Qué adjuntar
@@ -25,7 +25,11 @@ Casona 3, en obra con entrega estimada en 2029: 27 unidades (4 de 1 dormitorio, 
 
 Te adjunto las dos listas por separado y el brochure. Un pedido: a cada cliente mostrale solo la lista que le corresponde según cómo va a pagar. El terminado, a quien compra con crédito o contado; el de obra, a quien necesita cuotas o busca una tipología que en terminado no hay.
 
-Si querés mostrar, avisame el día y la franja y coordino. Los honorarios los hablamos aparte.
+Primero: el jueves 22 de octubre, de 12 a 15, hacemos una recorrida para colegas en el complejo. Se ven los terminados, los amenities, el 2° F amoblado y la obra de Casona 3. Decime si venís y te reservo el lugar.
+
+Y si te quedó algún cliente sin definir, pasame el nombre y la tipología que buscaba y te digo qué hay hoy para él. Los honorarios los hablamos aparte.
+
+¿Te queda mejor que coordinemos por acá o te llamo?
 
 Francisco, Asesor Comercial de DOMINIA
 ```

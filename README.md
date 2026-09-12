@@ -1,18 +1,20 @@
 # Copiloto para Asesores Comerciales de DOMINIA
 
 > Trabajo final · Creación de Agentes de IA · MBA UCEMA · 2026 2T · Francisco Alloatti
-> Estado al 11/9/2026, 18:30: contrato en su versión 4, dos módulos funcionando, 26 corridas reales
-> exitosas. Pendiente: la comparación de modelos, frenada por falta de crédito en la API (ver *Qué
-> falta o qué falló*).
+> Estado al 12/9/2026: contrato en su versión 5, dos módulos y un envío mensual funcionando, 26
+> corridas reales exitosas y dos auditorías hechas (la comercial contra los manuales y la de la
+> rúbrica de la materia). Pendiente: la comparación de modelos, frenada por falta de crédito en la
+> API, y correr las iteraciones 6 a 8 (ver *Qué falta o qué falló*).
 
 | Documento | Qué tiene |
 |---|---|
 | `prompts/` | El contrato: `system_prompt.md` y `user_prompt.md` (módulo 1) y `variantes/` (módulo 2) |
 | `corridas/` | Las ejecuciones reales: entrada, llamadas a la herramienta, salida, chequeos, tokens, costo y fecha |
-| `DECISIONES.md` | La historia: trece decisiones y cinco iteraciones, cada una con su error textual |
+| `DECISIONES.md` | La historia completa: cada decisión numerada (D-01 en adelante) y cada iteración del contrato con el error textual que la motivó |
+| `auditorias/` | La auditoría comercial del 12/9: dieciséis hallazgos contra los manuales, con el texto exacto que había que cambiar |
 | `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
-| `GOBIERNO.md` | Permisos, catorce modos de falla con su mitigación, control humano y firma |
-| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto, la pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha y el borrador y corre los doce chequeos, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
+| `GOBIERNO.md` | Permisos, los modos de falla con su mitigación, el control humano y quién firma |
+| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto privado en la cuenta del autor (el link no es público; el archivo del repositorio es la copia que se puede abrir sin permisos). La pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha y el borrador y corre los doce chequeos, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
 
 ## Qué construí
 
@@ -119,9 +121,12 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
   del CSV consultó y el sha256 del tarifario.
 - **La salida estructurada**: JSON validado por la API contra `sistema/esquema_ficha.json`, con los
   mismos trece campos en todas las corridas.
-- **Doce reglas verificadas en código** después de cada corrida (V1–V12: lista única, precios
+- **Catorce reglas verificadas en código** después de cada corrida (V1–V14: lista única, precios
   idénticos al tarifario, sin descuentos ni urgencia, fechas coherentes, firma, presentación,
-  preguntas, largo). Si una falla, la corrida queda **BLOQUEADA** y el asesor no la envía.
+  preguntas, largo, dirección y aviso de confirmación cuando hay visita, y vocabulario que la ficha
+  desmiente). Si una falla, la corrida queda **BLOQUEADA** y el asesor no la envía.
+- **El seguimiento del que no contesta**: cada ficha deja preparados tres toques —48 h, 7 días y 21
+  días— con su aporte de valor y su texto. Los manda el asesor.
 - **La transcripción de audios**, local (`herramientas/transcribir_audio.py`, Whisper).
 - **El módulo 2**: `sistema/plan_mensual.py`, con su contrato en `prompts/variantes/`.
 - **El paquete mensual para colegas**: `sistema/paquete_colegas.py`, sin API, con la tarea programada
@@ -184,6 +189,15 @@ python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
   que entrega las dos listas, se resolvió con la decisión D-13 (a los colegas se les mandan las dos,
   por separado). La otra es un falso positivo del chequeo, que se dejó así a propósito: un control
   por palabras no distingue *mencionar* de *ofrecer*.
+- **Las iteraciones 6, 7 y 8 están aplicadas y sin corrida que las pruebe.** Salieron de la
+  auditoría comercial del 12/9 (seguimiento, post-visita, dirección y confirmación, el otro camino
+  para colegas, la implicancia por escrito, el precio con su plan, la persona antes que la consulta).
+  Sin crédito de API no se pudieron correr; el front permite hacerlo sin API y esa corrida es la que
+  falta. La lista de qué mirar en cada una está en `DECISIONES.md`.
+- **La auditoría de formato encontró una contradicción real en este README**: decía «trece
+  decisiones» cuando `DECISIONES.md` ya tenía catorce, un número de índice que quedó viejo.
+  Corregido, y la lección quedó anotada: no escribir en un documento un número que otro documento
+  puede cambiar.
 - **El plan contó mal el stock**: *«14 unidades de 2 dorm y 9 de 3»* en Casona 3, cuando son 15 y 8.
   Ningún chequeo lo vio; se descubrió cuando el paquete mensual hizo la cuenta en código. La regla
   nueva del contrato (*«No cuentes unidades de memoria»*) no se pudo probar sin crédito.

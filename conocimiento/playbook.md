@@ -65,20 +65,42 @@ Corredores Públicos Inmobiliarios de Córdoba** (PDF del propio Colegio).
   contra el que se lo compara, el precio cierra la conversación en vez de abrirla. *(Academia Casona,
   T-01 y T-06; Forte, blog del autor: no negociar en el primer contacto; Villarroya: el objetivo es
   el avance)* **A un colega sí se le manda la lista** (T-26).
-- **T-28 · Si la lista salió del botón, la primera pregunta es cómo paga.** Cuando la lista quedó
-  asignada por la unidad que eligió en la web y no por lo que dijo de su forma de pago, la primera
-  pregunta es la T-03 («¿cómo pensabas pagarlo?»), no el uso. Si califica a crédito, el terminado
-  le puede convenir más (T-13), y eso solo se sabe preguntando. *(Academia Casona)*
+- **T-28 · Si la lista salió del botón, la primera pregunta es cómo paga, y va con su motivo.**
+  Cuando la lista quedó asignada por la unidad que eligió en la web y no por lo que dijo de su forma
+  de pago, la primera pregunta es la T-03, **dicha con lo que la persona gana al contestarla**:
+  «Según cómo lo pienses pagar te conviene una cosa u otra —tenemos terminado para escriturar ya y en
+  obra con cuotas—, así que decime: ¿lo veías al contado o con crédito, o te sirve más el plan en
+  cuotas?». Nunca «¿cómo pensabas pagarlo?» a secas: pedida sin motivo, es la pregunta que más
+  conversaciones corta. Si califica a crédito, el terminado le puede convenir más (T-13), y eso solo
+  se sabe preguntando. *(Academia Casona, T-01: la pregunta va con el motivo dicho)*
+- **T-32 · El precio nunca viaja solo: viaja con su plan.** Cuando corresponde dar el precio de una
+  unidad de Casona 3 porque lo pidió, en el mismo mensaje van, tal cual salen del tarifario, el
+  **anticipo**, la **cantidad y el monto de la cuota** y el **saldo contra entrega**, con la
+  aclaración de que la cuota puede ser en dólares o en pesos ajustados por CAC. En Casona 2, el
+  precio va con «contado o crédito hipotecario con tu banco» y con la cochera incluida. Un precio sin
+  plan es un número contra el que la persona no tiene con qué comparar, y cierra la conversación.
+  *(Woscoboinik, cap. 4: el precio se funda; regla 11 de `fuentes_manuales.md`)*
+- **T-33 · No se anuncia que no se da el precio.** Se dan la unidad, su diferencial y la forma de
+  pago general, y se pasa al próximo paso. «Antes de pasarte números» o «con eso te paso el valor»
+  convierten el silencio del precio en una condición y provocan el pedido inmediato del número. Si lo
+  pide igual, se da: una sola cifra, la de esa unidad, con su plan (T-32). *(Forte: guiar, no dejarse
+  guiar; Villarroya: el objetivo es el avance)*
 - **T-17 · Responder a la persona antes que a la consulta.** Retomar lo que escribió (se muda con su
   pareja, alquila en tal barrio) antes de dar un dato. *(Forte, descripción del libro)*
 
 ### Conversación
 
 - **T-05 · SPIN.** Situación → Problema → Implicancia → Necesidad-beneficio. Por escrito se trabajan
-  los dos primeros; la implicancia se hace en la visita. *(Rackham, vía Academia Casona; Villarroya
-  adapta SPIN a la venta inmobiliaria)*
-- **T-06 · La implicancia como pregunta.** Alquiler × 36 meses, devuelto como pregunta. Nunca se da
-  un precio antes de tener el número contra el que se lo quiere comparar. *(Academia Casona)*
+  la situación y el problema siempre, y **una** implicancia cuando ya hay un dato propio de la
+  persona sobre el que apoyarla: que alquila, que se le vence el contrato, que tiene la plata quieta,
+  que le nació un hijo. La implicancia larga —números, cuentas, comparaciones— se hace en la visita.
+  *(Rackham, vía Academia Casona; Villarroya adapta SPIN a la venta inmobiliaria)*
+- **T-06 · La implicancia como pregunta.** Se devuelve como pregunta, nunca como afirmación, y
+  **ocupa el lugar de la pregunta de calificación de ese mensaje: no se suma a ella**. Por escrito la
+  forma segura es abierta y sin números: «¿hasta cuándo tenías pensado seguir alquilando?», «¿esa
+  plata la tenés esperando algo puntual?». La cuenta (alquiler × 36) se hace **en la visita**, nunca
+  escrita. Nunca se da un precio antes de tener el número contra el que se lo quiere comparar.
+  *(Academia Casona; Forte, blog del autor: precalificación motivacional antes que financiera)*
 - **T-07 · Contra qué se compite.** La alternativa real casi nunca es otro emprendimiento: es seguir
   alquilando o dejar la plata quieta. *(Fisher y Ury, vía Academia Casona)*
 - **T-08 · Quién decide.** Se pregunta temprano; la visita se arma con todos los decisores.
@@ -130,8 +152,32 @@ Corredores Públicos Inmobiliarios de Córdoba** (PDF del propio Colegio).
   «el cierre mágico»)*
 - **T-24 · Concertar y confirmar.** Al agendar: día, hora, dirección y qué se va a ver, con aviso de
   que se confirma el día anterior. *(Villarroya, artículo del autor)*
+- **T-31 · Después de la visita, el avance es la reunión de plan y boleto.** Con quien ya visitó, el
+  mensaje hace tres cosas, en este orden: (1) **resume en una línea lo que dijo que valora**, con sus
+  palabras («te quedaste con la planta baja por el jardín y por no tener escaleras»); (2) responde la
+  duda que quedó abierta, o dice cuándo la responde; (3) propone el paso siguiente, que **no es otra
+  visita**: sentarse a ver el plan de pagos de esa unidad y el modelo de boleto, en la oficina de Av.
+  Vélez Sarsfield 522 o por videollamada, con los decisores. Nunca se cierra un post-visita con
+  «cualquier cosa avisame». *(Villarroya: el cierre como consecuencia de resolver las objeciones y
+  resumir los factores de decisión; Migliorisi, cap. 6)*
 - **T-16 · Orden de la visita.** Edificios terminados → amenities → 2° F amoblado → la unidad →
   recién al final la obra de Casona 3. *(Academia Casona)*
+
+### Seguimiento
+
+- **T-29 · El que no contesta no se pierde: entra en secuencia.** Si el interesado no responde, el
+  copiloto deja preparados **tres toques** con espaciado creciente, cada uno con **un aporte de valor
+  distinto**, nunca «¿pudiste ver mi mensaje?»: (1) a las 48 h, un dato útil que no se dijo antes —el
+  contra, la cochera incluida, que las expensas corren desde la posesión—; (2) a los 7 días, algo
+  nuevo y verificable —avance de obra, que se liberó o se vendió una unidad de esa tipología, la
+  jornada de puertas abiertas—; (3) a los 21 días, la pregunta que cierra el ciclo: «¿seguís mirando
+  o lo pausaste por ahora?», que le da permiso a decir que no. Después del tercer toque sin respuesta
+  el lead pasa a la base fría del plan mensual y no se le vuelve a escribir individualmente. **Los
+  tres los manda el asesor**, no el sistema. *(Keller, MREA: secuencias 8x8 y 33 toques, vía reseñas;
+  Forte: seguir a tibios y fríos; Villarroya: si las excusas se repiten, seguimiento largo)*
+- **T-30 · Bajar la intensidad, no subirla.** Cada toque es más corto que el anterior y ninguno
+  repite la propuesta de horario más de dos veces en total. La señal de huida se respeta: quien no
+  contestó tres veces no recibe un cuarto mensaje individual. *(Villarroya: leer las señales de huida)*
 
 ### Marca y colegas
 

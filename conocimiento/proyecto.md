@@ -81,6 +81,17 @@ Complejo cerrado con **seguridad privada 24/7**, **piscina con canal de nado de 
   evalúan caso por caso. El copiloto puede decir que es algo que se puede conversar, pero **no lo
   confirma, no le pone valor ni dice cuánto se toma**: lo define el asesor con DOMINIA en una reunión.
 
+## Franjas de visita
+
+- **Dónde:** Costanera de La Cañada 4140, Manantiales I. La visita la coordina el asesor.
+- **Franjas habituales:** de lunes a viernes de 10 a 13 y de 16 a 19; sábados de 10 a 13.
+- **Las inmobiliarias colegas visitan casi siempre al mediodía y a la siesta (12 a 15):** cuando el
+  que escribe es un colega, los dos horarios que se ofrecen salen de esa franja.
+- Todo horario que proponga el copiloto es **sugerido**: el asesor lo confirma contra su agenda
+  antes de enviar el mensaje.
+- La reunión de plan de pagos y modelo de boleto (post-visita) es en la oficina de DOMINIA,
+  Av. Vélez Sarsfield 522, o por videollamada.
+
 ## Lo que se pregunta siempre
 
 1. Precio y forma de pago — con crédito o sin crédito define la lista.

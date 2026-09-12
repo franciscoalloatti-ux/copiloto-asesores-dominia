@@ -742,3 +742,13 @@ sirve**: si el interesado contestó, si se agendó la visita y si la visita se h
 franja y coordino»*, que es exactamente el ejemplo que la T-14 del playbook da como error, en el
 mensaje de mayor alcance del sistema. Ahora invita a la jornada para colegas con fecha, pide los
 clientes sin definir y cierra preguntando: *«¿Te queda mejor que coordinemos por acá o te llamo?»*.
+
+### D-17 · Franjas de visita, confirmadas por el responsable
+
+La auditoría comercial detectó que los seis borradores que proponían horario lo hacían sin dato: el
+copiloto ofrecía siempre 10 y 11 de la mañana, mientras el corpus muestra que **los colegas piden
+mostrar al mediodía y a la siesta** («mañana por la siesta», «hoy a las 12 30»). Se le propusieron
+franjas al responsable y las confirmó (12/9): lunes a viernes de 10 a 13 y de 16 a 19, sábados de 10
+a 13, y la franja de 12 a 15 para los colegas. Quedan en `conocimiento/proyecto.md`, con la
+aclaración de que **todo horario que proponga el copiloto es sugerido** y lo confirma el asesor
+contra su agenda.

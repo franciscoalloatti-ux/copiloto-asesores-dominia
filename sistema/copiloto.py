@@ -203,13 +203,15 @@ def verificar(ficha, datos, llamadas):
     chequeo("V5", "Todo monto en USD del borrador sale del tarifario de la lista asignada",
             not fuera, f"montos no respaldados: {fuera}" if fuera else f"{len(montos)} monto(s)")
 
-    prohibidas = [p for p in ("descuento", "bonificaci", "comisi", "rebaja") if p in borrador.lower()]
-    chequeo("V6", "El borrador no menciona descuentos ni comisiones", not prohibidas, ", ".join(prohibidas))
+    # Los toques de seguimiento también le llegan al cliente: V6, V7 y V14 los leen junto con el borrador.
+    al_cliente = (borrador + " " + " ".join(s["texto"] for s in ficha.get("seguimiento") or [])).lower()
+    prohibidas = [p for p in ("descuento", "bonificaci", "comisi", "rebaja") if p in al_cliente]
+    chequeo("V6", "El borrador y el seguimiento no mencionan descuentos ni comisiones", not prohibidas, ", ".join(prohibidas))
 
     promesas = [p for p in ("garantiz", "te aseguro", "sin dudas", "se revaloriza", "rentabilidad asegurada",
                             "olímpica", "semiolímpica", "seguro de caución", "fecha cierta",
                             "últimas unidades", "última unidad", "solo por hoy", "decidí hoy")
-                if p in borrador.lower()]
+                if p in al_cliente]
     chequeo("V7", "El borrador no promete lo que no se puede cumplir ni mete urgencia artificial",
             not promesas, ", ".join(promesas))
 
@@ -246,17 +248,18 @@ def verificar(ficha, datos, llamadas):
             f"{palabras} palabras · canal {datos['canal']}")
 
     # V13 y V14 salieron de la auditoría comercial del 12/9 (ver DECISIONES).
-    hay_visita = bool(ficha["proximo_paso"]["propuesta_de_visita"])
+    # Solo cuando la visita queda acordada (restricción 8): proponer dos horarios todavía no la acuerda.
+    hay_visita = ficha["camino_del_comprador"]["etapa"] == "listo_para_visita"
     b = borrador.lower()
     falta = [t for t, ok in (("la dirección", "costanera de la cañada 4140" in b),
                              ("el aviso de confirmación", "confirmo el día anterior" in b or "te confirmo" in b))
              if not ok]
-    chequeo("V13", "Si hay visita, el borrador lleva dirección y aviso de confirmación",
+    chequeo("V13", "Si la visita quedó acordada, el borrador lleva dirección y aviso de confirmación",
             not hay_visita or not falta,
-            "sin visita propuesta" if not hay_visita else ("falta " + " y ".join(falta) if falta else "dirección y confirmación"))
+            "la visita todavía no está acordada" if not hay_visita else ("falta " + " y ".join(falta) if falta else "dirección y confirmación"))
 
     vocabulario = [v for v in ("jardín privado", "jardin privado", "jardín propio", "patio privado",
-                               "monoambiente", "pileta olímpica") if v in b]
+                               "monoambiente", "pileta olímpica") if v in al_cliente]
     chequeo("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)",
             not vocabulario, ", ".join(vocabulario))
 

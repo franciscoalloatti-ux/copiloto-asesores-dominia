@@ -773,3 +773,39 @@ La base de datos de la página publicada guardó una corrida hecha por el respon
   iteraciones 6 a 8 (commit de las 14:01). Por eso no trae `seguimiento` ni los chequeos V13 y V14,
   y **tampoco trae la dirección ni el aviso de confirmación**, que es justo lo que la iteración 7
   agrega. Y la entrada es un ejemplo, no un interesado real. Las iteraciones 6 a 8 siguen sin corrida.
+
+### Corridas de verificación de las iteraciones 6 a 8 · 13/9 13:37–13:40 · desde el front
+
+El responsable corrió en el front, con el contrato v5, las mismas consultas reales 03, 06 y 08 (con
+la fecha del día). Quedaron en `corridas/vivo/`. Es el «después» que les faltaba a las iteraciones
+6 a 8.
+
+| Consulta | v1 (11/9) | v5 (13/9) | Chequeos |
+|---|---|---|---|
+| **03** · colega, «hoy a las 12 30» | *«¿Te queda mejor 12:30 o lo corremos a las 16…?»* | *«Dale, hoy 12:30 queda confirmado, te espero»* · nombra el otro camino sin precios · *«Te espero en Costanera de La Cañada 4140, Manantiales I; te mando la ubicación ahora»* · un solo toque de seguimiento, porque la visita ya está acordada · y avisa que **es domingo, fuera de las franjas** de D-17 | 14/14 |
+| **06** · cliente, PB A | Precio y plan completos a un desconocido | Sin precio; *«Según cómo lo pienses pagar te conviene una cosa u otra: ¿lo veías en cuotas o al contado?»*; *«Si la decisión la toman entre dos, mejor vengan los dos»*; tres toques de seguimiento, ninguno con «¿pudiste ver…?»; el precio con su plan queda preparado en las alertas por si lo pide (T-32) | 14/14 tras corregir V13 |
+| **08** · cliente, PB B o PB H | *«El PB H no integra el stock a la venta»* | *«El PB H no está a la venta: la misma tipología de 1 dormitorio la tenés en el PB D»* | **Bloqueada: 135 palabras** |
+
+**Dos errores del chequeo, encontrados por las corridas:**
+
+1. **V13 marcaba mal.** Pedía dirección y aviso de confirmación siempre que hubiera horarios
+   *propuestos*, y la restricción 8 los exige cuando la visita queda *acordada*. Bloqueó la 06 y la
+   08 por eso. Se corrigió (aplica en la etapa `listo_para_visita`) en el ejecutor y en el front, y
+   se reverificaron las tres fichas guardadas **sin volver a llamar al modelo**: la 06 pasa.
+2. **Los toques de seguimiento no los revisaba ningún chequeo**, y también le llegan al cliente.
+   V6 (descuentos), V7 (promesas y urgencia) y V14 (vocabulario) ahora leen el borrador **y** el
+   seguimiento. Reverificadas las tres: ninguna cambió de resultado.
+
+**Lo que queda abierto, con su error textual:**
+
+- **La 08 se pasa de largo**: *«❌ V10 Menos de 120 palabras en WhatsApp o Instagram — 135 palabras»*.
+  Con dos unidades pedidas y una que no está a la venta, el formato v5 —presentación, contexto,
+  respuesta, forma de pago, horario con decisores, firma— no entra. El candidato de corrección es de
+  la pieza **formato**: si hay que responder por dos unidades o por una que no existe, se saca la
+  línea de contexto del complejo. **No se pudo correr hoy**: queda como falla contada.
+- **Las aperturas a colegas siguen clonadas.** La 03 abre otra vez con *«Hola! Francisco, de DOMINIA,
+  por acá.»*, la misma frase de las corridas del 11/9. La regla de formato de la iteración 8 no
+  alcanzó.
+- **El toque de 7 días es vago.** *«Te puedo mostrar el avance de obra de Casona 3 y cómo viene el
+  stock de 2 dormitorios»* no trae un hecho verificable, que es lo que pide la T-29. Y en la 08 dice
+  que los de 1 dormitorio *«son pocos»*, que roza la urgencia que prohíbe la T-23 aunque no dispare V7.

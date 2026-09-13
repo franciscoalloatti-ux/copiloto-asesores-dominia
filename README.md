@@ -4,7 +4,7 @@
 > Estado al 13/9/2026: contrato en su versión 5, dos módulos y un envío mensual funcionando, 26
 > corridas reales exitosas y dos auditorías hechas (la comercial contra los manuales y la de la
 > rúbrica de la materia). Pendiente: la comparación de modelos, frenada por falta de crédito en la
-> API, y correr las iteraciones 6 a 8 (ver *Qué falta o qué falló*).
+> API, y la consulta 08, que se pasa de largo (ver *Qué falta o qué falló*).
 
 | Documento | Qué tiene |
 |---|---|
@@ -192,11 +192,11 @@ python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
   que entrega las dos listas, se resolvió con la decisión D-13 (a los colegas se les mandan las dos,
   por separado). La otra es un falso positivo del chequeo, que se dejó así a propósito: un control
   por palabras no distingue *mencionar* de *ofrecer*.
-- **Las iteraciones 6, 7 y 8 están aplicadas y sin corrida que las pruebe.** Salieron de la
-  auditoría comercial del 12/9 (seguimiento, post-visita, dirección y confirmación, el otro camino
-  para colegas, la implicancia por escrito, el precio con su plan, la persona antes que la consulta).
-  Sin crédito de API no se pudieron correr; el front permite hacerlo sin API y esa corrida es la que
-  falta. La lista de qué mirar en cada una está en `DECISIONES.md`.
+- **Las iteraciones 6 a 8 se verificaron el 13/9 desde el front** con las consultas 03, 06 y 08
+  (`corridas/vivo/`): la 03 y la 06 pasan los catorce chequeos; **la 08 queda bloqueada por 135
+  palabras**, una falla real que no se llegó a corregir. Las corridas encontraron además dos errores
+  del chequeo, ya corregidos, y dos flojedades del borrador que siguen: la apertura a colegas sigue
+  siendo la misma frase y el toque de seguimiento de 7 días no trae un hecho verificable.
 - **La auditoría de formato encontró una contradicción real en este README**: decía «trece
   decisiones» cuando `DECISIONES.md` ya tenía catorce, un número de índice que quedó viejo.
   Corregido, y la lección quedó anotada: no escribir en un documento un número que otro documento

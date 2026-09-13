@@ -40,10 +40,11 @@ def leer_corrida(ruta):
     return {
         "archivo": ruta.relative_to(RAIZ).as_posix(),
         "fecha": campo("Fecha de la corrida"),
-        "modelo": campo("Modelo"),
+        "modelo": campo("Modelo") or "front",
         "hash": h,
-        "version": VERSIONES.get(h, ("?", "Versión sin registrar"))[0],
-        "version_detalle": VERSIONES.get(h, ("?", "Versión sin registrar"))[1],
+        "version": "v5 front" if "vivo" in ruta.parts else VERSIONES.get(h, ("?", "Versión sin registrar"))[0],
+        "version_detalle": ("Contrato v5 (iteraciones 6 a 8), corrida desde el front sin API" if "vivo" in ruta.parts
+                            else VERSIONES.get(h, ("?", "Versión sin registrar"))[1]),
         "resultado": campo("Resultado"),
         "herramienta": re.findall(r"^\d+\. `(\w+)\((.*?)\)` → (.*)$", t, re.M),
         "ficha": json.loads(j.group(1)) if j else None,

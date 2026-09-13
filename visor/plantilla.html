@@ -463,11 +463,12 @@ function verificar(f, datos, llamadas){
   const fuera = montos.filter(m => !permitidos.has(m));
   ch("V5", "Todo monto en USD del borrador sale del tarifario de la lista asignada", !fuera.length,
      fuera.length ? `montos no respaldados: ${fuera.join(", ")}` : `${montos.length} monto(s)`);
-  const prohibidas = ["descuento","bonificaci","comisi","rebaja"].filter(p => borrador.toLowerCase().includes(p));
-  ch("V6", "El borrador no menciona descuentos ni comisiones", !prohibidas.length, prohibidas.join(", "));
+  const alCliente = (borrador + " " + (f.seguimiento || []).map(s => s.texto).join(" ")).toLowerCase();
+  const prohibidas = ["descuento","bonificaci","comisi","rebaja"].filter(p => alCliente.includes(p));
+  ch("V6", "El borrador y el seguimiento no mencionan descuentos ni comisiones", !prohibidas.length, prohibidas.join(", "));
   const promesas = ["garantiz","te aseguro","sin dudas","se revaloriza","rentabilidad asegurada","olímpica","semiolímpica",
                     "seguro de caución","fecha cierta","últimas unidades","última unidad","solo por hoy","decidí hoy"]
-                   .filter(p => borrador.toLowerCase().includes(p));
+                   .filter(p => alCliente.includes(p));
   ch("V7", "El borrador no promete lo que no se puede cumplir ni mete urgencia artificial", !promesas.length, promesas.join(", "));
   const firma = `${datos.asesor}, Asesor Comercial de DOMINIA`;
   ch("V8", "Firma exacta del asesor", borrador.trim().endsWith(firma), `esperada: «${firma}»`);
@@ -487,14 +488,14 @@ function verificar(f, datos, llamadas){
   }
   ch("V12", "Días de la semana coherentes con las fechas propuestas", !errados.length,
      errados.join("; ") || `${[...texto.matchAll(/\d{1,2}\/\d{1,2}/g)].length} fecha(s) verificada(s)`);
-  const hayVisita = !!f.proximo_paso.propuesta_de_visita, b = borrador.toLowerCase();
+  const hayVisita = f.camino_del_comprador.etapa === "listo_para_visita", b = borrador.toLowerCase();
   const faltan = [["la dirección", b.includes("costanera de la cañada 4140")],
                   ["el aviso de confirmación", b.includes("confirmo el día anterior") || b.includes("te confirmo")]]
                  .filter(x => !x[1]).map(x => x[0]);
-  ch("V13", "Si hay visita, el borrador lleva dirección y aviso de confirmación", !hayVisita || !faltan.length,
-     !hayVisita ? "sin visita propuesta" : (faltan.length ? "falta " + faltan.join(" y ") : "dirección y confirmación"));
+  ch("V13", "Si la visita quedó acordada, el borrador lleva dirección y aviso de confirmación", !hayVisita || !faltan.length,
+     !hayVisita ? "la visita todavía no está acordada" : (faltan.length ? "falta " + faltan.join(" y ") : "dirección y confirmación"));
   const vocab = ["jardín privado","jardin privado","jardín propio","patio privado","monoambiente","pileta olímpica"]
-                .filter(v => b.includes(v));
+                .filter(v => alCliente.includes(v));
   ch("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)", !vocab.length, vocab.join(", "));
   return out.sort((a, b) => Number(a.codigo.slice(1)) - Number(b.codigo.slice(1)));
 }

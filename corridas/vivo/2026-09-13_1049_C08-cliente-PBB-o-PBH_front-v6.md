@@ -1,8 +1,8 @@
-# Corrida en vivo · C08-cliente-PBB-o-PBH · 13/09/2026 13:49
+# Corrida en vivo · C08-cliente-PBB-o-PBH · 13/09/2026 10:49
 
 | Campo | Valor |
 |---|---|
-| Fecha de la corrida | 2026-09-13 13:49 (hora de Córdoba) |
+| Fecha de la corrida | 2026-09-13 10:49 (hora de Córdoba; el identificador `VIVO-202609131349` está en UTC) |
 | Dónde corrió | Front del copiloto publicado, capacidad `sample`, a cuenta de la suscripción del responsable |
 | Versión del contrato | **v6** (iteración 9, pieza formato) + playbook v3 |
 | Entrada | La misma consulta real de `entradas/consulta-08.md`, con la fecha del día |

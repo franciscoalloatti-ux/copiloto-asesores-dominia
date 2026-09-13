@@ -774,7 +774,7 @@ La base de datos de la página publicada guardó una corrida hecha por el respon
   y **tampoco trae la dirección ni el aviso de confirmación**, que es justo lo que la iteración 7
   agrega. Y la entrada es un ejemplo, no un interesado real. Las iteraciones 6 a 8 siguen sin corrida.
 
-### Corridas de verificación de las iteraciones 6 a 8 · 13/9 13:37–13:40 · desde el front
+### Corridas de verificación de las iteraciones 6 a 8 · 13/9 10:37–10:40 · desde el front
 
 El responsable corrió en el front, con el contrato v5, las mismas consultas reales 03, 06 y 08 (con
 la fecha del día). Quedaron en `corridas/vivo/`. Es el «después» que les faltaba a las iteraciones
@@ -810,9 +810,9 @@ la fecha del día). Quedaron en `corridas/vivo/`. Es el «después» que les fal
   stock de 2 dormitorios»* no trae un hecho verificable, que es lo que pide la T-29. Y en la 08 dice
   que los de 1 dormitorio *«son pocos»*, que roza la urgencia que prohíbe la T-23 aunque no dispare V7.
 
-## Iteración 9 · pieza: FORMATO · contrato v5 → v6 · 13/9 13:45
+## Iteración 9 · pieza: FORMATO · contrato v5 → v6 · 13/9 10:49
 
-**Qué falló** (corrida del front de las 13:40, `corridas/vivo/2026-09-13_1340_C08-cliente-PBB-o-PBH_front-v5.md`):
+**Qué falló** (corrida del front de las 10:40, `corridas/vivo/2026-09-13_1040_C08-cliente-PBB-o-PBH_front-v5.md`):
 
 ```text
 ❌ V10 Menos de 120 palabras en WhatsApp o Instagram — 135 palabras · canal whatsapp
@@ -827,9 +827,9 @@ respuesta cubre más de una unidad o una que no está a la venta, **se saca la l
 complejo**, cada unidad se resuelve en una sola línea y la forma de pago va dentro de la pregunta de
 calificación, no en una línea aparte.
 
-**Qué cambió en la salida** (misma consulta, 13:49, `corridas/vivo/2026-09-13_1349_C08-cliente-PBB-o-PBH_front-v6.md`):
+**Qué cambió en la salida** (misma consulta, 10:49, `corridas/vivo/2026-09-13_1049_C08-cliente-PBB-o-PBH_front-v6.md`):
 
-| | v5 · 13:40 | v6 · 13:49 |
+| | v5 · 10:40 | v6 · 10:49 |
 |---|---|---|
 | Largo | 135 palabras · **bloqueada** | **119 palabras · 14/14, aprobada** |
 | Contexto del complejo | *«Casona de los Arcos es un complejo cerrado de tres torres en Manantiales I…»* | Sacado |
@@ -893,7 +893,7 @@ Es la T-28, que la iteración 9 perdió sin que nada lo detectara.
 |---|---|---|
 | 05, 06 y 08 con el contrato v1, y 06 con la v3 (11/9, 16:57 a 17:22) | ✗ | Antes de la iteración 3 la T-28 no existía: el chequeo marca la ausencia real |
 | 05 y 06 desde la iteración 3 (17:24 en adelante), y 06 y 08 del front con la v5 | ✓ | La pregunta aparece desde que el playbook la pide |
-| **08 del front con la v6 (13/9 13:49)** | **✗ · BLOQUEADA** | *«Contame si es para vivir o para invertir»*: el hueco de la iteración 9 |
+| **08 del front con la v6 (13/9 10:49)** | **✗ · BLOQUEADA** | *«Contame si es para vivir o para invertir»*: el hueco de la iteración 9 |
 | Coherencia 3 con el contrato v1 | ✓ | **Falso negativo**: pasa por *«Y si el plan de pagos te cierra, ¿te queda mejor…?»*, que nombra el pago dentro de la pregunta del horario |
 
 **Consecuencia honesta: la iteración 9 no resolvió la consulta 08.** Con V14 la 08 salía bloqueada
@@ -905,3 +905,67 @@ reemplaza a la aclaración de los decisores cuando no entran las dos.
 **Y la flaqueza de V15 queda dicha**: busca palabras de pago dentro de cualquier pregunta, así que una
 pregunta de horario que mencione «el plan de pagos» la engaña. Un chequeo por palabras sirve para
 frenar, no para juzgar (lo mismo que se anotó sobre P3 del módulo 2).
+
+
+### D-21 · Las horas de las corridas del front estaban en UTC
+
+Las corridas del front del 13/9 se habían anotado a las 13:37, 13:39, 13:40 y 13:49 «hora de
+Córdoba». **Eran horas UTC**: la página arma el identificador con la hora universal, y al pasarlas a
+los archivos no se restaron las tres horas. Las reales son **10:37, 10:39, 10:40 y 10:49**. Así
+escritas, las corridas figuraban *después* de los commits que las agregaban (el de las 10:47 subía
+corridas «de las 13:37»), que es exactamente lo que un evaluador lee como historia de proceso falsa.
+Se corrigieron los nombres de archivo, los encabezados y las referencias de este documento. La
+corrida del 12/9 sí estaba bien convertida (16:24 UTC → 13:24).
+
+## Iteración 10 · pieza: FORMATO · contrato v6 → v7 · 13/9 11:17
+
+**Qué falló** (corrida del front de las 10:49, contrato v6): el borrador entró en el largo y perdió
+la pregunta de cómo paga. El chequeo V15, agregado a las 11:14, la deja bloqueada:
+
+```text
+❌ V15 Si la consulta vino del botón de la web, el borrador pregunta cómo paga (T-28) — no pregunta cómo piensa pagar
+```
+
+**Qué se cambió** (solo la pieza *formato*, commit `3543c30`): un **orden de recorte** cuando no entra
+todo. Primero la línea de contexto, después la aclaración de los decisores, al final la segunda
+unidad. La pregunta de pago no se saca nunca y no se reemplaza por la del uso.
+
+**Qué cambió en la salida** (misma consulta, 11:18, `corridas/vivo/2026-09-13_1118_C08-cliente-PBB-o-PBH_front.md`):
+
+| | v5 · 10:40 | v6 · 10:49 | v7 · 11:18 |
+|---|---|---|---|
+| Largo | 135 palabras ❌ | 119 palabras | **113 palabras** |
+| Pregunta | *«¿lo veías en cuotas o al contado?»* | *«Contame si es para vivir o para invertir»* ❌ | *«Según cómo lo pienses pagar te conviene una cosa u otra —tenemos terminado para escriturar ya y en obra con cuotas—, así que decime: ¿lo veías al contado o con crédito, o te sirve más el plan en cuotas?»* |
+| Decisores | Pegados al horario | Pegados al horario | **Recortados**, como manda el orden nuevo |
+| Chequeos | Bloqueada por V10 | Bloqueada por V15 | **15 de 15, aprobada** |
+
+**La consulta 08 queda cerrada.** Hicieron falta tres iteraciones de la misma pieza, y la lección es
+la que ya había dejado la iteración 4: con un límite de largo, **no alcanza con decir qué va en el
+mensaje; hay que decir qué se saca primero**. Sin ese orden, el modelo recorta lo que le resulta más
+fácil de recortar, que no es lo menos importante.
+
+Lo que sigue flojo en esta misma corrida: el toque de 7 días (*«Te cuento cómo viene la obra de
+Casona 3 y qué queda de planta baja con jardín»*) todavía no trae un hecho verificable.
+
+## Uso con una consulta nueva · 13/9 11:03 · C10, colega, amoblado el domingo
+
+El responsable cargó en el front una **consulta nueva** de una inmobiliaria colega, que no está en
+`entradas/`: un cliente jugador de fútbol de Buenos Aires quiere ver el amoblado el domingo temprano.
+Corrió con el contrato v6, antes de V15 y de la iteración 10
+(`corridas/vivo/2026-09-13_1103_C10-inmob-amoblado-domingo_front.md`).
+
+- **Lo que hizo bien**: devolvió el saludo primero (*«Todo bien por acá, gracias!»*), aceptó el
+  domingo temprano sin condiciones (restricción 13), asignó Casona 2 y nombró el otro camino sin
+  precios, explicó el 2º F como producto amoblado (restricción 7) y puso dirección y aviso de
+  confirmación.
+- **Salió BLOQUEADA por dos chequeos**, y los dos dicen algo distinto:
+  - **V4 · «4 unidad(es)»**: propuso cuatro unidades y el máximo es tres. Falla real del modelo.
+  - **V11 · primera línea sin el nombre del asesor**: acá chocan dos reglas del propio contrato. El
+    formato pide *primero la persona* (devolver el saludo, T-17) y V11 exige el nombre en la primera
+    línea. Con un colega que ya lo conoce, el borrador eligió la T-17. **La contradicción es del
+    contrato, no del modelo**, y queda abierta.
+- **Un error que ningún chequeo ve**: la consulta es del domingo 13/9 y pide «el domingo»; el
+  borrador acepta «el domingo temprano» y el toque de seguimiento dice *«Confirmado para mañana a las
+  9»*. Si «el domingo» es hoy, «mañana» es lunes. V12 solo verifica pares con fecha numérica.
+- **Revisión humana: pendiente del responsable** —si el borrador se envió, qué se cambió y qué
+  respondió el colega—. Es la primera corrida con una consulta que no estaba en el corpus.

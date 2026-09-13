@@ -194,11 +194,15 @@ python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
   que entrega las dos listas, se resolvió con la decisión D-13 (a los colegas se les mandan las dos,
   por separado). La otra es un falso positivo del chequeo, que se dejó así a propósito: un control
   por palabras no distingue *mencionar* de *ofrecer*.
-- **Las iteraciones 6 a 9 se verificaron el 13/9 desde el front** con las consultas 03, 06 y 08
-  (`corridas/vivo/`). La 03 y la 06 terminan aprobadas. **La 08 sigue abierta**: con la iteración 8
-  se pasaba de largo, y con la 9 entró en el largo pero dejó de preguntar cómo paga, cosa que ahora
-  detecta el chequeo V15 y la deja bloqueada. Siguen además dos flojedades: la apertura a colegas es
-  siempre la misma frase y el toque de seguimiento de 7 días no trae un hecho verificable.
+- **Las iteraciones 6 a 10 se verificaron el 13/9 desde el front** (`corridas/vivo/`). La 03 y la
+  06 terminan aprobadas. **La 08 quedó cerrada en la iteración 10**, después de tres intentos sobre
+  la misma pieza: primero se pasaba de largo y después perdía la pregunta de cómo paga.
+- **Una consulta nueva de un colega (C10) salió bloqueada**: propuso cuatro unidades cuando el máximo
+  es tres, y chocaron dos reglas del contrato (devolver el saludo primero contra el nombre del asesor
+  en la primera línea). Además aceptó «el domingo» y en el seguimiento escribió «mañana», un error de
+  fecha que ningún chequeo ve. Su revisión humana —si se envió y qué respondió el colega— está pendiente.
+- **Siguen dos flojedades**: la apertura a colegas repite la misma frase y el toque de seguimiento de
+  7 días no trae un hecho verificable.
 - **La auditoría de formato encontró una contradicción real en este README**: decía «trece
   decisiones» cuando `DECISIONES.md` ya tenía catorce, un número de índice que quedó viejo.
   Corregido, y la lección quedó anotada: no escribir en un documento un número que otro documento

@@ -1,8 +1,8 @@
-# Corrida en vivo · C06-cliente-PBA-C3 · 13/09/2026 13:39
+# Corrida en vivo · C06-cliente-PBA-C3 · 13/09/2026 10:39
 
 | Campo | Valor |
 |---|---|
-| Fecha de la corrida | 2026-09-13 13:39 (hora de Córdoba) |
+| Fecha de la corrida | 2026-09-13 10:39 (hora de Córdoba; el identificador `VIVO-202609131339` está en UTC) |
 | Dónde corrió | Front del copiloto publicado, capacidad `sample`, a cuenta de la suscripción del responsable |
 | Versión del contrato | **v5** (iteraciones 6 a 8) + playbook v3 + ficha con franjas de visita |
 | Entrada | La misma consulta real de `entradas/consulta-06.md`, con la fecha cambiada a la del día |

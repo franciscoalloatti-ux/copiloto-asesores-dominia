@@ -1,8 +1,8 @@
-# Corrida en vivo · C03-inmob-mostrar-hoy · 13/09/2026 13:37
+# Corrida en vivo · C03-inmob-mostrar-hoy · 13/09/2026 10:37
 
 | Campo | Valor |
 |---|---|
-| Fecha de la corrida | 2026-09-13 13:37 (hora de Córdoba) |
+| Fecha de la corrida | 2026-09-13 10:37 (hora de Córdoba; el identificador `VIVO-202609131337` está en UTC) |
 | Dónde corrió | Front del copiloto publicado, capacidad `sample`, a cuenta de la suscripción del responsable |
 | Versión del contrato | **v5** (iteraciones 6 a 8) + playbook v3 + ficha con franjas de visita |
 | Entrada | La misma consulta real de `entradas/consulta-03.md`, con la fecha cambiada a la del día |

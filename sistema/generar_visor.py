@@ -86,6 +86,8 @@ def main():
     }
     plantilla = (RAIZ / "visor" / "plantilla.html").read_text(encoding="utf-8")
     salida = plantilla.replace("/*__DATOS__*/null", json.dumps(datos, ensure_ascii=False).replace("</", "<\\/"))
+    chequeos_js = (RAIZ / "visor" / "chequeos.js").read_text(encoding="utf-8")
+    salida = salida.replace("/*__CHEQUEOS__*/", chequeos_js.replace("</", "<" + chr(92) + "/"))
     (RAIZ / "visor" / "index.html").write_text(salida, encoding="utf-8")
     print(f"visor/index.html · {len(consultas)} consultas · {sum(len(c['corridas']) for c in consultas)} corridas")
 

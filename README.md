@@ -168,6 +168,20 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 | `d48ad9997e10` | v4 + user prompt v2 (iteración 5) | 04 de las 17:31 |
 | `6a60ec936cf3` | Vigente: la anterior + ficha D-11 | 01–06 de las 17:39–17:45 |
 
+**Cómo se corre desde cero** (Python 3 y, para los tests, Node.js):
+
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+python pruebas/test_regresion.py
+```
+
+```bash
+python pruebas/test_paridad.py
+```
+
 Cómo se usa:
 
 ```bash

@@ -1093,3 +1093,34 @@ renombre de la C04 de las 17:31, que es parecida, y le asignaba el commit de ese
 `--follow`, el commit que las agregó es el de las 17:49: posterior a las corridas, como corresponde. Se
 sacó `--follow` y el repositorio pasó limpio. **Un verificador también se verifica**: antes de corregir
 el repositorio por lo que dijo el script, se miró qué decía git directamente.
+
+### D-28 · Los chequeos en un solo archivo de JavaScript, y dos tests que lo sostienen
+
+Una revisión del código marcó el riesgo más serio: **los chequeos
+existían dos veces**, en `sistema/copiloto.py` y dentro de `visor/plantilla.html`, y el día que se
+cambiara uno solo, el front y el ejecutor iban a aprobar cosas distintas sin avisar. Ya había pasado
+en chico (D-22 tuvo que tocar V15 en los dos lados). Se hizo en este orden, para no romper nada:
+
+1. **Primero la foto**: `pruebas/test_regresion.py` guarda en `pruebas/esperado_chequeos.json` qué da
+   cada chequeo sobre todas las corridas guardadas, y falla si algo cambia sin que se regenere la foto.
+   Es lo que D-22 y D-23 habían hecho a mano.
+2. **Después la extracción**: los chequeos de JavaScript pasaron a `visor/chequeos.js`. El front lo
+   recibe insertado por `sistema/generar_visor.py`, y Node lo puede cargar solo.
+3. **Y el test de paridad**: `pruebas/test_paridad.py` corre Python y JavaScript sobre las mismas
+   corridas y falla si dan distinto en algún chequeo.
+
+**En su primera corrida, el test de paridad encontró una diferencia real**:
+
+```text
+❌ corridas/2026-09-11_1648_C01-inmob-1dorm_opus-5.md · V12: Python True, JavaScript False
+```
+
+y nueve más iguales. El JavaScript armaba la fecha pegando `"T12:00:00"` a lo que viniera; con una
+fecha que trae hora (`"2026-08-24 10:18"`, como en las entradas) quedaba inválida y V12 marcaba error
+en cualquier día propuesto. Python toma solo los primeros diez caracteres. En el front no se había
+visto porque el campo de fecha siempre da `AAAA-MM-DD`, pero era una divergencia silenciosa entre las
+dos implementaciones. Se corrigió en `chequeos.js` para leer la fecha como Python. Con eso, **las dos
+dan lo mismo en todas las corridas guardadas** y la regresión no cambió.
+
+Además: `requirements.txt` con las versiones con que se probó, `.gitattributes` marca
+`visor/index.html` como archivo generado, y `sistema/verificar_repo.py` corre los dos tests.

@@ -48,6 +48,7 @@ for p in textos("sistema/*.py", "herramientas/*.py"):
 plantilla = (RAIZ / "visor" / "plantilla.html").read_text(encoding="utf-8")
 if shutil.which("node"):
     js = "\n".join(re.findall(r"<script>(.*?)</script>", plantilla, re.S)).replace("/*__DATOS__*/null", "null")
+    js = (RAIZ / "visor" / "chequeos.js").read_text(encoding="utf-8") + chr(10) + js.replace("/*__CHEQUEOS__*/", "")
     with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as tmp:
         tmp.write(js)
     r = subprocess.run(["node", "--check", tmp.name], capture_output=True, text=True)
@@ -113,6 +114,12 @@ for p in (RAIZ / "README.md", RAIZ / "GOBIERNO.md", RAIZ / "visor" / "plantilla.
     for f in frases:
         for m in re.finditer(f, p.read_text(encoding="utf-8")):
             problema(f"Conteo escrito en {p.name}: «{m.group(0)}» — nombrá el archivo que tiene el dato")
+
+# 8 bis · Los tests: regresión de chequeos y paridad Python / JavaScript
+for test in ("test_regresion.py", "test_paridad.py"):
+    r = subprocess.run([sys.executable, str(RAIZ / "pruebas" / test)], cwd=RAIZ, capture_output=True, text=True, encoding="utf-8")
+    if r.returncode:
+        problema(f"Falló pruebas/{test}: " + " | ".join(l.strip() for l in r.stdout.splitlines() if "❌" in l)[:300])
 
 # 9 · El visor publicado está al día con el repositorio
 index = RAIZ / "visor" / "index.html"

@@ -215,7 +215,7 @@ No aplica: corrió con la capacidad `sample` de la página, sin API.
 
 - Revisó: sí, en el front
 - Cambios al borrador (pegar el texto que se envió de verdad):
-- ¿Se envió?:
+- ¿Se envió?: no. El colega ya había respondido al mensaje que el asesor le mandó el viernes, antes de esta corrida (ver D-24)
 - Respuesta del interesado:
 - **¿Contestó?**:
 - **¿Se agendó visita?**:

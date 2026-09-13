@@ -887,7 +887,7 @@ repositorio antes de corregir:
 («Me interesa … de Casona III»), alguna pregunta del borrador tiene que ser sobre la forma de pago.
 Es la T-28, que la iteración 9 perdió sin que nada lo detectara.
 
-**Cómo se probó sin la API**: aplicándolo a las dieciséis corridas guardadas que vinieron del botón de la web. *(La primera versión de esta tabla mostraba catorce; faltaban coherencia 2 y el ejemplo del front, agregadas el 13/9 después de que una evaluación externa lo marcara.)*
+**Cómo se probó sin la API**: aplicándolo a todas las corridas guardadas que vinieron del botón de la web. *(La primera versión de esta tabla dejaba afuera coherencia 2 y el ejemplo del front; se agregaron el 13/9 después de que una evaluación externa lo marcara.)*
 
 | Corridas | V15 | Qué muestra |
 |---|---|---|
@@ -980,10 +980,10 @@ que habla de pago no sea la misma que propone horario»*. Se agregó esa condici
 ejecutor y en el front: una pregunta que contiene «a las» seguido de una hora no cuenta como pregunta
 de pago, aunque mencione el plan de pagos.
 
-**Reverificadas las dieciséis corridas del botón con la condición nueva, sin llamar al modelo:**
+**Reverificadas todas las corridas del botón con la condición nueva, sin llamar al modelo:**
 cambió **una sola**, coherencia 3 con el contrato v1 (*«Y si el plan de pagos te cierra, ¿te queda
 mejor el sábado a las 10 o a las 11?»*), que pasa de ✓ a ✗. Es exactamente el falso negativo. Las
-otras quince dan lo mismo que antes, y ninguna corrida que preguntaba el pago de verdad quedó marcada.
+demás dan lo mismo que antes, y ninguna corrida que preguntaba el pago de verdad quedó marcada.
 
 **Lo que V15 todavía no ve**: una pregunta de pago que no use ninguna de sus palabras («¿con qué lo
 pensabas encarar?»). Sigue siendo un chequeo por palabras: frena, no juzga.
@@ -1034,3 +1034,30 @@ familia de error que D-24.
 Las corridas guardadas ya tenían la hora local correcta desde D-21; los identificadores viejos se
 dejan como están (siguen en UTC) porque son las claves de la base de datos de la página, y cada
 archivo de corrida lo aclara.
+
+### D-26 · Tres contradicciones del contrato, resueltas por escrito y sin corrida
+
+Otra pasada de la evaluación externa encontró tres cosas que ningún chequeo mira porque son del
+contrato, no de una salida. Se aplicaron como **aclaraciones sin corrida**: no hay crédito de API, y
+lo que se verificó fue contra las corridas guardadas.
+
+1. **Restricción 1 contra T-28.** El borrador v7 de la 08 le dice a un cliente con lista Casona 3
+   *«tenemos terminado para escriturar ya y en obra con cuotas»*. La restricción 1 solo permitía
+   nombrar los dos caminos con la lista *sin asignar*; la T-28 del playbook manda exactamente esa
+   frase cuando la lista salió del botón de la web. **Se resolvió a favor de la T-28**, porque es el
+   caso que la motivó: una lista asignada por el botón es provisoria hasta saber cómo paga. La
+   restricción 1 ahora lo dice, y mantiene lo que no se hace nunca: dar un precio, una unidad o la
+   lista del otro edificio. **Es una decisión de negocio** y el responsable la puede revertir.
+2. **V11 contra T-17 con colegas.** El formato pide contestar primero el saludo y V11 exigía el
+   nombre del asesor en la primera línea. Ahora, con un colega, el nombre puede ir en la primera o en
+   la segunda línea. **Reverificadas todas las corridas guardadas: ninguna cambió de resultado.** La
+   C10 sigue bloqueada por V11, y con razón: el nombre no aparece ni en la primera ni en la segunda
+   línea, solo en la firma.
+3. **La fecha precargada.** El front ya no propone la fecha del día: la tiene que cargar quien recibió
+   la consulta. Es la causa del error de D-24 y queda como modo de falla 16 en `GOBIERNO.md`. Esto
+   reemplaza lo que D-25 había hecho con la precarga, que usaba la hora local pero seguía proponiendo
+   «hoy».
+
+Además se completaron dos precisiones: la revisión humana de la C10 dice que el borrador no se
+envió, y D-20 y D-22 ya no escriben cuántas corridas del botón hay, porque ese número quedó viejo a
+los siete minutos, con la corrida de la iteración 10.

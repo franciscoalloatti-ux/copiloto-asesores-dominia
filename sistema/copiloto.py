@@ -235,9 +235,12 @@ def verificar(ficha, datos, llamadas):
     chequeo("V12", "Días de la semana coherentes con las fechas propuestas", not errados,
             "; ".join(errados) or (f"{len(pares)} fecha(s) verificada(s)" if d0 else "sin fecha exacta de consulta"))
 
-    primera = borrador.strip().splitlines()[0] if borrador.strip() else ""
-    chequeo("V11", "El asesor se presenta en la primera línea", datos["asesor"] in primera,
-            f"primera línea: «{primera[:80]}»")
+    # Con un colega, la primera línea puede contestar el saludo (T-17) y el nombre ir en la segunda (D-26).
+    lineas = [l for l in borrador.strip().splitlines() if l.strip()]
+    tope = 2 if datos["canal"].lower() == "inmobiliaria" else 1
+    presentado = any(datos["asesor"] in l for l in lineas[:tope])
+    chequeo("V11", "El asesor se presenta al inicio (primera línea; con colegas, primera o segunda)", presentado,
+            f"inicio: «{' / '.join(lineas[:tope])[:80]}»")
 
     preguntas = borrador.count("?")
     chequeo("V9", "Como máximo dos preguntas", preguntas <= 2, f"{preguntas} pregunta(s)")

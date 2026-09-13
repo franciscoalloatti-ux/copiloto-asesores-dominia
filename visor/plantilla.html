@@ -201,7 +201,7 @@
             </select>
           </label>
           <label>Asesor que firma <input name="asesor" value="Francisco" required></label>
-          <label>Fecha de la consulta <input name="fecha" type="date" required></label>
+          <label>Fecha en que llegó la consulta <input name="fecha" type="date" required></label>
         </div>
         <label class="ancho">Conversación previa, si hay
           <textarea name="historial" rows="2" placeholder="Vacío si es el primer contacto"></textarea></label>
@@ -475,8 +475,10 @@ function verificar(f, datos, llamadas){
   ch("V7", "El borrador no promete lo que no se puede cumplir ni mete urgencia artificial", !promesas.length, promesas.join(", "));
   const firma = `${datos.asesor}, Asesor Comercial de DOMINIA`;
   ch("V8", "Firma exacta del asesor", borrador.trim().endsWith(firma), `esperada: «${firma}»`);
-  const primera = borrador.trim().split("\n")[0] || "";
-  ch("V11", "El asesor se presenta en la primera línea", primera.includes(datos.asesor), `primera línea: «${primera.slice(0, 80)}»`);
+  const lineas = borrador.trim().split("\n").filter(l => l.trim());
+  const tope = datos.canal === "inmobiliaria" ? 2 : 1;
+  ch("V11", "El asesor se presenta al inicio (primera línea; con colegas, primera o segunda)",
+     lineas.slice(0, tope).some(l => l.includes(datos.asesor)), `inicio: «${lineas.slice(0, tope).join(" / ").slice(0, 80)}»`);
   const preguntas = (borrador.match(/\?/g) || []).length;
   ch("V9", "Como máximo dos preguntas", preguntas <= 2, `${preguntas} pregunta(s)`);
   const palabras = borrador.split(/\s+/).filter(Boolean).length;
@@ -584,7 +586,7 @@ function pintarResultado(datos, f, llamadas, chequeos){
 }
 
 const form = $("#form");
-form.fecha.value = fechaLocal();
+form.fecha.value = ""; // sin precarga: la fecha la carga quien recibió la consulta (D-26)
 form.consulta.value = EJEMPLO;
 form.addEventListener("submit", async ev => {
   ev.preventDefault();

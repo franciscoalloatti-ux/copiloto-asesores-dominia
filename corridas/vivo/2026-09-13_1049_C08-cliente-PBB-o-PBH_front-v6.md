@@ -8,6 +8,7 @@
 | Entrada | La misma consulta real de `entradas/consulta-08.md`, con la fecha del día |
 | Cómo se obtuvo | Documento `corridas_vivo/VIVO-202609131349` de la base de datos de la página |
 | Resultado en el front | aprobada para revisión |
+| Con los chequeos vigentes (13/9, reverificada sin llamar al modelo) | BLOQUEADA (V15) |
 
 ## Entrada
 

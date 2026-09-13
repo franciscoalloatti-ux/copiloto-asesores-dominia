@@ -8,6 +8,7 @@
 | Tarifario | `herramientas/tarifario_vigente.csv` embebido en la página |
 | Cómo se obtuvo | Documento `corridas_vivo/VIVO-202609121624` de la base de datos de la página, leído el 13/9 |
 | Resultado | aprobada para revisión |
+| Con los chequeos vigentes (13/9, reverificada sin llamar al modelo) | aprobada para revisión |
 
 > **La entrada es la consulta de ejemplo que trae el front**, no la de un interesado real. Esta corrida
 > prueba que el front funciona de punta a punta (contrato → herramienta → ficha → chequeos); no es

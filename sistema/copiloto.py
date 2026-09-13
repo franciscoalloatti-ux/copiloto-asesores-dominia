@@ -266,7 +266,9 @@ def verificar(ficha, datos, llamadas):
     # V15 salió de la iteración 9: el borrador entró en el largo y perdió la pregunta de pago (T-28).
     boton = re.search(r"me interesa .+ de casona (iii|3)\b", datos.get("consulta", "").lower())
     preguntas = re.findall(r"[^.!?\n]*\?", borrador)
-    pregunta_pago = any(re.search(r"pag|cuota|contado|crédito|credito|financ", q.lower()) for q in preguntas)
+    # Una pregunta que propone horario («¿el sábado a las 10…?») no cuenta aunque nombre el pago (D-22).
+    pregunta_pago = any(re.search(r"pag|cuota|contado|crédito|credito|financ", q.lower())
+                        and not re.search(r"a las \d", q.lower()) for q in preguntas)
     chequeo("V15", "Si la consulta vino del botón de la web, el borrador pregunta cómo paga (T-28)",
             not boton or pregunta_pago,
             "la consulta no vino del botón de la web" if not boton

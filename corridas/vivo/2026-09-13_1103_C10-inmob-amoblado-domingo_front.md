@@ -8,6 +8,7 @@
 | Entrada | Consulta nueva, cargada por el responsable en el front; no tiene archivo en `entradas/` |
 | Cómo se obtuvo | Documento `corridas_vivo/VIVO-202609131403` de la base de datos de la página |
 | Resultado en el front | BLOQUEADA: corregir antes de enviar |
+| Con los chequeos vigentes (13/9, reverificada sin llamar al modelo) | BLOQUEADA (V4, V11) |
 
 ## Entrada
 

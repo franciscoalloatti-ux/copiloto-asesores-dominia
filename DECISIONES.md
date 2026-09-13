@@ -887,13 +887,15 @@ repositorio antes de corregir:
 («Me interesa … de Casona III»), alguna pregunta del borrador tiene que ser sobre la forma de pago.
 Es la T-28, que la iteración 9 perdió sin que nada lo detectara.
 
-**Cómo se probó sin la API**: aplicándolo a todas las corridas guardadas que vinieron del botón.
+**Cómo se probó sin la API**: aplicándolo a las dieciséis corridas guardadas que vinieron del botón de la web. *(La primera versión de esta tabla mostraba catorce; faltaban coherencia 2 y el ejemplo del front, agregadas el 13/9 después de que una evaluación externa lo marcara.)*
 
 | Corridas | V15 | Qué muestra |
 |---|---|---|
 | 05, 06 y 08 con el contrato v1, y 06 con la v3 (11/9, 16:57 a 17:22) | ✗ | Antes de la iteración 3 la T-28 no existía: el chequeo marca la ausencia real |
 | 05 y 06 desde la iteración 3 (17:24 en adelante), y 06 y 08 del front con la v5 | ✓ | La pregunta aparece desde que el playbook la pide |
 | **08 del front con la v6 (13/9 10:49)** | **✗ · BLOQUEADA** | *«Contame si es para vivir o para invertir»*: el hueco de la iteración 9 |
+| Coherencia 2 con el contrato v1 | ✗ | La misma consulta que la 06, escrita por otra persona, antes de la T-28 |
+| Ejemplo del front con el contrato v4 (12/9 13:24) | ✓ | *«¿cómo pensaban pagarlo, con anticipo y cuotas o de contado?»* |
 | Coherencia 3 con el contrato v1 | ✓ | **Falso negativo**: pasa por *«Y si el plan de pagos te cierra, ¿te queda mejor…?»*, que nombra el pago dentro de la pregunta del horario |
 
 **Consecuencia honesta: la iteración 9 no resolvió la consulta 08.** Con V14 la 08 salía bloqueada
@@ -969,3 +971,29 @@ Corrió con el contrato v6, antes de V15 y de la iteración 10
   9»*. Si «el domingo» es hoy, «mañana» es lunes. V12 solo verifica pares con fecha numérica.
 - **Revisión humana: pendiente del responsable** —si el borrador se envió, qué se cambió y qué
   respondió el colega—. Es la primera corrida con una consulta que no estaba en el corpus.
+
+
+### D-22 · V15 dejaba pasar la pregunta del horario que nombra el pago
+
+La evaluación externa propuso cerrar el falso negativo que D-20 había dejado dicho: *«que la pregunta
+que habla de pago no sea la misma que propone horario»*. Se agregó esa condición a V15, en el
+ejecutor y en el front: una pregunta que contiene «a las» seguido de una hora no cuenta como pregunta
+de pago, aunque mencione el plan de pagos.
+
+**Reverificadas las dieciséis corridas del botón con la condición nueva, sin llamar al modelo:**
+cambió **una sola**, coherencia 3 con el contrato v1 (*«Y si el plan de pagos te cierra, ¿te queda
+mejor el sábado a las 10 o a las 11?»*), que pasa de ✓ a ✗. Es exactamente el falso negativo. Las
+otras quince dan lo mismo que antes, y ninguna corrida que preguntaba el pago de verdad quedó marcada.
+
+**Lo que V15 todavía no ve**: una pregunta de pago que no use ninguna de sus palabras («¿con qué lo
+pensabas encarar?»). Sigue siendo un chequeo por palabras: frena, no juzga.
+
+### D-23 · Cada corrida del front dice su resultado con los chequeos de hoy
+
+La misma evaluación marcó que la corrida 08 con la v6 decía *«aprobada para revisión»* en su tabla y
+*BLOQUEADA* en la nota de abajo. El resultado original **no se borra**, porque es lo que el front
+mostró en ese momento. Se agregó a la tabla de **todas** las corridas de `corridas/vivo/` una fila
+*«Con los chequeos vigentes»*, calculada volviendo a verificar la ficha guardada: quien lee solo la
+tabla ve las dos cosas. Dos corridas cambian respecto de lo que mostró el front: la 06 con la v5
+(el front la bloqueó por el falso positivo de V13; hoy está aprobada) y la 08 con la v6 (el front la
+aprobó; hoy está bloqueada por V15).

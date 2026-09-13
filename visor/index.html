@@ -498,7 +498,8 @@ function verificar(f, datos, llamadas){
   ch("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)", !vocab.length, vocab.join(", "));
   const boton = /me interesa .+ de casona (iii|3)\b/.test((datos.consulta || "").toLowerCase());
   const preguntasTxt = borrador.match(/[^.!?\n]*\?/g) || [];
-  const preguntaPago = preguntasTxt.some(q => /pag|cuota|contado|crédito|credito|financ/.test(q.toLowerCase()));
+  const preguntaPago = preguntasTxt.some(q => /pag|cuota|contado|crédito|credito|financ/.test(q.toLowerCase())
+                                         && !/a las \d/.test(q.toLowerCase()));
   ch("V15", "Si la consulta vino del botón de la web, el borrador pregunta cómo paga (T-28)", !boton || preguntaPago,
      !boton ? "la consulta no vino del botón de la web" : (preguntaPago ? "pregunta por la forma de pago" : "no pregunta cómo piensa pagar"));
   return out.sort((a, b) => Number(a.codigo.slice(1)) - Number(b.codigo.slice(1)));

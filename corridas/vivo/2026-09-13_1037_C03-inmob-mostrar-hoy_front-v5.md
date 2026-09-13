@@ -8,6 +8,7 @@
 | Entrada | La misma consulta real de `entradas/consulta-03.md`, con la fecha cambiada a la del día |
 | Cómo se obtuvo | Documento `corridas_vivo/VIVO-202609131337` de la base de datos de la página |
 | Resultado en el front | aprobada para revisión |
+| Con los chequeos vigentes (13/9, reverificada sin llamar al modelo) | aprobada para revisión |
 
 ## Entrada
 

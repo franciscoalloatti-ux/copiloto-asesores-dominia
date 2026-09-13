@@ -235,12 +235,12 @@
           <li><b>Se arma el contrato</b><span>System prompt con las seis piezas, más la ficha del proyecto y el playbook (28 técnicas con fuente). El programa agrega el calendario.</span></li>
           <li><b>Consulta el tarifario</b><span>Herramienta <span class="mono">consultar_tarifario</span>, solo lectura: 36 unidades, sin comisiones ni compradores.</span></li>
           <li><b>Escribe la ficha</b><span>JSON validado contra el esquema: etapa, perfil, lista asignada, unidades, técnicas, borrador, alertas.</span></li>
-          <li><b>12 chequeos en código</b><span>Lista única, precios del tarifario, sin descuentos, fechas coherentes, firma, largo. Si uno falla, la corrida queda bloqueada.</span></li>
+          <li><b>14 chequeos en código</b><span>Lista única, precios del tarifario, sin descuentos, fechas coherentes, firma, largo, dirección y confirmación, vocabulario. Si uno falla, la corrida queda bloqueada.</span></li>
           <li><b>El asesor revisa y envía</b><span>Precio contra la lista del día, lista asignada, agenda real, adjuntos. El copiloto no envía nada.</span></li>
         </ol>
       </div>
       <div class="panel">
-        <h3>Cinco iteraciones, una pieza del contrato por vez</h3>
+        <h3>Las iteraciones del contrato</h3>
         <div class="scroll">
           <table class="iter" id="iteraciones"></table>
         </div>
@@ -265,8 +265,8 @@ const corridasTotal = consultas.reduce((a, c) => a + c.corridas.length, 0);
 $("#facts").innerHTML = [
   `<span><b>${consultas.length}</b> consultas reales, anonimizadas</span>`,
   `<span><b>${corridasTotal}</b> corridas guardadas</span>`,
-  `<span><b>5</b> iteraciones del contrato</span>`,
-  `<span><b>12</b> reglas verificadas en código</span>`,
+  `<span><b>8</b> iteraciones del contrato</span>`,
+  `<span><b>14</b> reglas verificadas en código</span>`,
   `<span><b>USD 0,23</b> por consulta en frío · Opus 5</span>`
 ].join("");
 
@@ -411,6 +411,7 @@ $("#iteraciones").innerHTML = `<thead><tr><th>Versión</th><th>Pieza</th><th>Qu�
   <tr><td>v3 → v3+</td><td>Contexto</td><td class="cita">«Precio de lista USD 247.582, con 40% de anticipo…» — a un desconocido que escribió a las 2 de la mañana</td><td>Sin precio en el primer mensaje al cliente; la primera pregunta es cómo paga.</td></tr>
   <tr><td>v3+ → v4</td><td>Formato</td><td class="cita">«❌ V9 Como máximo dos preguntas — 3 pregunta(s)» · «❌ V10 … 127 palabras»</td><td>Dos preguntas en total, incluida la de la visita; 80 a 110 palabras.</td></tr>
   <tr><td>v4 → v4+</td><td>Pedido puntual</td><td class="cita">«Jueves 11/9 a las 17:00 o sábado 13/9» — el 11/9/2026 era viernes y el 13/9, domingo</td><td>El programa pasa el calendario; el chequeo V12 verifica cada fecha.</td></tr>
+  <tr><td>v4+ → v5</td><td>Tarea, restricciones, formato y playbook · <b>sin corrida</b></td><td class="cita">Auditoría comercial del 12/9: si el interesado no contesta, se pierde; «T-24 se cita y no se cumple» en los 7 borradores; «jardín privado» donde la ficha dice de uso exclusivo</td><td>Seguimiento en tres toques, post-visita hacia plan y boleto, dirección y aviso de confirmación, el otro camino para colegas, el precio con su plan; chequeos V13 y V14.</td></tr>
 </tbody>`;
 
 /* ---------- usar el copiloto en vivo ---------- */

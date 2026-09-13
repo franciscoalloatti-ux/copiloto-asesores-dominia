@@ -14,7 +14,7 @@
 | `auditorias/` | La auditoría comercial del 12/9: dieciséis hallazgos contra los manuales, con el texto exacto que había que cambiar |
 | `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
 | `GOBIERNO.md` | Permisos, los modos de falla con su mitigación, el control humano y quién firma |
-| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto privado en la cuenta del autor (el link no es público; el archivo del repositorio es la copia que se puede abrir sin permisos). La pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha y el borrador y corre los doce chequeos, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los doce chequeos y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
+| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto privado en la cuenta del autor (el link no es público; el archivo del repositorio es la copia que se puede abrir sin permisos). La pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha, el borrador y el seguimiento y corre los catorce chequeos, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los chequeos de cada corrida y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
 
 ## Qué construí
 
@@ -140,7 +140,7 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 - **Cuatro de inmobiliarias colegas y cinco de clientes** (una por audio), cada una guardada con lo
   que respondió el asesor en la realidad para poder comparar. Las corridas finales con el contrato
-  vigente (`corridas/2026-09-11_1739_…` a `…_1745_…`) pasan los doce chequeos.
+  vigente (`corridas/2026-09-11_1739_…` a `…_1745_…`) pasan los doce chequeos que existían entonces (V13 y V14 son del 12/9).
 - **Tres corridas de referencia**, una por tipo de caso:
 
   | Corrida | Caso | Qué muestra |

@@ -6,6 +6,7 @@
 | Dónde corrió | Front del copiloto publicado, capacidad `sample`, a cuenta de la suscripción del responsable |
 | Versión del contrato | v6 (iteración 9), **anterior a V15 y a la iteración 10** |
 | Entrada | Consulta nueva, cargada por el responsable en el front; no tiene archivo en `entradas/` |
+| Fecha real de la consulta | **Viernes 11/9/2026**. En el front se cargó por error la del día de la corrida (13/9); ver D-24 |
 | Cómo se obtuvo | Documento `corridas_vivo/VIVO-202609131403` de la base de datos de la página |
 | Resultado en el front | BLOQUEADA: corregir antes de enviar |
 | Con los chequeos vigentes (13/9, reverificada sin llamar al modelo) | BLOQUEADA (V4, V11) |

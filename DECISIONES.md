@@ -997,3 +997,22 @@ mostró en ese momento. Se agregó a la tabla de **todas** las corridas de `corr
 tabla ve las dos cosas. Dos corridas cambian respecto de lo que mostró el front: la 06 con la v5
 (el front la bloqueó por el falso positivo de V13; hoy está aprobada) y la 08 con la v6 (el front la
 aprobó; hoy está bloqueada por V15).
+
+
+### D-24 · El «error de fecha» de la C10 era de la entrada, no del modelo
+
+La sección de la C10 decía que el borrador aceptaba «el domingo» y en el seguimiento escribía
+*«Confirmado para mañana a las 9»*, y que eso era un error de fecha que ningún chequeo veía. El
+responsable aclaró que **la consulta llegó el viernes 11/9**, y en el front se había cargado la fecha
+del día de la corrida (domingo 13/9). Con la fecha real, «el domingo» es el 13/9 y el toque
+`dia_anterior_a_la_visita` —«confirmado para mañana»— se manda el sábado: **el borrador era
+coherente**. El error fue de quien cargó la entrada. Queda como lección de gobierno: **la fecha de la
+consulta es un dato de entrada crítico**, porque el calendario y V12 se arman a partir de ella; el
+front la precarga con la de hoy y eso invita a este error.
+
+**Y lo que respondió el colega no cuenta como uso del copiloto.** El responsable pegó la respuesta
+real del corredor, del sábado 12/9 a las 9:52 (*«Estoy viendo de confirmar horarios / Por casualidad
+tenes un video del depto modelo ?»*). Es **anterior** a la corrida del copiloto (13/9 11:03): le
+contestaba al mensaje que el asesor le había mandado él el viernes. Registrarla como respuesta al
+borrador sería exactamente una historia de proceso falsa. Quedó en `entradas/consulta-10.md` como
+«lo que pasó en la realidad», y la revisión humana de la corrida sigue sin uso real.

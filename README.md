@@ -199,8 +199,8 @@ python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
   la misma pieza: primero se pasaba de largo y después perdía la pregunta de cómo paga.
 - **Una consulta nueva de un colega (C10) salió bloqueada**: propuso cuatro unidades cuando el máximo
   es tres, y chocaron dos reglas del contrato (devolver el saludo primero contra el nombre del asesor
-  en la primera línea). Además aceptó «el domingo» y en el seguimiento escribió «mañana», un error de
-  fecha que ningún chequeo ve. Su revisión humana —si se envió y qué respondió el colega— está pendiente.
+  en la primera línea). El error de fecha que se le atribuyó
+  al principio era de la entrada: la consulta llegó el viernes y se cargó con la fecha del domingo (D-24). Su borrador no se envió: el colega ya había respondido al mensaje del asesor antes de la corrida.
 - **Siguen dos flojedades**: la apertura a colegas repite la misma frase y el toque de seguimiento de
   7 días no trae un hecho verificable.
 - **La auditoría de formato encontró una contradicción real en este README**: decía «trece

@@ -752,3 +752,24 @@ franjas al responsable y las confirmó (12/9): lunes a viernes de 10 a 13 y de 1
 a 13, y la franja de 12 a 15 para los colegas. Quedan en `conocimiento/proyecto.md`, con la
 aclaración de que **todo horario que proponga el copiloto es sugerido** y lo confirma el asesor
 contra su agenda.
+
+---
+
+## Domingo 13/9/2026
+
+### D-18 · La primera corrida del front, y lo que todavía no prueba
+
+La base de datos de la página publicada guardó una corrida hecha por el responsable el 12/9 a las
+13:24, con la consulta de ejemplo del front (`corridas/vivo/2026-09-12_1324_VIVO-ejemplo-PBC_front-v4.md`).
+
+- **Lo que prueba**: que el front funciona de punta a punta sin la API. Llamó dos veces a la
+  herramienta, asignó `casona_3_pozo`, propuso PB C, PB A y 1º C con los precios exactos del
+  tarifario y pasó los doce chequeos de entonces. El borrador aplicó lo que se había construido: se
+  presentó, **no dio precio** (T-27), la pregunta de pago vino con su motivo —*«Para armarles el
+  plan que mejor les sirva, ¿cómo pensaban pagarlo…?»*— y la visita se propuso con la pareja:
+  *«para que lo vean con tu señora, ¿les queda mejor el sábado 19 a las 10 o a las 11?»*. El 19/9 es
+  sábado: V12 en verde.
+- **Lo que no prueba**: corrió con el contrato v4, **37 minutos antes** de que se publicaran las
+  iteraciones 6 a 8 (commit de las 14:01). Por eso no trae `seguimiento` ni los chequeos V13 y V14,
+  y **tampoco trae la dirección ni el aviso de confirmación**, que es justo lo que la iteración 7
+  agrega. Y la entrada es un ejemplo, no un interesado real. Las iteraciones 6 a 8 siguen sin corrida.

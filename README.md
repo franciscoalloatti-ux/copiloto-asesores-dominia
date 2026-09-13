@@ -1,7 +1,7 @@
 # Copiloto para Asesores Comerciales de DOMINIA
 
 > Trabajo final · Creación de Agentes de IA · MBA UCEMA · 2026 2T · Francisco Alloatti
-> Estado al 12/9/2026: contrato en su versión 5, dos módulos y un envío mensual funcionando, 26
+> Estado al 13/9/2026: contrato en su versión 5, dos módulos y un envío mensual funcionando, 26
 > corridas reales exitosas y dos auditorías hechas (la comercial contra los manuales y la de la
 > rúbrica de la materia). Pendiente: la comparación de modelos, frenada por falta de crédito en la
 > API, y correr las iteraciones 6 a 8 (ver *Qué falta o qué falló*).
@@ -129,6 +129,9 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
   días— con su aporte de valor y su texto. Los manda el asesor.
 - **La transcripción de audios**, local (`herramientas/transcribir_audio.py`, Whisper).
 - **El módulo 2**: `sistema/plan_mensual.py`, con su contrato en `prompts/variantes/`.
+- **El front, probado**: el 12/9 corrió de punta a punta desde la página publicada, sin API, y pasó
+  los doce chequeos de entonces (`corridas/vivo/`). Fue con la consulta de ejemplo y con el contrato
+  v4, antes de las iteraciones 6 a 8.
 - **El paquete mensual para colegas**: `sistema/paquete_colegas.py`, sin API, con la tarea programada
   de Windows «Copiloto DOMINIA - Paquete colegas» (día 1 de cada mes, 9:00). Probado el 11/9: generó
   `corridas/paquete_colegas/2026-09/` y el aviso en pantalla.

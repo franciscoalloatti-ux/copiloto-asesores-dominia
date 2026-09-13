@@ -809,3 +809,62 @@ la fecha del día). Quedaron en `corridas/vivo/`. Es el «después» que les fal
 - **El toque de 7 días es vago.** *«Te puedo mostrar el avance de obra de Casona 3 y cómo viene el
   stock de 2 dormitorios»* no trae un hecho verificable, que es lo que pide la T-29. Y en la 08 dice
   que los de 1 dormitorio *«son pocos»*, que roza la urgencia que prohíbe la T-23 aunque no dispare V7.
+
+## Iteración 9 · pieza: FORMATO · contrato v5 → v6 · 13/9 13:45
+
+**Qué falló** (corrida del front de las 13:40, `corridas/vivo/2026-09-13_1340_C08-cliente-PBB-o-PBH_front-v5.md`):
+
+```text
+❌ V10 Menos de 120 palabras en WhatsApp o Instagram — 135 palabras · canal whatsapp
+```
+
+Con dos unidades pedidas —y una de ellas que no está a la venta— el formato v5 no entraba:
+presentación, contexto del complejo, las dos unidades, una línea aparte de forma de pago, la pregunta,
+el horario con los decisores y la firma.
+
+**Qué se cambió** (solo la pieza *formato* de `prompts/system_prompt.md`, commit `ede450d`): cuando la
+respuesta cubre más de una unidad o una que no está a la venta, **se saca la línea de contexto del
+complejo**, cada unidad se resuelve en una sola línea y la forma de pago va dentro de la pregunta de
+calificación, no en una línea aparte.
+
+**Qué cambió en la salida** (misma consulta, 13:49, `corridas/vivo/2026-09-13_1349_C08-cliente-PBB-o-PBH_front-v6.md`):
+
+| | v5 · 13:40 | v6 · 13:49 |
+|---|---|---|
+| Largo | 135 palabras · **bloqueada** | **119 palabras · 14/14, aprobada** |
+| Contexto del complejo | *«Casona de los Arcos es un complejo cerrado de tres torres en Manantiales I…»* | Sacado |
+| Las dos unidades | En dos oraciones | *«El PB H no está a la venta; lo más parecido es el PB D, 1 dormitorio también en planta baja, con jardín y cochera»* |
+| Pregunta de calificación | *«¿lo veías en cuotas o al contado?»* | *«Contame si es para vivir o para invertir»* |
+
+**El arreglo funcionó a medias, y eso también queda dicho.** El borrador entró en el límite, pero:
+
+1. **Se perdió la pregunta de cómo paga.** La regla nueva decía que la forma de pago va *dentro* de
+   la pregunta; el modelo la convirtió en afirmación (*«Las dos se toman en cuotas durante la obra»*)
+   y preguntó el uso. Justo lo que la T-28 dice que no hay que hacer cuando la lista salió del botón
+   de la web. **Ningún chequeo lo detecta**: V9 cuenta signos de pregunta, no cuál es la pregunta.
+2. **119 palabras pasa el chequeo (menos de 120) pero no el presupuesto del formato (80 a 110).** Es
+   la misma distancia entre el límite duro y el presupuesto que se registró en la iteración 4.
+
+**Queda abierto**: un chequeo que verifique que, con la lista asignada por el botón, el borrador
+pregunte por la forma de pago (T-28). Sin crédito de API ni otra corrida del front no se agregó.
+
+### D-19 · Correcciones de una evaluación hecha desde otra sesión
+
+El responsable pidió evaluar el repositorio desde la sesión del agente evaluador del parcial, que
+aplicó la rúbrica a mano porque la API no tenía crédito, y trajo sus hallazgos a esta sesión. Se
+verificaron uno por uno contra el repositorio antes de tocar nada, y los cuatro eran reales:
+
+1. **El README decía «contrato en su versión 5» y «`system_prompt.md` v4»**, y el archivo ya estaba en
+   la versión 6. Corregido: el README ya no nombra la versión, remite al encabezado del prompt.
+2. **El README decía «los mismos trece campos en todas las corridas»**, y las de `corridas/vivo/`
+   tienen catorce desde que se sumó `seguimiento`. Corregido: trece hasta la v4, catorce desde la
+   iteración 6, idénticos dentro de cada generación.
+3. **La iteración 9 no estaba en este archivo**, aunque el prompt decía que su historial estaba acá.
+   Agregada arriba, con su corrida.
+4. **`GOBIERNO.md` citaba chequeos por número de línea, y las líneas se habían corrido** cuando se
+   agregaron V13 y V14. Ahora se citan por su código. Además, la tabla de modos de falla estaba
+   cortada por líneas en blanco, y las fallas 12 a 14 quedaban fuera de la tabla. Arreglada.
+
+Es la tercera vez que aparece el mismo error: un número escrito en un documento que otro documento
+cambió. La regla ya estaba anotada desde D-15 y no alcanzó con anotarla. **Lo que funciona es no
+escribir el número**: referenciar el archivo que lo tiene.

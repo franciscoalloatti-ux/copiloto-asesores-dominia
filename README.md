@@ -182,6 +182,12 @@ python sistema/plan_mensual.py --mes 2026-10 --desde 2026-06-01 --hasta 2026-09-
 python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
 ```
 
+Antes de cada commit, para no romper nada (código, corridas, horas, tablas, conteos y visor):
+
+```bash
+python sistema/verificar_repo.py
+```
+
 ## Qué falta o qué falló
 
 - **La comparación de modelos no se hizo.** El 11/9 a las 17:45 se terminó el crédito de la API y

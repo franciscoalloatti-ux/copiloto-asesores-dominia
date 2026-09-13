@@ -1063,3 +1063,33 @@ iteraciones 6 a 10—; lo que faltaba no era crédito sino hacer las corridas.)*
 Además se completaron dos precisiones: la revisión humana de la C10 dice que el borrador no se
 envió, y D-20 y D-22 ya no escriben cuántas corridas del botón hay, porque ese número quedó viejo a
 los siete minutos, con la corrida de la iteración 10.
+
+### D-27 · Una verificación del repositorio antes de cada commit
+
+El responsable pidió *«Siempre verifiquemos de no romper nada»*. Mirando atrás, casi todo lo que se
+rompió en estos tres días fue del mismo tipo: cosas que un editor humano no ve y una máquina sí.
+Conteos que quedaron viejos (D-15, D-19, D-20), horas UTC anotadas como locales (D-21, D-25), un salto
+de línea que quedó adentro de una expresión regular al escribir V15, una tabla de `GOBIERNO.md` cortada
+por líneas en blanco (D-19). Se escribió `sistema/verificar_repo.py`, que revisa eso sin llamar a la
+API y sale con error si encuentra algo:
+
+1. que el Python compile y que el JavaScript del front compile (con Node);
+2. que no haya caracteres de control ocultos ni JSON inválido;
+3. que cada corrida del front diga, en su fila «Con los chequeos vigentes», lo mismo que dan los
+   chequeos de hoy sobre su ficha guardada;
+4. que ninguna corrida tenga una hora posterior al commit que la agregó;
+5. que ninguna tabla de markdown esté cortada;
+6. que no vuelvan los conteos escritos que ya se quedaron viejos alguna vez;
+7. que `visor/index.html` esté al día con el repositorio.
+
+**En su primera corrida el script se equivocó**, y conviene contarlo:
+
+```text
+❌ 2026-09-11_1742_C04-inmob-2dorm_opus-5.md: la corrida (2026-09-11 17:42) es posterior al commit que la agregó (2026-09-11 17:32)
+```
+
+y tres más iguales con la C09. Con `git log --follow`, git trataba a la corrida de las 17:42 como un
+renombre de la C04 de las 17:31, que es parecida, y le asignaba el commit de ese otro archivo. Sin
+`--follow`, el commit que las agregó es el de las 17:49: posterior a las corridas, como corresponde. Se
+sacó `--follow` y el repositorio pasó limpio. **Un verificador también se verifica**: antes de corregir
+el repositorio por lo que dijo el script, se miró qué decía git directamente.

@@ -14,7 +14,7 @@
 | `auditorias/` | La auditoría comercial del 12/9: dieciséis hallazgos contra los manuales, con el texto exacto que había que cambiar |
 | `ECONOMIA.md` | Costo por corrida medido, la cuenta rehecha, proyección y elección de modelo |
 | `GOBIERNO.md` | Permisos, los modos de falla con su mitigación, el control humano y quién firma |
-| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto privado en la cuenta del autor (el link no es público; el archivo del repositorio es la copia que se puede abrir sin permisos). La pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha, el borrador y el seguimiento y corre los catorce chequeos, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los chequeos de cada corrida y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
+| `visor/index.html` | **Para usarlo y para mirarlo.** Publicado como artefacto privado en la cuenta del autor (el link no es público; el archivo del repositorio es la copia que se puede abrir sin permisos). La pestaña «Usar el copiloto» toma una consulta nueva, consulta el tarifario, arma la ficha, el borrador y el seguimiento y corre los mismos chequeos que el ejecutor, sin usar la API (capacidad `sample`, a cuenta de quien abre la página). Abierto como archivo local queda solo el visor: elegí una consulta. Muestra lo que respondió el asesor real, el borrador del copiloto en cada versión del contrato, la ficha, los chequeos de cada corrida y el plan de octubre. Se regenera con `python sistema/generar_visor.py` |
 
 ## Qué construí
 
@@ -115,7 +115,7 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 - **El contrato** (`prompts/system_prompt.md` y `prompts/user_prompt.md`; cada archivo lleva su versión y su historial en el encabezado), con las seis piezas
   marcadas por nombre, más dos anexos: `conocimiento/proyecto.md` (la ficha del proyecto) y
-  `conocimiento/playbook.md` (28 técnicas, cada una con su fuente verificada).
+  `conocimiento/playbook.md` (cada técnica con su código `T-..` y su fuente verificada).
 - **La herramienta real**: `consultar_tarifario` lee `herramientas/tarifario_vigente.csv`, derivado
   de las listas de precios internas sin comisiones ni compradores. Cada corrida registra qué filas
   del CSV consultó y el sha256 del tarifario.
@@ -123,7 +123,7 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
   todas las corridas hasta el contrato v4** (`corridas/` y `corridas/coherencia/`); **desde la
   iteración 6 son catorce**, porque se sumó `seguimiento` (`corridas/vivo/`). Dentro de cada
   generación, el esquema es idéntico en todas las corridas.
-- **Catorce reglas verificadas en código** después de cada corrida (V1–V14: lista única, precios
+- **Reglas verificadas en código** después de cada corrida (los chequeos `V..` de `sistema/copiloto.py`: lista única, precios
   idénticos al tarifario, sin descuentos ni urgencia, fechas coherentes, firma, presentación,
   preguntas, largo, dirección y aviso de confirmación cuando hay visita, y vocabulario que la ficha
   desmiente). Si una falla, la corrida queda **BLOQUEADA** y el asesor no la envía.
@@ -195,11 +195,10 @@ python sistema/paquete_colegas.py --mes 2026-10 --asesor Francisco
   por separado). La otra es un falso positivo del chequeo, que se dejó así a propósito: un control
   por palabras no distingue *mencionar* de *ofrecer*.
 - **Las iteraciones 6 a 9 se verificaron el 13/9 desde el front** con las consultas 03, 06 y 08
-  (`corridas/vivo/`): las tres terminan aprobadas. La 08 salió primero bloqueada por 135 palabras y
-  pasó con la iteración 9, **pero a medias**: entró en el límite y perdió la pregunta de cómo paga,
-  que la T-28 exige y que ningún chequeo verifica. Las corridas encontraron además dos errores del
-  chequeo, ya corregidos, y dos flojedades que siguen: la apertura a colegas sigue siendo la misma
-  frase y el toque de seguimiento de 7 días no trae un hecho verificable.
+  (`corridas/vivo/`). La 03 y la 06 terminan aprobadas. **La 08 sigue abierta**: con la iteración 8
+  se pasaba de largo, y con la 9 entró en el largo pero dejó de preguntar cómo paga, cosa que ahora
+  detecta el chequeo V15 y la deja bloqueada. Siguen además dos flojedades: la apertura a colegas es
+  siempre la misma frase y el toque de seguimiento de 7 días no trae un hecho verificable.
 - **La auditoría de formato encontró una contradicción real en este README**: decía «trece
   decisiones» cuando `DECISIONES.md` ya tenía catorce, un número de índice que quedó viejo.
   Corregido, y la lección quedó anotada: no escribir en un documento un número que otro documento

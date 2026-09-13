@@ -1,6 +1,10 @@
 # Playbook comercial — técnicas que aplica el copiloto
 
-> **Versión 2 (11/9/2026)** · Iteración 3: se resolvió la contradicción sobre el precio en el primer
+> **Versión 3 (12/9/2026)** · Iteraciones 6 a 8, salidas de la auditoría comercial: seguimiento
+> (T-29, T-30), post-visita (T-31), el precio con su plan (T-32), no anunciar que no se da el precio
+> (T-33), y T-05, T-06 y T-28 reescritas.
+>
+> Versión 2 (11/9/2026) · Iteración 3: se resolvió la contradicción sobre el precio en el primer
 > mensaje (T-27) y se agregó cuándo va primero la pregunta de cómo paga (T-28).
 >
 > Versión 1: técnicas de la Academia Casona (formación interna de DOMINIA) más las

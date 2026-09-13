@@ -263,6 +263,15 @@ def verificar(ficha, datos, llamadas):
     chequeo("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)",
             not vocabulario, ", ".join(vocabulario))
 
+    # V15 salió de la iteración 9: el borrador entró en el largo y perdió la pregunta de pago (T-28).
+    boton = re.search(r"me interesa .+ de casona (iii|3)\b", datos.get("consulta", "").lower())
+    preguntas = re.findall(r"[^.!?\n]*\?", borrador)
+    pregunta_pago = any(re.search(r"pag|cuota|contado|crédito|credito|financ", q.lower()) for q in preguntas)
+    chequeo("V15", "Si la consulta vino del botón de la web, el borrador pregunta cómo paga (T-28)",
+            not boton or pregunta_pago,
+            "la consulta no vino del botón de la web" if not boton
+            else ("pregunta por la forma de pago" if pregunta_pago else "no pregunta cómo piensa pagar"))
+
     return {"aprobada_para_revision": all(c["ok"] for c in chequeos), "chequeos": chequeos}
 
 

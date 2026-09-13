@@ -29,7 +29,7 @@ envía el asesor, con su nombre.
 
 ## Modos de falla: qué pasa y qué se hace
 
-> Los chequeos se citan por su código (`V1` a `V14`), no por número de línea: el código es lo que se
+> Los chequeos se citan por su código (`V1`, `V2`…), no por número de línea: el código es lo que se
 > busca en `sistema/copiloto.py` y en `visor/plantilla.html`, y no se corre cuando el archivo cambia.
 
 Cada fila salió de una corrida real o de una regla de negocio con consecuencia concreta. La columna
@@ -51,6 +51,7 @@ Cada fila salió de una corrida real o de una regla de negocio con consecuencia 
 | 12 | **La API deja de responder** (11/9 17:45: *«Your credit balance is too low to access the Anthropic API»*) | Los asesores se quedan sin copiloto en medio de una tanda | El ejecutor guarda la corrida con el error y costo 0, sin inventar salida. **El asesor responde a mano, como antes del copiloto**, y el responsable configura una alerta de saldo en la consola de Anthropic. Lo que no se puede es que el copiloto sea el único camino para responder |
 | 13 | **Paquete mensual con disponibilidad vieja**: se le manda a los colegas una unidad que ya se vendió | El colega la ofrece, el cliente la quiere y no existe: queda mal DOMINIA y queda mal el colega | **K1** en `sistema/paquete_colegas.py`: si el tarifario tiene más de 35 días, el paquete sale **«REVISAR ANTES DE ENVIAR»** y pide actualizar la planilla interna. **Implementada** |
 | 14 | **El modelo cuenta mal** (plan de octubre: «14 de 2 dormitorios y 9 de 3» cuando son 15 y 8) | Un plan o un mensaje con stock equivocado | Los conteos que se mandan a colegas los hace el código (paquete mensual); el contrato del módulo 2 prohíbe contar de memoria. **Parcial**: la regla del contrato no se pudo probar |
+| 15 | **El borrador pierde la pregunta de cómo paga** (consulta 08 con el contrato v6: para entrar en el largo preguntó el uso) | Se asigna la lista por el botón y nadie verifica si la persona califica a crédito: se le puede vender pozo a quien le conviene terminado | **V15**: si la consulta vino del botón de la web, alguna pregunta del borrador tiene que ser sobre la forma de pago. **Implementada**; se engaña si el pago aparece dentro de la pregunta del horario |
 
 **Cuando algún chequeo falla**, la corrida queda marcada **«BLOQUEADA: corregir antes de enviar»**
 en el archivo y en la consola. El asesor no la envía hasta corregir la regla que falló.

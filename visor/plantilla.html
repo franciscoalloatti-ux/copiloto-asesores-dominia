@@ -232,10 +232,10 @@
         <p class="lede">El copiloto nunca le escribe al cliente. Prepara la ficha y el borrador; el asesor revisa, corrige y envía con su firma. Nivel de delegación <b>L2 · ejecuta con revisión</b>. Responsable del sistema: Francisco Alloatti, responsable general de DOMINIA.</p>
         <ol class="flujo">
           <li><b>Llega la consulta</b><span>Por WhatsApp, Instagram, portal o una inmobiliaria colega. Los audios se transcriben en la computadora del asesor, con Whisper.</span></li>
-          <li><b>Se arma el contrato</b><span>System prompt con las seis piezas, más la ficha del proyecto y el playbook (28 técnicas con fuente). El programa agrega el calendario.</span></li>
+          <li><b>Se arma el contrato</b><span>System prompt con las seis piezas, más la ficha del proyecto y el playbook (cada técnica con su fuente). El programa agrega el calendario.</span></li>
           <li><b>Consulta el tarifario</b><span>Herramienta <span class="mono">consultar_tarifario</span>, solo lectura: 36 unidades, sin comisiones ni compradores.</span></li>
           <li><b>Escribe la ficha</b><span>JSON validado contra el esquema: etapa, perfil, lista asignada, unidades, técnicas, borrador, alertas.</span></li>
-          <li><b>14 chequeos en código</b><span>Lista única, precios del tarifario, sin descuentos, fechas coherentes, firma, largo, dirección y confirmación, vocabulario. Si uno falla, la corrida queda bloqueada.</span></li>
+          <li><b>Chequeos en código</b><span>Lista única, precios del tarifario, sin descuentos, fechas coherentes, firma, largo, dirección y confirmación, vocabulario. Si uno falla, la corrida queda bloqueada.</span></li>
           <li><b>El asesor revisa y envía</b><span>Precio contra la lista del día, lista asignada, agenda real, adjuntos. El copiloto no envía nada.</span></li>
         </ol>
       </div>
@@ -265,8 +265,7 @@ const corridasTotal = consultas.reduce((a, c) => a + c.corridas.length, 0);
 $("#facts").innerHTML = [
   `<span><b>${consultas.length}</b> consultas reales, anonimizadas</span>`,
   `<span><b>${corridasTotal}</b> corridas guardadas</span>`,
-  `<span><b>8</b> iteraciones del contrato</span>`,
-  `<span><b>14</b> reglas verificadas en código</span>`,
+  `<span>reglas verificadas en código antes de enviar</span>`,
   `<span><b>USD 0,23</b> por consulta en frío · Opus 5</span>`
 ].join("");
 
@@ -497,6 +496,11 @@ function verificar(f, datos, llamadas){
   const vocab = ["jardín privado","jardin privado","jardín propio","patio privado","monoambiente","pileta olímpica"]
                 .filter(v => alCliente.includes(v));
   ch("V14", "Sin vocabulario que la ficha desmiente (el jardín es de uso exclusivo)", !vocab.length, vocab.join(", "));
+  const boton = /me interesa .+ de casona (iii|3)\b/.test((datos.consulta || "").toLowerCase());
+  const preguntasTxt = borrador.match(/[^.!?\n]*\?/g) || [];
+  const preguntaPago = preguntasTxt.some(q => /pag|cuota|contado|crédito|credito|financ/.test(q.toLowerCase()));
+  ch("V15", "Si la consulta vino del botón de la web, el borrador pregunta cómo paga (T-28)", !boton || preguntaPago,
+     !boton ? "la consulta no vino del botón de la web" : (preguntaPago ? "pregunta por la forma de pago" : "no pregunta cómo piensa pagar"));
   return out.sort((a, b) => Number(a.codigo.slice(1)) - Number(b.codigo.slice(1)));
 }
 function corridaMarkdown(datos, f, llamadas, chequeos){

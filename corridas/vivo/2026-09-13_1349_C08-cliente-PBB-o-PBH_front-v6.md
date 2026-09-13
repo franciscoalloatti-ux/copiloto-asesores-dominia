@@ -199,7 +199,8 @@ Cualquier de los dos
 
 ## Reverificación del 13/9 (sin volver a llamar al modelo)
 
-- **Aprobada** también con el ejecutor de Python: 14 de 14.
+- Aprobada con los chequeos de ese momento.
+- **Con el chequeo V15 (13/9, D-20) queda BLOQUEADA**: *«no pregunta cómo piensa pagar»*. El borrador entró en el largo preguntando el uso (*«Contame si es para vivir o para invertir»*) en lugar de la forma de pago que exige la T-28.
 
 ## Consumo y costo
 

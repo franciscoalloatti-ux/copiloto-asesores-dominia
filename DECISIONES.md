@@ -868,3 +868,40 @@ verificaron uno por uno contra el repositorio antes de tocar nada, y los cuatro 
 Es la tercera vez que aparece el mismo error: un número escrito en un documento que otro documento
 cambió. La regla ya estaba anotada desde D-15 y no alcanzó con anotarla. **Lo que funciona es no
 escribir el número**: referenciar el archivo que lo tiene.
+
+### D-20 · Chequeo V15: la pregunta de pago que el largo se llevó, y cuatro conteos más
+
+Una segunda evaluación desde la sesión del agente evaluador marcó que la iteración 9 había dejado un
+hueco sin chequeo y que seguían escritos números que ya eran viejos. Se verificó cada punto contra el
+repositorio antes de corregir:
+
+- **`conocimiento/playbook.md` decía «Versión 2»** y su contenido ya era la versión 3 (T-29 a T-33).
+  Corregido el encabezado.
+- **El README y el visor decían «28 técnicas»** y el playbook tiene 33. Y quedaban «catorce reglas»,
+  «14 chequeos» y «8 iteraciones» en el README y en el visor, que se iban a quedar viejos apenas se
+  sumara un chequeo. **Se sacaron todos los conteos**: los documentos nombran el archivo que tiene el
+  dato. Es la cuarta vez que aparece este error; D-15 y D-19 lo habían anotado como regla y no
+  alcanzó, porque la regla estaba escrita pero los conteos seguían en los documentos.
+
+**El chequeo nuevo, V15**, en el ejecutor y en el front: si la consulta vino del botón de la web
+(«Me interesa … de Casona III»), alguna pregunta del borrador tiene que ser sobre la forma de pago.
+Es la T-28, que la iteración 9 perdió sin que nada lo detectara.
+
+**Cómo se probó sin la API**: aplicándolo a todas las corridas guardadas que vinieron del botón.
+
+| Corridas | V15 | Qué muestra |
+|---|---|---|
+| 05, 06 y 08 con el contrato v1, y 06 con la v3 (11/9, 16:57 a 17:22) | ✗ | Antes de la iteración 3 la T-28 no existía: el chequeo marca la ausencia real |
+| 05 y 06 desde la iteración 3 (17:24 en adelante), y 06 y 08 del front con la v5 | ✓ | La pregunta aparece desde que el playbook la pide |
+| **08 del front con la v6 (13/9 13:49)** | **✗ · BLOQUEADA** | *«Contame si es para vivir o para invertir»*: el hueco de la iteración 9 |
+| Coherencia 3 con el contrato v1 | ✓ | **Falso negativo**: pasa por *«Y si el plan de pagos te cierra, ¿te queda mejor…?»*, que nombra el pago dentro de la pregunta del horario |
+
+**Consecuencia honesta: la iteración 9 no resolvió la consulta 08.** Con V14 la 08 salía bloqueada
+por largo; con V15 sale bloqueada por no preguntar cómo paga. El formato todavía no encontró cómo
+responder por dos unidades, una de ellas inexistente, y preguntar lo que la T-28 exige en menos de
+120 palabras. Queda abierta, y el próximo intento es de la pieza **formato**: la pregunta de pago
+reemplaza a la aclaración de los decisores cuando no entran las dos.
+
+**Y la flaqueza de V15 queda dicha**: busca palabras de pago dentro de cualquier pregunta, así que una
+pregunta de horario que mencione «el plan de pagos» la engaña. Un chequeo por palabras sirve para
+frenar, no para juzgar (lo mismo que se anotó sobre P3 del módulo 2).

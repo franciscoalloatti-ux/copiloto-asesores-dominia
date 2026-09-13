@@ -15,6 +15,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from casos import RAIZ, casos, resultado_python  # noqa: E402
 
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 FOTO = RAIZ / "pruebas" / "esperado_chequeos.json"
 
 actual = {caso["nombre"]: resultado_python(caso) for caso in casos()}

@@ -1,0 +1,3 @@
+# Opcional: solo para herramientas/transcribir_audio.py (consultas que llegan como audio).
+# Pesado: descarga el modelo Whisper la primera vez.
+faster-whisper==1.2.1

@@ -22,6 +22,10 @@ from pathlib import Path
 
 import anthropic
 
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 RAIZ = Path(__file__).resolve().parent.parent
 TARIFARIO = RAIZ / "herramientas" / "tarifario_vigente.csv"
 ESQUEMA = json.loads((Path(__file__).parent / "esquema_ficha.json").read_text(encoding="utf-8"))

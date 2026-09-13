@@ -14,6 +14,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from casos import RAIZ, c, casos, resultado_python  # noqa: E402
 
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 lista = list(casos())
 with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as tmp:
     json.dump({"casos": lista, "tarifario": c.leer_tarifario()}, tmp, ensure_ascii=False)

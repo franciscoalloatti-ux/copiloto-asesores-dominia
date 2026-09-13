@@ -14,6 +14,11 @@ import time
 
 from faster_whisper import WhisperModel
 
+import sys
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ap = argparse.ArgumentParser()
 ap.add_argument("audio")
 ap.add_argument("--modelo", default="small", help="tiny, base, small, medium")

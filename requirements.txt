@@ -1,5 +1,5 @@
 # Probado con Python 3.14.3 (11 al 13/9/2026)
 anthropic==1.5.0        # sistema/copiloto.py y sistema/plan_mensual.py (API de Anthropic)
 openpyxl==3.1.5         # herramientas/derivar_tarifario.py (lee las listas de precios internas)
-faster-whisper==1.2.1   # herramientas/transcribir_audio.py (opcional: solo para consultas por audio)
 # Los tests de paridad necesitan Node.js (probado con v24.14.1)
+# Para transcribir consultas por audio: requirements-audio.txt

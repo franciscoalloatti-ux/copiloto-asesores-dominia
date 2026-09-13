@@ -20,6 +20,11 @@ from pathlib import Path
 
 from copiloto import RAIZ, TARIFARIO, leer_tarifario
 
+import sys
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre",
          "octubre", "noviembre", "diciembre"]
 BROCHURE = "BROCHURE DOMINIA_3.pdf (29 páginas, planos tipo, amenities y terminaciones)"

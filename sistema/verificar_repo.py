@@ -22,6 +22,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import copiloto as c  # noqa: E402
 
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 RAIZ = c.RAIZ
 problemas, avisos = [], []
 
@@ -117,15 +121,19 @@ for p in (RAIZ / "README.md", RAIZ / "GOBIERNO.md", RAIZ / "visor" / "plantilla.
 
 # 8 bis · Los tests: regresión de chequeos y paridad Python / JavaScript
 for test in ("test_regresion.py", "test_paridad.py"):
-    r = subprocess.run([sys.executable, str(RAIZ / "pruebas" / test)], cwd=RAIZ, capture_output=True, text=True, encoding="utf-8")
+    r = subprocess.run([sys.executable, "-X", "utf8", str(RAIZ / "pruebas" / test)], cwd=RAIZ,
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
-        problema(f"Falló pruebas/{test}: " + " | ".join(l.strip() for l in r.stdout.splitlines() if "❌" in l)[:300])
+        problema(f"Falló pruebas/{test}: " + (" | ".join(l.strip() for l in (r.stdout or "").splitlines() if "❌" in l) or (r.stderr or "").strip()[-300:])[:300])
 
 # 9 · El visor publicado está al día con el repositorio
 index = RAIZ / "visor" / "index.html"
 anterior = index.read_text(encoding="utf-8")
-subprocess.run([sys.executable, str(RAIZ / "sistema" / "generar_visor.py")], cwd=RAIZ, capture_output=True, text=True)
-if index.read_text(encoding="utf-8") != anterior:
+gen = subprocess.run([sys.executable, "-X", "utf8", str(RAIZ / "sistema" / "generar_visor.py")], cwd=RAIZ,
+                     capture_output=True, text=True, encoding="utf-8", errors="replace")
+if gen.returncode:
+    problema("generar_visor.py falló, así que no se puede saber si el visor está al día: " + (gen.stderr or "").strip()[-200:])
+elif index.read_text(encoding="utf-8") != anterior:
     problema("visor/index.html no estaba al día: se regeneró ahora, hay que commitearlo y republicar el artefacto")
 
 print("Verificación del repositorio")

@@ -13,6 +13,10 @@ from pathlib import Path
 
 import openpyxl
 
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 SALIDA = Path(__file__).parent / "tarifario_vigente.csv"
 
 # Expensas mensuales por cantidad de dormitorios (confirmadas por el desarrollista, ago-2026).

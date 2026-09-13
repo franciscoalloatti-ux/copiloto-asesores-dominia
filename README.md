@@ -174,6 +174,8 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 pip install -r requirements.txt
 ```
 
+Para transcribir consultas que llegan como audio, además: `pip install -r requirements-audio.txt`.
+
 ```bash
 python pruebas/test_regresion.py
 ```

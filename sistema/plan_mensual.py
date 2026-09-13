@@ -18,6 +18,11 @@ import anthropic
 from copiloto import (DIAS, HERRAMIENTA, PRECIOS, RAIZ, TARIFARIO, cliente, consultar_tarifario, costo,
                       fecha_consulta, leer_entrada, leer_tarifario)
 
+import sys
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 ESQUEMA = json.loads((Path(__file__).parent / "esquema_plan.json").read_text(encoding="utf-8"))
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre",
          "octubre", "noviembre", "diciembre"]

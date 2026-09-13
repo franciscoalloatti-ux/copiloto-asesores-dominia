@@ -1124,3 +1124,32 @@ dan lo mismo en todas las corridas guardadas** y la regresión no cambió.
 
 Además: `requirements.txt` con las versiones con que se probó, `.gitattributes` marca
 `visor/index.html` como archivo generado, y `sistema/verificar_repo.py` corre los dos tests.
+
+### D-29 · Los scripts se caían en un Windows sin UTF-8
+
+Una evaluación externa clonó el repositorio en un entorno limpio, instaló las versiones exactas de
+`requirements.txt` (existen las tres) y corrió los tres scripts de verificación. **En su máquina se
+cayeron**, y en la del responsable no: sus comandos fuerzan UTF-8. Se reprodujo acá quitando esa
+configuración, como la tendría el profesor en un Windows por defecto:
+
+```text
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+AttributeError: 'NoneType' object has no attribute 'splitlines'
+```
+
+El primero es el test de regresión, que no podía imprimir ✅ en cp1252. El segundo es el verificador,
+que lanzaba ese test, recibía la salida vacía y se caía al leerla. **El paso que el README manda correr
+antes de cada commit no andaba fuera de esta computadora.**
+
+**Qué se cambió:**
+
+- Los nueve scripts que imprimen símbolos reconfiguran su salida a UTF-8 al arrancar.
+- El verificador lanza los tests con `python -X utf8` y ya no se cae si un test no devuelve salida:
+  informa el error.
+- **Un hueco más del verificador, marcado por la misma evaluación**: el chequeo «el visor está al
+  día» corría `generar_visor.py` sin mirar si terminaba bien. Si ese script se caía antes de escribir,
+  `index.html` quedaba igual y el chequeo decía que estaba al día. Ahora falla.
+- `faster-whisper`, que es pesado y solo sirve para audios, pasó a `requirements-audio.txt`.
+
+**Verificado en las dos condiciones**, sin UTF-8 y con UTF-8: test de regresión, test de paridad y
+verificador pasan limpios, `copiloto.py --help` responde y el visor se regenera igual.

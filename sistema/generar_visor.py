@@ -13,6 +13,11 @@ from pathlib import Path
 
 from copiloto import RAIZ, leer_entrada
 
+import sys
+if hasattr(sys.stdout, "reconfigure"):  # que funcione en un Windows sin UTF-8 (D-29)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 VERSIONES = {
     "911bac10d216": ("v1", "Contrato v1 + playbook v0 (prueba de humo)"),
     "07325a31ef33": ("v1", "Contrato v1 + playbook v1"),

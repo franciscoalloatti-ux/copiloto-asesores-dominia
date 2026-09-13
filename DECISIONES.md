@@ -1039,7 +1039,9 @@ archivo de corrida lo aclara.
 
 Otra pasada de la evaluación externa encontró tres cosas que ningún chequeo mira porque son del
 contrato, no de una salida. Se aplicaron como **aclaraciones sin corrida**: no hay crédito de API, y
-lo que se verificó fue contra las corridas guardadas.
+lo que se verificó fue contra las corridas guardadas. *(Corrección del mismo día, marcada por la
+evaluación externa: el motivo estaba mal dicho. El front corre sin la API —así se probaron las
+iteraciones 6 a 10—; lo que faltaba no era crédito sino hacer las corridas.)*
 
 1. **Restricción 1 contra T-28.** El borrador v7 de la 08 le dice a un cliente con lista Casona 3
    *«tenemos terminado para escriturar ya y en obra con cuotas»*. La restricción 1 solo permitía

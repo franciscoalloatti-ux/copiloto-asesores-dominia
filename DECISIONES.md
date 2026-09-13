@@ -1016,3 +1016,21 @@ tenes un video del depto modelo ?»*). Es **anterior** a la corrida del copiloto
 contestaba al mensaje que el asesor le había mandado él el viernes. Registrarla como respuesta al
 borrador sería exactamente una historia de proceso falsa. Quedó en `entradas/consulta-10.md` como
 «lo que pasó en la realidad», y la revisión humana de la corrida sigue sin uso real.
+
+### D-25 · El front anotaba la hora en UTC: se corrigió en la fuente
+
+D-21 corrigió a mano las horas de las corridas del 13/9, pero no la causa. El front usaba
+`toISOString()`, que da la hora universal, en tres lugares:
+
+- el **identificador** de cada corrida (`VIVO-…`);
+- la **«Fecha de la corrida»** del `.md` que se descarga;
+- la **fecha que se precarga** en el formulario.
+
+El tercero era el peor: en Córdoba (UTC−3), desde las 21 hs el formulario precargaba **la fecha de
+mañana**, y la fecha de la consulta arma el calendario del borrador y el chequeo V12. Es la misma
+familia de error que D-24.
+
+**Qué se cambió** en `visor/plantilla.html`: las tres usan ahora la hora local de quien corre la página.
+Las corridas guardadas ya tenían la hora local correcta desde D-21; los identificadores viejos se
+dejan como están (siguen en UTC) porque son las claves de la base de datos de la página, y cada
+archivo de corrida lo aclara.

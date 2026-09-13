@@ -415,6 +415,10 @@ $("#iteraciones").innerHTML = `<thead><tr><th>Versión</th><th>Pieza</th><th>Qu�
 
 /* ---------- usar el copiloto en vivo ---------- */
 const C = DATOS.contrato;
+// Hora local de quien usa la página (Córdoba), no UTC: toISOString() corre 3 horas y, de noche, cambia el día (D-25).
+const dos = n => String(n).padStart(2, "0");
+const fechaLocal = (d = new Date()) => `${d.getFullYear()}-${dos(d.getMonth() + 1)}-${dos(d.getDate())}`;
+const horaLocal = (d = new Date()) => `${dos(d.getHours())}:${dos(d.getMinutes())}`;
 const DIAS = ["lunes","martes","miércoles","jueves","viernes","sábado","domingo"];
 const diaDe = d => DIAS[(d.getDay() + 6) % 7];
 const norm = s => String(s).replace(/°/g, "º").replace(/\s+/g, "").toUpperCase();
@@ -507,7 +511,7 @@ function verificar(f, datos, llamadas){
 function corridaMarkdown(datos, f, llamadas, chequeos){
   const ok = chequeos.every(c => c.ok);
   return [`# Corrida en vivo · ${datos.consulta_id} · ${new Date().toLocaleString("es-AR")}`, "",
-    "| Campo | Valor |", "|---|---|", `| Fecha de la corrida | ${new Date().toISOString().slice(0, 16).replace("T", " ")} |`,
+    "| Campo | Valor |", "|---|---|", `| Fecha de la corrida | ${fechaLocal()} ${horaLocal()} (hora local de quien corrió) |`,
     "| Modelo | el del visor (capacidad `sample` de la página) |",
     `| Archivo de entrada | consulta cargada en el visor |`,
     `| Resultado | ${ok ? "aprobada para revisión" : "BLOQUEADA: corregir antes de enviar"} |`, "",
@@ -580,14 +584,14 @@ function pintarResultado(datos, f, llamadas, chequeos){
 }
 
 const form = $("#form");
-form.fecha.value = new Date().toISOString().slice(0, 10);
+form.fecha.value = fechaLocal();
 form.consulta.value = EJEMPLO;
 form.addEventListener("submit", async ev => {
   ev.preventDefault();
   const datos = {
     canal: form.canal.value, asesor: form.asesor.value.trim(), fecha: form.fecha.value,
     historial: form.historial.value.trim(), consulta: form.consulta.value.trim(),
-    consulta_id: "VIVO-" + new Date().toISOString().slice(0, 16).replace(/[-:T]/g, ""),
+    consulta_id: "VIVO-" + (fechaLocal() + horaLocal()).replace(/[-:]/g, ""),
   };
   const sample = await claude.use("sample");
   if (!sample) { $("#aviso").textContent = "Esta vista no puede consultar a Claude; abrí el artefacto desde tu cuenta."; $("#aviso").className = "aviso error"; return; }

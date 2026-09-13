@@ -55,7 +55,7 @@ if shutil.which("node"):
     js = (RAIZ / "visor" / "chequeos.js").read_text(encoding="utf-8") + chr(10) + js.replace("/*__CHEQUEOS__*/", "")
     with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False, encoding="utf-8") as tmp:
         tmp.write(js)
-    r = subprocess.run(["node", "--check", tmp.name], capture_output=True, text=True)
+    r = subprocess.run(["node", "--check", tmp.name], capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode:
         problema("JavaScript del front roto: " + (r.stderr.strip().splitlines() or ["?"])[-1])
 else:
@@ -98,11 +98,29 @@ for p in textos("corridas/**/*.md"):
     # Sin --follow: con él, git confunde corridas parecidas (la C04 de las 17:42 con la de las 17:31) como si
     # fueran el mismo archivo renombrado, y toma la fecha del commit equivocado.
     log = subprocess.run(["git", "log", "--diff-filter=A", "--format=%ad", "--date=format:%Y-%m-%d %H:%M",
-                          "--", str(p.relative_to(RAIZ))], cwd=RAIZ, capture_output=True, text=True).stdout.split()
+                          "--", str(p.relative_to(RAIZ))], cwd=RAIZ, capture_output=True, text=True,
+                         encoding="utf-8", errors="replace").stdout.split()
     if len(log) >= 2:
         agregado = datetime.strptime(" ".join(log[-2:]), "%Y-%m-%d %H:%M")
         if datetime.strptime(m.group(1), "%Y-%m-%d %H:%M") > agregado:
             problema(f"{p.name}: la corrida ({m.group(1)}) es posterior al commit que la agregó ({agregado:%Y-%m-%d %H:%M})")
+
+# 6 bis · Las horas escritas en DECISIONES.md no son posteriores al commit que agregó cada entrada (D-30)
+DIAS_ANIO = {"11/9": "2026-09-11", "12/9": "2026-09-12", "13/9": "2026-09-13"}
+decisiones = (RAIZ / "DECISIONES.md").read_text(encoding="utf-8")
+for cab in re.findall(r"^#{2,3} (?:D-\d+|Iteraci[oó]n \d+) ·[^\n]*$", decisiones, re.M):
+    hora = re.search(r"(\d{1,2}/9)[,· ]+(\d{1,2}):(\d{2})", cab)
+    marca = re.match(r"#{2,3} ((?:D-\d+|Iteraci[oó]n \d+) ·)", cab)
+    if not hora or hora.group(1) not in DIAS_ANIO or not marca:
+        continue
+    log = subprocess.run(["git", "log", "--reverse", "-S", marca.group(1), "--format=%ad", "--date=format:%Y-%m-%d %H:%M",
+                          "--", "DECISIONES.md"], cwd=RAIZ, capture_output=True, text=True,
+                         encoding="utf-8", errors="replace").stdout.splitlines()
+    if not log:
+        continue  # entrada todavía sin commitear
+    dicho = f"{DIAS_ANIO[hora.group(1)]} {int(hora.group(2)):02d}:{hora.group(3)}"
+    if dicho > log[0]:
+        problema(f"DECISIONES.md: «{cab[:60]}» dice {dicho} y el commit que la agregó es de {log[0]}")
 
 # 7 · Tablas de markdown sin cortar por líneas en blanco
 for p in textos("*.md", "conocimiento/*.md", "prompts/*.md"):
@@ -134,7 +152,8 @@ gen = subprocess.run([sys.executable, "-X", "utf8", str(RAIZ / "sistema" / "gene
 if gen.returncode:
     problema("generar_visor.py falló, así que no se puede saber si el visor está al día: " + (gen.stderr or "").strip()[-200:])
 elif index.read_text(encoding="utf-8") != anterior:
-    problema("visor/index.html no estaba al día: se regeneró ahora, hay que commitearlo y republicar el artefacto")
+    index.write_text(anterior, encoding="utf-8")  # el verificador revisa, no deja cambios (D-30)
+    problema("visor/index.html no está al día: corré python sistema/generar_visor.py, commitealo y republicá el artefacto")
 
 print("Verificación del repositorio")
 for a in avisos:

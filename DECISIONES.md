@@ -487,7 +487,7 @@ fecha(s) verificada(s)»*. Doce chequeos en verde.
 equivocar no puede depender solo del prompt. Un borrador con la fecha mal manda al interesado un
 domingo a un complejo cerrado.
 
-### D-11 · Tres datos del responsable y dos correcciones de la herramienta (11/9, 17:40)
+### D-11 · Tres datos del responsable y dos correcciones de la herramienta (11/9, 17:38)
 
 Respuestas textuales a las preguntas pendientes:
 
@@ -575,7 +575,7 @@ BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_
 - **Lo que queda pendiente** es la comparación con Haiku 4.5 y Sonnet 5, justo la prueba de la
   elección de modelo. Sin crédito no se puede hacer.
 
-### D-12 · No se carga más crédito; la comparación de modelos queda sin hacer (11/9, 18:40)
+### D-12 · No se carga más crédito; la comparación de modelos queda sin hacer (11/9, 18:06)
 
 Se le propuso al responsable cargar USD 10 para terminar la comparación de modelos y las corridas
 pendientes. Respuesta textual:
@@ -591,7 +591,7 @@ desde las corridas guardadas, sin llamar a ninguna API): para cada consulta real
 respondió el asesor, el borrador del copiloto en cada versión del contrato, la ficha, los doce
 chequeos y el costo, más el plan de octubre. Se abre en cualquier navegador desde el repositorio.
 
-### D-13 · Paquete mensual para colegas, con tarea programada (11/9, 19:00)
+### D-13 · Paquete mensual para colegas, con tarea programada (11/9, 18:32)
 
 El responsable propuso, sobre la jornada con colegas del plan de octubre:
 
@@ -644,7 +644,7 @@ día de la semana (iteración 5): **lo que se cuenta, se cuenta en código**. Se
 módulo 2 (*«No cuentes unidades de memoria»*), pero **sin corrida que lo pruebe**, porque no hay
 crédito (D-12).
 
-### D-14 · Un front para usarlo, que no depende del crédito de la API (11/9, 19:00)
+### D-14 · Un front para usarlo, que no depende del crédito de la API (11/9, 18:59)
 
 > pero lo quiero con un front que pueda usarlo
 
@@ -696,8 +696,8 @@ cero. Acá va solo lo que hay que arreglar.
 - **Dos G1 sin penalización**: «publicado como artefacto» sin URL verificable (corregido: ahora dice
   que es privado y que el archivo del repositorio es la copia abrible) y la tarea programada, que
   desde el repositorio solo se puede verificar por su `.bat`, su log y los paquetes que generó.
-- **Cero G2, G3a/b/c/d, G4, G5, G6 y G8.** El auditor barrió los 84 archivos por carácter —ancho
-  cero, controles bidireccionales, homoglifos— y la historia de git buscando credenciales.
+- El auditor barrió los archivos por carácter —ancho cero, controles bidireccionales, homoglifos— y
+  la historia de git buscando credenciales.
 - Rehízo **las 26 multiplicaciones de costo y los ocho agregados de `ECONOMIA.md`**: cierran al
   cuarto decimal. Reprodujo los dos sha256. Enumeró los 13 campos de las 26 salidas: idénticos.
 - **La duda que dejó anotada es la misma de siempre**: la exigencia más alta de «sistema completo»
@@ -1153,3 +1153,56 @@ antes de cada commit no andaba fuera de esta computadora.**
 
 **Verificado en las dos condiciones**, sin UTF-8 y con UTF-8: test de regresión, test de paridad y
 verificador pasan limpios, `copiloto.py --help` responde y el visor se regenera igual.
+
+
+### D-30 · Una auditoría independiente encontró horas escritas a mano posteriores a sus commits
+
+Antes del cierre se corrió una auditoría con un agente que no participó en la construcción, aplicando
+la rúbrica de la materia con la lectura estricta, sin guardar su informe en el repositorio. Encontró
+errores que ninguna revisión anterior había visto. Se verificó cada uno contra el repositorio antes de
+corregirlo.
+
+**El más grave, de historia de proceso (G6).** Cuatro encabezados de este archivo tenían una hora
+posterior al commit que los agregó:
+
+```text
+D-11 dice 17:40 y su commit es de las 17:38
+D-12 dice 18:40 y su commit es de las 18:06
+D-13 dice 19:00 y su commit es de las 18:32
+D-14 dice 19:00 y su commit es de las 18:59
+```
+
+**Causa**: esas horas se escribieron a mano, estimando, en lugar de tomarlas de git. Es la misma
+familia de error que D-21 (horas UTC): un dato de tiempo escrito sin fuente. **Se corrigieron con la
+hora de su commit** y `sistema/verificar_repo.py` suma un chequeo que compara la hora de cada
+encabezado de decisión o iteración con el commit que lo introdujo. El resto de los encabezados con
+hora ya daban bien.
+
+**Contradicciones entre documentos (G7), también corregidas:**
+
+- El README llamaba «vigente» al contrato de las corridas del 11/9 a las 17:39 (`6a60ec936cf3`). El
+  contrato cambió después varias veces; ahora esa fila dice que es la última versión corrida por la
+  API, y el README remite al encabezado del prompt para saber cuál rige.
+- `GOBIERNO.md` decía que los chequeos de JavaScript estaban en `visor/plantilla.html`. Desde D-28
+  están en `visor/chequeos.js`.
+- D-15 conservaba el veredicto de aquella auditoría («cero G2, G3… G6 y G8»). Era un resultado de
+  evaluación guardado dentro del trabajo, que puede leerse como anclaje, y además hoy es falso. Se
+  sacó el veredicto y quedó la descripción de lo que se revisó.
+
+**Precisiones:**
+
+- `ECONOMIA.md` ahora dice qué contrato midió: el de las corridas del 11/9. El contrato de hoy es más
+  largo y suma el campo `seguimiento`, y no se volvió a medir. El costo del front no se puede medir
+  en tokens.
+- «Catorce campos en `corridas/vivo/`»: la corrida del 12/9 es anterior a la iteración 6 y tiene
+  trece.
+- `GOBIERNO.md` decía que las corridas «no se sobrescriben»; D-21 y D-23 corrigieron horas y
+  agregaron una fila a corridas guardadas. Ahora lo dice.
+- `.gitignore` excluye audios, capturas y PDF, que son los formatos en que llegan las consultas y el
+  brochure.
+- El verificador lanzaba git y Node sin fijar la codificación, y al revisar si el visor estaba al día
+  lo dejaba regenerado en el repositorio. Las dos cosas se corrigieron.
+
+**Lo que se decidió no cambiar**: el ejemplo de formato de la restricción 2 del contrato usa un precio
+real (`USD 208.095`). Cambiarlo crearía otra versión del contrato sin corrida, a horas del cierre; el
+riesgo es bajo porque la restricción 2 obliga a copiar el precio de la herramienta.

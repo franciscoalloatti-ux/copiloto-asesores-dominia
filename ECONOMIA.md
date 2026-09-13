@@ -16,6 +16,14 @@ Fuente: https://platform.claude.com/docs/en/about-claude/pricing, **consultada e
 
 ## Costo por consulta (módulo 1, Opus 5)
 
+> **Qué contrato se midió.** Todas las mediciones de este documento son de las corridas por API del 11/9
+> (hasta las 17:45), con el contrato de ese momento (sha `6a60ec936cf3` para las últimas). El contrato
+> que rige hoy es más largo —el system prompt con sus anexos pasó de 28.783 a 38.170 caracteres— y la
+> ficha suma el campo `seguimiento`, así que **una consulta con el contrato de hoy cuesta más que lo
+> medido acá, y no se volvió a medir** porque no hay crédito de API (D-12). El front corre con la
+> capacidad `sample` de la página, a cuenta de la suscripción de quien la usa, y no expone tokens:
+> su costo no se puede medir con este método.
+
 Cada consulta hace **dos vueltas**: en la primera el modelo pide el tarifario, en la segunda
 escribe la ficha. El prefijo fijo (system prompt, ficha del proyecto, playbook, herramienta y
 esquema) mide **~15.400 tokens** y se guarda en caché. Por eso el costo depende de si la consulta

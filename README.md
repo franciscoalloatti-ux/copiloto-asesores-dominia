@@ -121,7 +121,7 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
   del CSV consultó y el sha256 del tarifario.
 - **La salida estructurada**: JSON validado contra `sistema/esquema_ficha.json`. **Trece campos en
   todas las corridas hasta el contrato v4** (`corridas/` y `corridas/coherencia/`); **desde la
-  iteración 6 son catorce**, porque se sumó `seguimiento` (`corridas/vivo/`). Dentro de cada
+  iteración 6 son catorce**, porque se sumó `seguimiento` (las corridas del front del 13/9; la del 12/9 es anterior y tiene trece). Dentro de cada
   generación, el esquema es idéntico en todas las corridas.
 - **Reglas verificadas en código** después de cada corrida (los chequeos `V..` de `sistema/copiloto.py`: lista única, precios
   idénticos al tarifario, sin descuentos ni urgencia, fechas coherentes, firma, presentación,
@@ -142,7 +142,7 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 - **Cuatro de inmobiliarias colegas y cinco de clientes** (una por audio), cada una guardada con lo
   que respondió el asesor en la realidad para poder comparar. Las corridas finales con el contrato
-  vigente (`corridas/2026-09-11_1739_…` a `…_1745_…`) pasan los doce chequeos que existían entonces (V13 y V14 son del 12/9).
+  de ese momento (`corridas/2026-09-11_1739_…` a `…_1745_…`) pasan los doce chequeos que existían entonces (V13 y V14 son del 12/9).
 - **Tres corridas de referencia**, una por tipo de caso:
 
   | Corrida | Caso | Qué muestra |
@@ -157,6 +157,8 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 
 **Qué versión del contrato produjo cada corrida.** Cada archivo trae el sha256 de system + user:
 
+El contrato que rige hoy es el que indica el encabezado de `prompts/system_prompt.md`; cada corrida guarda el sha256 con que se hizo.
+
 | sha256 | Contrato | Corridas |
 |---|---|---|
 | `911bac10d216` | v1 + playbook v0 | humo (`pruebas/`) |
@@ -166,7 +168,7 @@ descargar copias no autorizadas de los manuales), está en `DECISIONES.md`.
 | `c59fefd13d70` | v3 + playbook v2 (iteración 3) | 06 y 05 de las 17:24 y 17:26 |
 | `b856d022cd4b` | v4 (iteración 4) | 06 y 05 de las 17:28 y 17:29 |
 | `d48ad9997e10` | v4 + user prompt v2 (iteración 5) | 04 de las 17:31 |
-| `6a60ec936cf3` | Vigente: la anterior + ficha D-11 | 01–06 de las 17:39–17:45 |
+| `6a60ec936cf3` | La anterior + ficha D-11: **la última versión corrida por la API** | 01–06 de las 17:39–17:45 |
 
 **Cómo se corre desde cero** (Python 3 y, para los tests, Node.js):
 
@@ -211,7 +213,7 @@ python sistema/verificar_repo.py
   Anthropic API»* (`corridas/errores/`). Después se decidió no cargar más crédito (D-12). El sistema
   corre con Opus 5, el más caro de los tres, y no hay una prueba de que uno más chico no alcance.
 - **Las corridas finales 07, 08, 09 y las de coherencia** quedaron sin repetir con el contrato
-  vigente por la misma razón. Sus versiones con el contrato v1 están en `corridas/`.
+  de ese momento por la misma razón. Sus versiones con el contrato v1 están en `corridas/`.
 - **El plan de octubre salió bloqueado.** Una de las dos piezas marcadas, la jornada con colegas
   que entrega las dos listas, se resolvió con la decisión D-13 (a los colegas se les mandan las dos,
   por separado). La otra es un falso positivo del chequeo, que se dejó así a propósito: un control
@@ -225,7 +227,7 @@ python sistema/verificar_repo.py
   al principio era de la entrada: la consulta llegó el viernes y se cargó con la fecha del domingo (D-24). Su borrador no se envió: el colega ya había respondido al mensaje del asesor antes de la corrida.
 - **Siguen dos flojedades**: la apertura a colegas repite la misma frase y el toque de seguimiento de
   7 días no trae un hecho verificable.
-- **La auditoría de formato encontró una contradicción real en este README**: decía «trece
+- **La auditoría de formato** (su informe no se guarda en el repositorio, a propósito: sería un anclaje) **encontró una contradicción real en este README**: decía «trece
   decisiones» cuando `DECISIONES.md` ya tenía catorce, un número de índice que quedó viejo.
   Corregido, y la lección quedó anotada: no escribir en un documento un número que otro documento
   puede cambiar.

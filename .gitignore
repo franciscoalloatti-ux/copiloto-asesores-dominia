@@ -9,3 +9,15 @@
 *.key
 
 __pycache__/
+
+# Audios, capturas y PDF: así llegan las consultas y el brochure. Las consultas se versionan
+# transcriptas y anonimizadas en entradas/, nunca el original.
+*.ogg
+*.opus
+*.mp3
+*.m4a
+*.wav
+*.jpg
+*.jpeg
+*.png
+*.pdf

@@ -23,21 +23,21 @@ envía el asesor, con su nombre.
 | `entradas/` (registro de consultas) | **Solo lectura**, por `resumen_consultas` (módulo 2) | Consultas transcriptas y anonimizadas. Las secciones con lo que respondió el asesor real no se le pasan al modelo |
 | API de Anthropic | Llamadas con la API key del responsable | La key vive en `~/.anthropic-key` o en `ANTHROPIC_API_KEY`, **fuera del repositorio**; el ejecutor nunca la imprime ni la guarda en las corridas. Lo que sale de la máquina es el texto de la consulta y los anexos |
 | Audio del interesado | **Local**: `herramientas/transcribir_audio.py` corre Whisper en la computadora | El audio no sale de la máquina; solo el texto transcripto, revisado, entra a la consulta |
-| `corridas/` | **Escritura**, solo archivos locales nuevos | Cada corrida se guarda completa y no se sobrescribe |
+| `corridas/` | **Escritura**, solo archivos locales nuevos | Cada corrida se guarda completa y su salida no se reescribe. Las únicas ediciones posteriores están documentadas: corrección de horas (D-21) y la fila «Con los chequeos vigentes» (D-23) |
 | Tarea programada de Windows «Copiloto DOMINIA - Paquete colegas» | Corre con el usuario del responsable, el día 1 de cada mes a las 9:00, solo con la sesión iniciada | Ejecuta `herramientas/paquete_mensual.bat`: escribe el paquete en `corridas/paquete_colegas/AAAA-MM/`, muestra un aviso y abre la carpeta. **No envía nada ni llama a la API.** Se ve y se borra desde el Programador de tareas de Windows |
 | WhatsApp, Instagram, portales, CRM, correo | **Ninguno** | No hay conector. El asesor copia el borrador y lo envía él |
 
 ## Modos de falla: qué pasa y qué se hace
 
 > Los chequeos se citan por su código (`V1`, `V2`…), no por número de línea: el código es lo que se
-> busca en `sistema/copiloto.py` y en `visor/plantilla.html`, y no se corre cuando el archivo cambia.
+> busca en `sistema/copiloto.py` y en `visor/chequeos.js`, y no se corre cuando el archivo cambia.
 
 Cada fila salió de una corrida real o de una regla de negocio con consecuencia concreta. La columna
 *mitigación* dice si está **implementada** (y dónde) o si depende de la revisión humana.
 
 | # | Falla | Qué pasa si llega al cliente | Mitigación |
 |---|---|---|---|
-| 1 | **Mezcla de listas**: le muestra Casona 2 y Casona 3 al mismo comprador | Compara, ve que la misma unidad cuesta ~19 % más en pozo y se pierde la venta o la confianza | Restricción 1 del contrato + **chequeo V2** (`chequeo("V2"…)` en `sistema/copiloto.py` y en `visor/plantilla.html`): unidades de un solo edificio y coherentes con la lista asignada. **Implementada** |
+| 1 | **Mezcla de listas**: le muestra Casona 2 y Casona 3 al mismo comprador | Compara, ve que la misma unidad cuesta ~19 % más en pozo y se pierde la venta o la confianza | Restricción 1 del contrato + **chequeo V2** (`chequeo("V2"…)` en `sistema/copiloto.py` y en `visor/chequeos.js`): unidades de un solo edificio y coherentes con la lista asignada. **Implementada** |
 | 2 | **Precio inventado, redondeado o de otra lista** | Lo escrito puede obligar a DOMINIA (Ley 9445 art. 16, Código de Ética CPI Córdoba) | Restricción 2 + **V3** (precio idéntico al tarifario) + **V5** (todo monto en USD del borrador sale de la lista asignada). **Implementada** |
 | 3 | **Fecha con el día de la semana equivocado** (corrida 04, v2: «jueves 11/9» era viernes) | El interesado va un domingo a un complejo cerrado | Calendario calculado en código en el user prompt + **V12**. **Implementada** en la iteración 5 |
 | 4 | **Ofrece una unidad que no está a la venta** (el PB H, que la web sí publica) | Promesa que no se puede cumplir | Restricción 3 + `disponible = no` en el tarifario + **V3**. **Implementada** |
